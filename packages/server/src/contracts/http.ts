@@ -18,6 +18,6 @@ export abstract class Service<T> {
     this.application = application;
   }
 
-  public abstract listen(port: number): Promise<void>;
-  public abstract close(): Promise<void>;
+  public abstract listen(port: number): void;
+  public abstract close(): void;
 }

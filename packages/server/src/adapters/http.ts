@@ -1,12 +1,12 @@
 import { Server } from "http";
-import { Application } from "express";
+import * as E from "express";
 
-import { Service } from "~/contracts/http";
+import { Route, Router, Service } from "~/contracts/http";
 
-export class HttpService extends Service<Application> {
+export class HttpService extends Service<E.Application> {
   private server?: Server;
 
-  public constructor(application: Application) {
+  public constructor(application: E.Application) {
     super(application);
   }
 
@@ -20,5 +20,23 @@ export class HttpService extends Service<Application> {
     this.server?.close((err) =>
       console.log("The service has been closed", err)
     );
+  }
+}
+
+export class HttpRouter extends Router<E.Router, E.Request, E.Response> {
+  public constructor(routes: Route<E.Request, E.Response>[]) {
+    super(routes);
+  }
+
+  public create(): E.Router {
+    const router = E.Router();
+
+    this.routes.forEach((route) => {
+      const middlewares = route.middlewares ?? [];
+
+      router[route.method](route.route, [...middlewares, route.handle]);
+    });
+
+    return router;
   }
 }

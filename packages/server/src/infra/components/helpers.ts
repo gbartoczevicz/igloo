@@ -1,4 +1,4 @@
-import { ComponenMapRecord, ComponentMap } from "~/contracts/components";
+import { ComponenMapRecord, ComponentMap } from "./contracts";
 
 import { InvalidDependencies } from "./errors";
 

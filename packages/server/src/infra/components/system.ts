@@ -1,4 +1,4 @@
-import { ComponenMapRecord } from "~/contracts/components";
+import { ComponenMapRecord } from "./contracts";
 
 import { Lifecycle, reverseUpdate, update } from "./component";
 import { componentMapFromValue } from "./helpers";

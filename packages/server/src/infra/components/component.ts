@@ -3,7 +3,7 @@ import {
   ComponentAction,
   ComponentIterable,
   ComponentMap,
-} from "~/contracts/components";
+} from "./contracts";
 
 import { componentMapFromValue } from "./helpers";
 import { LifecycleNotFound } from "./errors";

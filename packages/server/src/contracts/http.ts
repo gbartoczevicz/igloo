@@ -12,10 +12,10 @@ export type Middleware<T, U> = (
 ) => void;
 
 export type Route<T, U> = {
-  route: string;
+  path: string;
   method: Method;
   handle: (request: T, response: U) => U;
-  middlewares?: Middleware<T, U>[];
+  middlewares?: Middleware<T, U> | Middleware<T, U>[];
 };
 
 export abstract class Service<T> {

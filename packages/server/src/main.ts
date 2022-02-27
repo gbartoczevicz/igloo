@@ -1,6 +1,6 @@
 import { system } from "~/system";
 
-process.addListener("SIGINT", () => system.stop());
-process.addListener("SIGTERM", () => system.stop());
+const startedSystem = system.start();
 
-system.start();
+process.addListener("SIGINT", () => startedSystem.stop());
+process.addListener("SIGTERM", () => startedSystem.stop());

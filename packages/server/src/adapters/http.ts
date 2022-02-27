@@ -32,9 +32,11 @@ export class HttpRouter extends Router<E.Router, E.Request, E.Response> {
     const router = E.Router();
 
     this.routes.forEach((route) => {
-      const middlewares = route.middlewares ?? [];
+      const maybeArray = route.middlewares ?? [];
 
-      router[route.method](route.route, [...middlewares, route.handle]);
+      const middlewares = Array.isArray(maybeArray) ? maybeArray : [maybeArray];
+
+      router[route.method](route.path, [...middlewares, route.handle]);
     });
 
     return router;

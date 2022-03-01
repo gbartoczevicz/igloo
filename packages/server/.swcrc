@@ -1,0 +1,20 @@
+{
+  "jsc": {
+    "parser": {
+      "syntax": "typescript",
+      "tsx": false
+    },
+    "target": "es5",
+    "loose": false,
+    "baseUrl": "./src/",
+    "paths": {
+      "~/*": [
+        "*"
+      ]
+    }
+  },
+  "module": {
+    "type": "commonjs"
+  },
+  "minify": true
+}

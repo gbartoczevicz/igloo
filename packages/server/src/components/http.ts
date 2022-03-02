@@ -13,13 +13,13 @@ export class Http<T> extends Lifecycle {
     this.port = port;
   }
 
-  public start(): Lifecycle {
+  public override start(): Lifecycle {
     this.service.listen(this.port);
 
     return new Http(this.service, this.port);
   }
 
-  public stop(): Lifecycle {
+  public override stop(): Lifecycle {
     this.service.close();
 
     return new Http(this.service, this.port);

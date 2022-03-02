@@ -17,11 +17,11 @@ export class System extends Lifecycle {
     super(_deps);
   }
 
-  public start(): System {
+  public override start(): System {
     return new System(update(this, (dep) => dep.start()));
   }
 
-  public stop(): System {
+  public override stop(): System {
     return new System(reverseUpdate(this, (dep) => dep.stop()));
   }
 }

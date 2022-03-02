@@ -2,5 +2,13 @@ ARG  NODE_VERSION
 
 FROM node:${NODE_VERSION}-alpine
 
-RUN npm --version
-RUN node --version
+WORKDIR /app
+
+COPY . .
+
+RUN npm i
+RUN npm run build
+
+CMD npm run start
+
+EXPOSE 3333

@@ -1,0 +1,6 @@
+/.swc
+/.vscode
+/docker
+/node_modules
+/dist
+makefile

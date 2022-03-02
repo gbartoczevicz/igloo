@@ -1,0 +1,12 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      args:
+        - NODE_VERSION=${NODE_VERSION}
+        - PORT=${PORT}
+    volumes:
+      - .:/code
+    ports:
+      - "${PORT}:${PORT}"

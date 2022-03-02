@@ -1,4 +1,5 @@
 ARG  NODE_VERSION
+ARG  PORT
 
 FROM node:${NODE_VERSION}-alpine
 
@@ -11,4 +12,4 @@ RUN npm run build
 
 CMD npm run start
 
-EXPOSE 3333
+EXPOSE ${PORT}

@@ -1,7 +1,7 @@
 {
-  "name": "@projetinho/server",
+  "name": "@igloo/server",
   "version": "1.0.0",
-  "description": "The Projetinho's application server",
+  "description": "The Igloo's application server",
   "license": "MIT",
   "main": "src/main.ts",
   "scripts": {

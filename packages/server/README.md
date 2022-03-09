@@ -1,4 +1,4 @@
-# Projetinho's server
+# Igloo's server
 
 ## Requirements
 

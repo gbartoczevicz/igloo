@@ -1,6 +1,6 @@
 import * as E from "express";
 
-import { createSystem } from "~/components/implementation/system";
+import { createSystem } from "~/lib/component";
 import { Http } from "~/components/http";
 
 import * as HttpContracts from "~/contracts/http";

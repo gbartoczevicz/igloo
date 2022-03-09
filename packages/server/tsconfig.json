@@ -10,13 +10,10 @@
     "strict": true,
     "skipLibCheck": true,
     "noEmitOnError": true,
-    "baseUrl": ".",
+    "baseUrl": "./src/",
     "paths": {
       "~/*": [
-        "./src/*"
-      ],
-      "!/*": [
-        "./lib/*"
+        "*"
       ]
     }
   }

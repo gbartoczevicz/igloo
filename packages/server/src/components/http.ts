@@ -1,6 +1,5 @@
 import { Service } from "~/contracts/http";
-
-import { Lifecycle } from "./implementation/component";
+import { Lifecycle } from "~/lib/component";
 
 export class Http<T> extends Lifecycle {
   private readonly service: Service<T>;

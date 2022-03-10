@@ -1,3 +1,5 @@
+import { Out } from "~/dtos";
+
 export enum Method {
   get = "get",
   post = "post",
@@ -37,4 +39,17 @@ export abstract class Router<A, T, U> {
   }
 
   public abstract create(): A;
+}
+
+export enum HttpStatus {
+  created = 201,
+  badRequest = 400,
+}
+
+export class Response {
+  public constructor(private readonly status: HttpStatus, private readonly content?: Out) { }
+
+  public toJson() {
+    return { status: this.status, body: this.content?.toRaw() }
+  }
 }

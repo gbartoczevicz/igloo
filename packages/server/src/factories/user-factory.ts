@@ -16,7 +16,7 @@ export class UserFactory implements Factory<CreateUserIn, User> {
     public readonly emailValidator: EmailValidator,
     public readonly passwordHandler: PasswordHandler,
     public readonly phoneValidator: PhoneValidator,
-  ) { }
+  ) {}
 
   public create(incoming: CreateUserIn): User {
     const { name } = incoming;

@@ -1,6 +1,6 @@
 import { UsersRepo } from "~/contracts";
 import { CreateUserIn } from "~/dtos";
-import { UserFactory } from "~/factories/user-factory";
+import { UserFactory } from "~/domain/factories/user-factory";
 import { User } from "~/domain/entities";
 import { DomainError } from "~/errors";
 

@@ -44,12 +44,24 @@ export abstract class Router<A, T, U> {
 export enum HttpStatus {
   created = 201,
   badRequest = 400,
+  internalError = 500,
 }
 
 export class Response {
-  public constructor(private readonly status: HttpStatus, private readonly content?: Out) { }
+  public constructor(
+    private readonly status: HttpStatus,
+    private readonly content?: string | Out,
+  ) {}
 
   public toJson() {
-    return { status: this.status, body: this.content?.toRaw() }
+    const body = this.content instanceof Out
+      ? this.content.toRaw()
+      : this.content;
+
+    return { status: this.status, body };
   }
+}
+
+export abstract class Controller {
+  abstract execute(incoming: unknown): Promise<Response>;
 }

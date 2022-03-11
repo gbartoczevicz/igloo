@@ -1,7 +1,7 @@
 import { Server } from "http";
 import * as E from "express";
 
-import { Route, Router, Service } from "~/contracts/http";
+import { Route, Router, Service, Result, HandleOnResult } from "~/contracts/http";
 
 export class HttpService extends Service<E.Application> {
   private server?: Server;
@@ -41,4 +41,9 @@ export class HttpRouter extends Router<E.Router, E.Request, E.Response> {
 
     return router;
   }
+}
+
+export const handleOnResult: HandleOnResult<E.Response> = (response: Result, res: E.Response) => {
+  const { body, status } = response.toJson();
+  res.status(status).json(body);
 }

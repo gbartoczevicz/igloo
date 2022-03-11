@@ -16,7 +16,7 @@ export type Middleware<T, U> = (
 export type Route<T, U> = {
   path: string;
   method: Method;
-  handle: (request: T, response: U) => U;
+  handle: (request: T, response: U) => void;
   middlewares?: Middleware<T, U> | Middleware<T, U>[];
 };
 
@@ -47,11 +47,11 @@ export enum HttpStatus {
   internalError = 500,
 }
 
-export class Response {
+export class Result {
   public constructor(
     private readonly status: HttpStatus,
     private readonly content?: string | Out,
-  ) {}
+  ) { }
 
   public toJson() {
     const body = this.content instanceof Out
@@ -63,5 +63,7 @@ export class Response {
 }
 
 export abstract class Controller {
-  abstract execute(incoming: unknown): Promise<Response>;
+  abstract execute(incoming: unknown): Promise<Result>;
 }
+
+export type HandleOnResult<T> = (response: Result, res: T) => void;

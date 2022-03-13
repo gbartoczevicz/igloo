@@ -5,7 +5,7 @@ import { DomainError } from "~/errors";
 import { User } from "~/domain/entities";
 
 export class CreateUserController implements Controller<CreateUserIn, User> {
-  public constructor(private readonly createUserUseCase: CreateUserUseCase) { }
+  public constructor(private readonly createUserUseCase: CreateUserUseCase) {}
 
   async execute(incoming: CreateUserIn): Promise<R<User>> {
     try {

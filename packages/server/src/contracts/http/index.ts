@@ -51,7 +51,7 @@ export class Result<T> {
   public constructor(
     private readonly status: HttpStatus,
     private readonly content?: string | OutDTO<T>,
-  ) { }
+  ) {}
 
   public toJson() {
     const body = this.content instanceof OutDTO

@@ -3,8 +3,10 @@ import {
   Method,
   PasswordHandler,
   PhoneValidator,
-  UsersRepo,
 } from "~/contracts";
+
+import { UsersRepo } from "~/contracts/repositories";
+
 import { CreateUserController } from "~/domain/controllers";
 import { IdFactory } from "~/domain/factories/id-factory";
 import { UserFactory } from "~/domain/factories/user-factory";

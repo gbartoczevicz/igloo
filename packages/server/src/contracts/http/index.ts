@@ -1,4 +1,4 @@
-import { Out } from "~/dtos";
+import { OutDTO } from "~/contracts/dtos";
 
 export enum Method {
   get = "get",
@@ -47,14 +47,14 @@ export enum HttpStatus {
   internalError = 500,
 }
 
-export class Result {
+export class Result<T> {
   public constructor(
     private readonly status: HttpStatus,
-    private readonly content?: string | Out,
+    private readonly content?: string | OutDTO<T>,
   ) { }
 
   public toJson() {
-    const body = this.content instanceof Out
+    const body = this.content instanceof OutDTO
       ? this.content.toRaw()
       : this.content;
 
@@ -62,8 +62,8 @@ export class Result {
   }
 }
 
-export abstract class Controller {
-  abstract execute(incoming: unknown): Promise<Result>;
+export abstract class Controller<T, U> {
+  abstract execute(incoming: T): Promise<Result<U>>;
 }
 
-export type HandleOnResult<T> = (response: Result, res: T) => void;
+export type HandleOnResult<T> = (response: Result<T>, res: T) => void;

@@ -1,21 +1,15 @@
-import {
-  EmailValidator,
-  Factory,
-  PasswordHandler,
-  PhoneValidator,
-} from "~/contracts";
 import { User } from "~/domain/entities";
-import { Email, Phone } from "~/domain/entities/values";
 import { CreateUserIn } from "~/dtos";
 import { DomainError } from "~/errors";
-import { IdFactory } from "./id-factory";
+import { Factory } from "~/contracts/domain";
+import * as Factories from "~/domain/factories";
 
 export class UserFactory implements Factory<CreateUserIn, User> {
   public constructor(
-    public readonly idFactory: IdFactory,
-    public readonly emailValidator: EmailValidator,
-    public readonly passwordHandler: PasswordHandler,
-    public readonly phoneValidator: PhoneValidator,
+    public readonly idFactory: Factories.IdFactory,
+    public readonly emailFactory: Factories.EmailFactory,
+    public readonly passwordFactory: Factories.PasswordFactory,
+    public readonly phoneFactory: Factories.PhoneFactory,
   ) {}
 
   public create(incoming: CreateUserIn): User {
@@ -25,24 +19,10 @@ export class UserFactory implements Factory<CreateUserIn, User> {
       throw new DomainError("Name is required");
     }
 
-    if (!this.emailValidator.isValid(incoming.email)) {
-      throw new DomainError("Email is invalid");
-    }
-
-    if (!this.phoneValidator.isValid(incoming.phone)) {
-      throw new DomainError("Phone is invalid");
-    }
-
-    const isValidPassword = this.passwordHandler.isValid(incoming.password);
-
-    if (!isValidPassword) {
-      throw new DomainError("Password is invalid");
-    }
-
     const id = this.idFactory.create();
-    const email = new Email(incoming.email);
-    const password = this.passwordHandler.encode(incoming.password);
-    const phone = new Phone(incoming.phone);
+    const email = this.emailFactory.create(incoming.email);
+    const password = this.passwordFactory.create(incoming.password);
+    const phone = this.phoneFactory.create(incoming.email);
 
     return new User(id, name, incoming.surname, email, password, phone);
   }

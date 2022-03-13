@@ -18,7 +18,9 @@ const router: HttpContracts.Router<E.Router, E.Request, E.Response> =
       path: createUser.route,
       method: createUser.method,
       handle: (req, res) =>
-        createUser.controller.execute(req.body).then(body => HttpAdapters.handleOnResult(body, res)),
+        createUser.controller.execute(req.body).then((body) =>
+          HttpAdapters.handleOnResult(body, res)
+        ),
       middlewares: (req, _, next) => {
         console.log("Requester IP", req.ip);
         next();

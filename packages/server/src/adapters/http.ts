@@ -1,9 +1,9 @@
 import { Server } from "http";
 import * as E from "express";
 
-import { Route, Router, Service, Result, HandleOnResult } from "~/contracts/http";
+import * as HttpContracts from "~/contracts/http";
 
-export class HttpService extends Service<E.Application> {
+export class HttpService extends HttpContracts.Service<E.Application> {
   private server?: Server;
 
   public constructor(application: E.Application) {
@@ -23,8 +23,9 @@ export class HttpService extends Service<E.Application> {
   }
 }
 
-export class HttpRouter extends Router<E.Router, E.Request, E.Response> {
-  public constructor(routes: Route<E.Request, E.Response>[]) {
+export class HttpRouter
+  extends HttpContracts.Router<E.Router, E.Request, E.Response> {
+  public constructor(routes: HttpContracts.Route<E.Request, E.Response>[]) {
     super(routes);
   }
 
@@ -43,7 +44,10 @@ export class HttpRouter extends Router<E.Router, E.Request, E.Response> {
   }
 }
 
-export const handleOnResult: HandleOnResult<E.Response> = (response: Result, res: E.Response) => {
+export const handleOnResult: HttpContracts.HandleOnResult<E.Response> = <T>(
+  response: HttpContracts.Result<T>,
+  res: E.Response,
+) => {
   const { body, status } = response.toJson();
   res.status(status).json(body);
-}
+};

@@ -1,18 +1,18 @@
+import { OutDTO } from "~/contracts/dtos";
 import { User } from "~/domain/entities";
-import { Out } from "./out";
 
-export class CreateUserOut extends Out {
-  public constructor(private readonly user: User) {
-    super();
+export class CreateUserOut extends OutDTO<User> {
+  public constructor(user: User) {
+    super(user);
   }
 
   public toRaw(): unknown {
     return {
-      id: this.user.id.value,
-      name: this.user.name,
-      surname: this.user.surname,
-      email: this.user.email.toString(),
-      phone: this.user.phone.toString(),
+      id: this.outcoming.id.value,
+      name: this.outcoming.name,
+      surname: this.outcoming.surname,
+      email: this.outcoming.email.toString(),
+      phone: this.outcoming.phone.toString(),
     };
   }
 }

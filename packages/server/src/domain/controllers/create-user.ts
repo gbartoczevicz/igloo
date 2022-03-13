@@ -4,12 +4,10 @@ import { CreateUserUseCase } from "~/domain/usecases";
 import { DomainError } from "~/errors";
 import { User } from "~/domain/entities";
 
-type Result = R<User>;
-
-export class CreateUserController implements Controller<CreateUserIn, Result> {
+export class CreateUserController implements Controller<CreateUserIn, User> {
   public constructor(private readonly createUserUseCase: CreateUserUseCase) { }
 
-  async execute(incoming: CreateUserIn): Promise<Result> {
+  async execute(incoming: CreateUserIn): Promise<R<User>> {
     try {
       const user = await this.createUserUseCase.create(incoming);
 

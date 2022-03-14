@@ -1,37 +1,27 @@
-import { Controller, HttpStatus, Result } from "~/contracts/http";
-import * as Presentation from "~/contracts/presentation";
+import * as P from "~/contracts/presentation";
 import { CreateUserIn, CreateUserOut } from "~/dtos";
 import { CreateUserUseCase } from "~/domain/usecases";
-import { DomainError } from "~/errors";
 
-export class CreateUserController implements Controller<CreateUserIn> {
+export class CreateUserController extends P.Controller<CreateUserIn> {
   private readonly createUserUseCase: CreateUserUseCase;
 
-  private readonly onSuccess: Presentation.OnSuccess;
-
-  private readonly onDomainError: Presentation.OnDomainError;
+  private readonly onSuccess: P.OnSuccess<CreateUserOut>;
 
   public constructor(
     createUserUseCase: CreateUserUseCase,
-    onSuccess: Presentation.OnSuccess,
-    onDomainError: Presentation.OnDomainError,
+    onSuccess: P.OnSuccess<CreateUserOut>,
+    onInternalError: P.OnInternalError,
+    onDomainError: P.OnDomainError,
   ) {
+    super(onInternalError, onDomainError);
+
     this.createUserUseCase = createUserUseCase;
     this.onSuccess = onSuccess;
-    this.onDomainError = onDomainError;
   }
 
-  public async execute(incoming: CreateUserIn): Promise<void> {
-    try {
-      await this.createUserUseCase.create(incoming);
+  public async handle(incoming: CreateUserIn): Promise<void> {
+    const userCreated = await this.createUserUseCase.create(incoming);
 
-      return this.onSuccess();
-    } catch (err) {
-      if (err instanceof DomainError) {
-        return this.onDomainError(err);
-      }
-
-      throw err;
-    }
+    return this.onSuccess(new CreateUserOut(userCreated));
   }
 }

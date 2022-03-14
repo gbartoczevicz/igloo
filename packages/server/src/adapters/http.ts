@@ -27,14 +27,14 @@ export class HttpRoute extends C.Route<E.Request, E.Response, E.NextFunction> {
   public constructor(
     path: string,
     method: C.Method,
-    middlewares: C.Middleware<
+    handle: C.Middleware<E.Request, E.Response, E.NextFunction>,
+    middlewares?: C.Middleware<
       E.Request,
       E.Response,
       E.NextFunction
     >[],
-    handle: C.Middleware<E.Request, E.Response, E.NextFunction>,
   ) {
-    super(path, method, middlewares, handle);
+    super(path, method, handle, middlewares);
   }
 }
 

@@ -2,7 +2,7 @@ import { Method } from ".";
 
 export type Middleware<T, U, V> = (request: T, response: U, next: V) => void;
 
-export class Route<T, U, V> {
+export abstract class Route<T, U, V> {
   public readonly path: string;
 
   public readonly method: Method;
@@ -11,7 +11,7 @@ export class Route<T, U, V> {
 
   public readonly handle: Middleware<T, U, V>;
 
-  public constructor(
+  protected constructor(
     path: string,
     method: Method,
     middlewares: Middleware<T, U, V>[],

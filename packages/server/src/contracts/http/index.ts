@@ -51,7 +51,7 @@ export class Result<T> {
   public constructor(
     private readonly status: HttpStatus,
     private readonly content?: string | OutDTO<T>,
-  ) {}
+  ) { }
 
   public toJson() {
     const body = this.content instanceof OutDTO
@@ -62,8 +62,8 @@ export class Result<T> {
   }
 }
 
-export abstract class Controller<T, U> {
-  abstract execute(incoming: T): Promise<Result<U>>;
+export abstract class Controller<T> {
+  abstract execute(incoming: T): Promise<void>;
 }
 
 export type HandleOnResult<T> = (response: Result<T>, res: T) => void;

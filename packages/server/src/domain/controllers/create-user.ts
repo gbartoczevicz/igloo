@@ -5,11 +5,11 @@ import { CreateUserUseCase } from "~/domain/usecases";
 export class CreateUserController extends P.Controller<CreateUserIn> {
   private readonly createUserUseCase: CreateUserUseCase;
 
-  private readonly onSuccess: P.OnSuccess<CreateUserOut>;
+  private readonly onSuccess: P.OnCommonEvent<CreateUserOut>;
 
   public constructor(
     createUserUseCase: CreateUserUseCase,
-    onSuccess: P.OnSuccess<CreateUserOut>,
+    onSuccess: P.OnCommonEvent<CreateUserOut>,
     onInternalError: P.OnInternalError,
     onDomainError: P.OnDomainError,
   ) {
@@ -19,7 +19,7 @@ export class CreateUserController extends P.Controller<CreateUserIn> {
     this.onSuccess = onSuccess;
   }
 
-  public async handle(incoming: CreateUserIn): Promise<void> {
+  protected override async handle(incoming: CreateUserIn): Promise<void> {
     const userCreated = await this.createUserUseCase.create(incoming);
 
     return this.onSuccess(new CreateUserOut(userCreated));

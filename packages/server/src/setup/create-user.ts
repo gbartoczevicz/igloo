@@ -1,39 +1,34 @@
-import {
-  EmailValidator,
-  Method,
-  PasswordHandler,
-  PhoneValidator,
-} from "~/contracts";
-
+import { NodeIdProvider } from "~/adapters/hash";
+import { HttpRoute } from "~/adapters/http";
+import { IdProvider } from "~/contracts/hash";
+import { Method } from "~/contracts/http";
 import { UsersRepo } from "~/contracts/repositories";
-
 import { CreateUserController } from "~/domain/controllers";
-import { IdFactory } from "~/domain/factories/id-factory";
-import { UserFactory } from "~/domain/factories/user-factory";
+import { UserFactory } from "~/domain/factories";
 import { CreateUserUseCase } from "~/domain/usecases";
 
-const idFactory: IdFactory = {} as IdFactory;
-const emailValidator: EmailValidator = {} as EmailValidator;
-const passwordHandler: PasswordHandler = {} as PasswordHandler;
-const phoneValidator: PhoneValidator = {} as PhoneValidator;
+const idProvider: IdProvider = new NodeIdProvider();
 
-const userFactory = new UserFactory(
-  idFactory,
-  emailValidator,
-  passwordHandler,
-  phoneValidator,
-);
-
+const userFactory: UserFactory = {} as UserFactory;
 const usersRepo: UsersRepo = {} as UsersRepo;
 
 const createUserUseCase = new CreateUserUseCase(userFactory, usersRepo);
 
-const createUserController = new CreateUserController(createUserUseCase);
-
 export function setupCreateUsers() {
-  return {
-    controller: createUserController,
-    route: "/users",
-    method: Method.post,
-  };
+  return new HttpRoute(
+    "/users",
+    Method.post,
+    (req, res, next) => {
+      const controller = new CreateUserController(
+        createUserUseCase,
+        (out) => res.status(200).json(out.toRaw()),
+        (_) => res.sendStatus(500),
+        (err) => res.status(400).json({ message: err.message }),
+      );
+
+      controller.execute((req as any).user);
+
+      next();
+    },
+  );
 }

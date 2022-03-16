@@ -1,34 +1,43 @@
 import { DomainError } from "~/errors";
-import { OnDomainError, OnInternalError } from "./listeners";
+import { HttpStatus } from "../http";
 
-export abstract class Controller<T> {
-  private readonly onDomainError: OnDomainError;
+export type Result<T> = {
+  status: HttpStatus;
+  content: T;
+};
 
-  private readonly onInternalError: OnInternalError;
+export abstract class Controller<T, U> {
+  protected abstract handle(incoming: T): Promise<Result<U>>;
 
-  public constructor(
-    onInternalError: OnInternalError,
-    onDomainError: OnDomainError,
-  ) {
-    this.onDomainError = onDomainError;
-    this.onInternalError = onInternalError;
+  public async execute(incoming: T): Promise<Result<U | Error>> {
+    return await this.handle(incoming)
+      .then((result) => result)
+      .catch((err) => this.handleOnGeneralError(err));
   }
 
-  protected abstract handle(incoming: T): Promise<void>;
+  protected onCreated(content: U): Result<U> {
+    return { content, status: HttpStatus.created };
+  }
 
-  public execute(incoming: T): void {
-    this.handle(incoming).catch((err) => {
-      console.warn(err);
+  protected onDomainError(content: DomainError): Result<DomainError> {
+    return { content, status: HttpStatus.badRequest };
+  }
 
-      if (err instanceof DomainError) {
-        return this.onDomainError(err);
-      }
+  protected onInternalError(content: Error) {
+    return { content, status: HttpStatus.internalError };
+  }
 
-      if (err instanceof Error) {
-        return this.onInternalError(err);
-      }
+  private handleOnGeneralError(err: unknown): Result<Error> {
+    console.warn(err);
 
-      return this.onInternalError(new Error("Unmapped error occurred"));
-    });
+    if (err instanceof DomainError) {
+      return this.onDomainError(err);
+    }
+
+    if (err instanceof Error) {
+      return this.onInternalError(err);
+    }
+
+    return this.onInternalError(new Error("Unmapped error occurred"));
   }
 }

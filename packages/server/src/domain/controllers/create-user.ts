@@ -1,27 +1,24 @@
 import * as P from "~/contracts/presentation";
-import { CreateUserIn, CreateUserOut } from "~/dtos";
+import * as D from "~/dtos";
 import { CreateUserUseCase } from "~/domain/usecases";
-
-export class CreateUserController extends P.Controller<CreateUserIn> {
+export class CreateUserController
+  extends P.Controller<D.CreateUserIn, D.CreateUserOut> {
   private readonly createUserUseCase: CreateUserUseCase;
-
-  private readonly onSuccess: P.OnCommonEvent<CreateUserOut>;
 
   public constructor(
     createUserUseCase: CreateUserUseCase,
-    onSuccess: P.OnCommonEvent<CreateUserOut>,
-    onInternalError: P.OnInternalError,
-    onDomainError: P.OnDomainError,
   ) {
-    super(onInternalError, onDomainError);
-
+    super();
     this.createUserUseCase = createUserUseCase;
-    this.onSuccess = onSuccess;
   }
 
-  protected override async handle(incoming: CreateUserIn): Promise<void> {
+  protected override async handle(
+    incoming: D.CreateUserIn,
+  ): Promise<P.Result<D.CreateUserOut>> {
     const userCreated = await this.createUserUseCase.create(incoming);
 
-    return this.onSuccess(new CreateUserOut(userCreated));
+    const outcoming = new D.CreateUserOut(userCreated);
+
+    return this.onCreated(outcoming);
   }
 }

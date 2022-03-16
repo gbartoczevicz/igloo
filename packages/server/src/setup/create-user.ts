@@ -13,20 +13,18 @@ const userFactory: UserFactory = {} as UserFactory;
 const usersRepo: UsersRepo = {} as UsersRepo;
 
 const createUserUseCase = new CreateUserUseCase(userFactory, usersRepo);
+const controller = new CreateUserController(
+  createUserUseCase,
+);
 
 export function setupCreateUsers() {
   return new HttpRoute(
     "/users",
     Method.post,
     (req, res, next) => {
-      const controller = new CreateUserController(
-        createUserUseCase,
-        (out) => res.status(200).json(out.toRaw()),
-        (_) => res.sendStatus(500),
-        (err) => res.status(400).json({ message: err.message }),
+      controller.execute((req as any).user).then((result) =>
+        res.status(result.status).json(result.content)
       );
-
-      controller.execute((req as any).user);
 
       next();
     },

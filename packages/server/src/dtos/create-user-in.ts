@@ -1,4 +1,4 @@
-import { InDTOResult } from "~/contracts/dtos";
+import { DTOValidationMapping, InDTOResult } from "~/contracts/dtos";
 import { HttpStatus } from "~/contracts/http";
 import { Result } from "~/contracts/presentation";
 import { InvalidField } from "~/errors";
@@ -24,23 +24,33 @@ export class CreateUserIn {
     const errors: InvalidField[] = [];
 
     if (typeof name !== "string") {
-      errors.push(new InvalidField("name", "is a required string"));
+      errors.push(
+        new InvalidField("name", DTOValidationMapping.requiredString),
+      );
     }
 
     if (surname !== undefined && typeof surname !== "string") {
-      errors.push(new InvalidField("surname", "is a string"));
+      errors.push(
+        new InvalidField("surname", DTOValidationMapping.optionalString),
+      );
     }
 
     if (typeof email !== "string") {
-      errors.push(new InvalidField("email", "is a required string"));
+      errors.push(
+        new InvalidField("email", DTOValidationMapping.requiredString),
+      );
     }
 
     if (typeof phone !== "string") {
-      errors.push(new InvalidField("phone", "is a required string"));
+      errors.push(
+        new InvalidField("phone", DTOValidationMapping.requiredString),
+      );
     }
 
     if (typeof password !== "string") {
-      errors.push(new InvalidField("password", "is a required string"));
+      errors.push(
+        new InvalidField("password", DTOValidationMapping.requiredString),
+      );
     }
 
     if (errors.length > 0) {

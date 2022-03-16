@@ -1,25 +1,63 @@
+import { InDTOResult } from "~/contracts/dtos";
+import { HttpStatus } from "~/contracts/http";
+import { Result } from "~/contracts/presentation";
+import { InvalidField } from "~/errors";
+
 export class CreateUserIn {
-  public readonly name: string;
+  private constructor(
+    public readonly name: string,
+    public readonly surname: string,
+    public readonly email: string,
+    public readonly phone: string,
+    public readonly password: string,
+  ) {}
 
-  public readonly surname: string;
+  public static create(
+    income: unknown,
+  ): InDTOResult<CreateUserIn, InvalidField[]> {
+    if (income === undefined) {
+      throw new Error("Unexpected income");
+    }
 
-  public readonly email: string;
+    const { name, surname, email, phone, password } = income as any;
 
-  public readonly phone: string;
+    const errors: InvalidField[] = [];
 
-  public readonly password: string;
+    if (typeof name !== "string") {
+      errors.push(new InvalidField("name", "is a required string"));
+    }
 
-  public constructor(
-    name: string,
-    surname: string,
-    email: string,
-    phone: string,
-    password: string,
-  ) {
-    this.name = name;
-    this.surname = surname;
-    this.email = email;
-    this.password = password;
-    this.phone = phone;
+    if (surname !== undefined && typeof surname !== "string") {
+      errors.push(new InvalidField("surname", "is a string"));
+    }
+
+    if (typeof email !== "string") {
+      errors.push(new InvalidField("email", "is a required string"));
+    }
+
+    if (typeof phone !== "string") {
+      errors.push(new InvalidField("phone", "is a required string"));
+    }
+
+    if (typeof password !== "string") {
+      errors.push(new InvalidField("password", "is a required string"));
+    }
+
+    if (errors.length > 0) {
+      const result: Result<InvalidField[]> = {
+        content: errors,
+        status: HttpStatus.badRequest,
+      };
+
+      return result;
+    }
+
+    return new CreateUserIn(
+      name,
+      surname,
+      email,
+      phone,
+      password,
+    );
   }
 }

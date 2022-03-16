@@ -60,11 +60,3 @@ export class HttpRouter extends C.Router<
     return router;
   }
 }
-
-export const handleOnResult: C.HandleOnResult<E.Response> = <T>(
-  response: C.Result<T>,
-  res: E.Response,
-) => {
-  const { body, status } = response.toJson();
-  res.status(status).json(body);
-};

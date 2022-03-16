@@ -1,10 +1,6 @@
 import { DomainError } from "~/errors";
 import { HttpStatus } from "../http";
-
-export type Result<T> = {
-  status: HttpStatus;
-  content: T;
-};
+import { Result } from "./result";
 
 export abstract class Controller<T, U> {
   protected abstract handle(incoming: T): Promise<Result<U>>;

@@ -7,6 +7,6 @@ export abstract class PasswordHandler {
     this.hashSalt = hashSalt;
   }
 
-  abstract encode(value: string): Password;
-  abstract compare(value1: string, value2: string): boolean;
+  abstract encode(plain: string): Password;
+  abstract compare(plain: string, encoded: string): boolean;
 }

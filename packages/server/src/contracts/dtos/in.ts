@@ -19,19 +19,20 @@ type ParamToValidate = {
 
 type ParamsToValidate = Record<string, ParamToValidate>;
 
-const isNil = (val: unknown) => val === undefined || val === null;
+type ValidatorFun = (v: unknown) => boolean;
 
-const validatorMapping = {
-  [DTOValidationMapping.optionalList]: (val: unknown) =>
-    !isNil(val) && Array.isArray(val),
-  [DTOValidationMapping.optionalNumber]: (val: unknown) =>
-    !isNil(val) && !Number.isNaN(val),
-  [DTOValidationMapping.optionalString]: (val: unknown) =>
-    !isNil(val) && typeof val === "string",
-  [DTOValidationMapping.requiredList]: (val: unknown) => Array.isArray(val),
-  [DTOValidationMapping.requiredNumber]: (val: unknown) => !Number.isNaN(val),
-  [DTOValidationMapping.requiredString]: (val: unknown) =>
-    typeof val === "string",
+type ValodatorFunMapping = Record<DTOValidationMapping, ValidatorFun>;
+
+const isNil: ValidatorFun = (v: unknown) => v === undefined;
+
+const validatorMapping: ValodatorFunMapping = {
+  [DTOValidationMapping.optionalList]: (v) => !isNil(v) && Array.isArray(v),
+  [DTOValidationMapping.optionalNumber]: (v) => !isNil(v) && !Number.isNaN(v),
+  [DTOValidationMapping.optionalString]: (v) =>
+    !isNil(v) && typeof v === "string",
+  [DTOValidationMapping.requiredList]: (v) => Array.isArray(v),
+  [DTOValidationMapping.requiredNumber]: (v) => !Number.isNaN(v),
+  [DTOValidationMapping.requiredString]: (v) => typeof v === "string",
 };
 
 export abstract class InDTO {
@@ -40,16 +41,16 @@ export abstract class InDTO {
 
     const paramsEntries = Object.entries(params);
 
-    for (const [key, paramEntry] of paramsEntries) {
-      const validatorEntry = validatorMapping[paramEntry.validationType];
+    for (const [field, entry] of paramsEntries) {
+      const validatorFun = validatorMapping[entry.validationType];
 
-      if (!validatorEntry) throw new Error("Unmapped validation type");
+      if (!validatorFun) throw new Error("Unmapped validation type");
 
-      const isValid = validatorEntry(paramEntry.value);
+      const isValid = validatorFun(entry.value);
 
       if (isValid) continue;
 
-      invalidFields.push(new InvalidField(key, paramEntry.validationType));
+      invalidFields.push(new InvalidField(field, entry.validationType));
     }
 
     return invalidFields;

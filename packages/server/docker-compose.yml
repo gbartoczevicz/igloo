@@ -10,3 +10,16 @@ services:
       - .:/code
     ports:
       - "${PORT}:${PORT}"
+    depends_on:
+      - database
+
+  database:
+    image: mariadb:10.8-rc
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DATABASE_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DATABASE_NAME}
+      MYSQL_USER: ${DATABASE_USERNAME}
+      MYSQL_PASSWORD: ${DATABASE_PASSWORD}
+    ports:
+      - "${DATABASE_PORT}:${DATABASE_PORT}"

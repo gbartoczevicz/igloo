@@ -1,57 +1,46 @@
-import { DTOValidationMapping, InDTOResult } from "~/contracts/dtos";
+import { DTOValidationMapping, InDTO, InDTOResult } from "~/contracts/dtos";
 import { HttpStatus } from "~/contracts/http";
 import { Result } from "~/contracts/presentation";
 import { InvalidField } from "~/errors";
 
-export class CreateUserIn {
+export class CreateUserIn extends InDTO {
   private constructor(
     public readonly name: string,
     public readonly email: string,
     public readonly phone: string,
     public readonly password: string,
     public readonly surname?: string,
-  ) {}
+  ) {
+    super();
+  }
 
   public static create(
     income: unknown,
   ): InDTOResult<CreateUserIn, InvalidField[]> {
-    if (income === undefined) {
-      throw new Error("Unexpected income");
-    }
+    const { name, surname, email, phone, password } = income as any || {};
 
-    const { name, surname, email, phone, password } = income as any;
-
-    const errors: InvalidField[] = [];
-
-    if (typeof name !== "string") {
-      errors.push(
-        new InvalidField("name", DTOValidationMapping.requiredString),
-      );
-    }
-
-    if (surname !== undefined && typeof surname !== "string") {
-      errors.push(
-        new InvalidField("surname", DTOValidationMapping.optionalString),
-      );
-    }
-
-    if (typeof email !== "string") {
-      errors.push(
-        new InvalidField("email", DTOValidationMapping.requiredString),
-      );
-    }
-
-    if (typeof phone !== "string") {
-      errors.push(
-        new InvalidField("phone", DTOValidationMapping.requiredString),
-      );
-    }
-
-    if (typeof password !== "string") {
-      errors.push(
-        new InvalidField("password", DTOValidationMapping.requiredString),
-      );
-    }
+    const errors = this.validate({
+      name: {
+        validationType: DTOValidationMapping.requiredString,
+        value: name,
+      },
+      surname: {
+        validationType: DTOValidationMapping.optionalString,
+        value: surname,
+      },
+      email: {
+        validationType: DTOValidationMapping.requiredString,
+        value: email,
+      },
+      phone: {
+        validationType: DTOValidationMapping.requiredString,
+        value: phone,
+      },
+      password: {
+        validationType: DTOValidationMapping.requiredString,
+        value: password,
+      },
+    });
 
     if (errors.length > 0) {
       return {

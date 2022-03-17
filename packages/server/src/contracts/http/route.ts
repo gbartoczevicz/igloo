@@ -2,7 +2,11 @@ import { Method } from ".";
 
 export type Middleware<T, U, V> = (request: T, response: U, next: V) => void;
 
-export type MiddlewareParam<T, U, V> = Middleware<T, U, V> | Middleware<T, U, V>[];
+export type MiddlewareParam<T, U, V> = Middleware<T, U, V> | Middleware<
+  T,
+  U,
+  V
+>[];
 
 export abstract class Route<T, U, V> {
   public readonly path: string;

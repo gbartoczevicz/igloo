@@ -28,11 +28,11 @@ export class HttpRoute extends C.Route<E.Request, E.Response, E.NextFunction> {
     path: string,
     method: C.Method,
     handle: C.Middleware<E.Request, E.Response, E.NextFunction>,
-    middlewares?: C.Middleware<
+    middlewares?: C.MiddlewareParam<
       E.Request,
       E.Response,
       E.NextFunction
-    >[],
+    >,
   ) {
     super(path, method, handle, middlewares);
   }

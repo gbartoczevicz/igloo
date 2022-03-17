@@ -6,10 +6,10 @@ import { InvalidField } from "~/errors";
 export class CreateUserIn {
   private constructor(
     public readonly name: string,
-    public readonly surname: string,
     public readonly email: string,
     public readonly phone: string,
     public readonly password: string,
+    public readonly surname?: string,
   ) {}
 
   public static create(
@@ -54,20 +54,18 @@ export class CreateUserIn {
     }
 
     if (errors.length > 0) {
-      const result: Result<InvalidField[]> = {
+      return {
         content: errors,
         status: HttpStatus.badRequest,
-      };
-
-      return result;
+      } as Result<InvalidField[]>;
     }
 
     return new CreateUserIn(
       name,
-      surname,
       email,
       phone,
       password,
+      surname,
     );
   }
 }

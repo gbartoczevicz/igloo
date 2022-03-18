@@ -1,9 +1,9 @@
-import { PrismaClient } from "@prisma/client";
+import { Prisma, PrismaClient, User as PrismaUser } from "@prisma/client";
 import { BaseRepo, UsersRepo } from "~/contracts/repositories";
 import { User } from "~/domain/entities";
 import { Email, Id, Password, Phone } from "~/domain/entities/values";
 
-export class PrismaUsersRepo extends BaseRepo<PrismaClient>
+export class PrismaUsersRepo extends BaseRepo<PrismaClient, PrismaUser, User>
   implements UsersRepo {
   public constructor(client: PrismaClient) {
     super(client);
@@ -37,16 +37,7 @@ export class PrismaUsersRepo extends BaseRepo<PrismaClient>
 
     if (!foundUser) return undefined;
 
-    const { id, name, password, phone, surname } = foundUser;
-
-    return new User(
-      new Id(id),
-      name,
-      surname,
-      email,
-      new Password(password),
-      new Phone(phone),
-    );
+    return this.toEntity(foundUser);
   }
 
   public async findByPhone(phone: Phone): Promise<User | undefined> {
@@ -56,7 +47,18 @@ export class PrismaUsersRepo extends BaseRepo<PrismaClient>
 
     if (!foundUser) return undefined;
 
-    const { id, name, password, email, surname } = foundUser;
+    return this.toEntity(foundUser);
+  }
+
+  protected toEntity(persisted: PrismaUser): User {
+    const {
+      id,
+      name,
+      surname,
+      email,
+      phone,
+      password,
+    } = persisted;
 
     return new User(
       new Id(id),
@@ -64,7 +66,7 @@ export class PrismaUsersRepo extends BaseRepo<PrismaClient>
       surname,
       new Email(email),
       new Password(password),
-      phone,
+      new Phone(phone),
     );
   }
 }

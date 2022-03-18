@@ -23,7 +23,7 @@ type ValidatorFun = (v: unknown) => boolean;
 
 type ValodatorFunMapping = Record<DTOValidationMapping, ValidatorFun>;
 
-const isNil: ValidatorFun = (v: unknown) => v === undefined;
+const isNil: ValidatorFun = (v: unknown) => v === undefined || v === null;
 
 const validatorMapping: ValodatorFunMapping = {
   [DTOValidationMapping.optionalList]: (v) => !isNil(v) && Array.isArray(v),

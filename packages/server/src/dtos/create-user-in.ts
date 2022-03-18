@@ -6,10 +6,10 @@ import { InvalidField } from "~/errors";
 export class CreateUserIn extends InDTO {
   private constructor(
     public readonly name: string,
+    public readonly surname: string | null,
     public readonly email: string,
     public readonly phone: string,
     public readonly password: string,
-    public readonly surname?: string,
   ) {
     super();
   }
@@ -51,10 +51,10 @@ export class CreateUserIn extends InDTO {
 
     return new CreateUserIn(
       name,
+      surname || null,
       email,
       phone,
       password,
-      surname,
     );
   }
 }

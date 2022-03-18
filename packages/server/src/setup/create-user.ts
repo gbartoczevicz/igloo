@@ -1,19 +1,46 @@
-import { NodeIdProvider } from "~/adapters/hash";
+import { PrismaClient } from "@prisma/client";
+import { BcryptPasswordHandler, NodeIdProvider } from "~/adapters/hash";
 import { HttpRoute } from "~/adapters/http";
-import { IdProvider } from "~/contracts/hash";
+import { PrismaUsersRepo } from "~/adapters/repositories";
+import { EmailValidatorImpl, PhoneValidatorImpl } from "~/adapters/validators";
+import { IdProvider, PasswordHandler } from "~/contracts/hash";
 import { Method } from "~/contracts/http";
 import { UsersRepo } from "~/contracts/repositories";
+import { EmailValidator, PhoneValidator } from "~/contracts/validators";
 import { CreateUserController } from "~/domain/controllers";
-import { UserFactory } from "~/domain/factories";
+import {
+  EmailFactory,
+  IdFactory,
+  PasswordFactory,
+  PhoneFactory,
+  UserFactory,
+} from "~/domain/factories";
 import { CreateUserUseCase } from "~/domain/usecases";
 import { CreateUserIn } from "~/dtos";
 
 const idProvider: IdProvider = new NodeIdProvider();
+const passwordHandler: PasswordHandler = new BcryptPasswordHandler(
+  "igloo_hash",
+);
+const emailValidator: EmailValidator = new EmailValidatorImpl();
+const phoneValidator: PhoneValidator = new PhoneValidatorImpl();
 
-const userFactory: UserFactory = {} as UserFactory;
-const usersRepo: UsersRepo = {} as UsersRepo;
+const idFactory = new IdFactory(idProvider);
+const passwordFactory = new PasswordFactory(passwordHandler);
+const emailFactory = new EmailFactory(emailValidator);
+const phoneFactory = new PhoneFactory(phoneValidator);
+
+const userFactory = new UserFactory(
+  idFactory,
+  emailFactory,
+  passwordFactory,
+  phoneFactory,
+);
+
+const usersRepo: UsersRepo = new PrismaUsersRepo(new PrismaClient());
 
 const createUserUseCase = new CreateUserUseCase(userFactory, usersRepo);
+
 const controller = new CreateUserController(
   createUserUseCase,
 );

@@ -42,10 +42,10 @@ export class PrismaUsersRepo extends BaseRepo<PrismaClient>
     return new User(
       new Id(id),
       name,
+      surname,
       email,
       new Password(password),
       new Phone(phone),
-      surname || undefined,
     );
   }
 
@@ -61,10 +61,10 @@ export class PrismaUsersRepo extends BaseRepo<PrismaClient>
     return new User(
       new Id(id),
       name,
+      surname,
       new Email(email),
-      password,
-      new Phone(phone),
-      surname || undefined,
+      new Password(password),
+      phone,
     );
   }
 }

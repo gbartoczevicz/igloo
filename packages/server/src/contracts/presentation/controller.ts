@@ -1,15 +1,17 @@
 import { DomainError } from "~/errors";
 import { OutDTO } from "../dtos";
 import { HttpStatus } from "../http";
-import { ErrorPayload, Result } from "./result";
+import { Result } from "./result";
 
 export abstract class Controller<T, U> {
   protected abstract handle(incoming: T): Promise<Result<U>>;
 
-  public async execute(incoming: T): Promise<Result<U | Error>> {
-    return await this.handle(incoming)
+  public async execute(incoming: T): Promise<Result<unknown>> {
+    const result = await this.handle(incoming)
       .then((result) => result)
-      .catch((err) => this.handleOnGeneralError(err));
+      .catch((err) => this.serializeOnAnyError(err));
+
+    return this.serializeOnExecuteResult(result);
   }
 
   protected onCreated(content: U): Result<U> {
@@ -30,7 +32,26 @@ export abstract class Controller<T, U> {
     };
   }
 
-  private handleOnGeneralError(err: unknown): Result<Error> {
+  private serializeOnExecuteResult(result: Result<U | Error>): Result<unknown> {
+    const { content, status } = result;
+
+    if (content instanceof OutDTO) {
+      return { content: content.toRaw(), status };
+    }
+
+    if (content instanceof Error) {
+      return {
+        content: {
+          message: content.message,
+        },
+        status,
+      };
+    }
+
+    throw new Error("Invalid result content type");
+  }
+
+  private serializeOnAnyError(err: unknown): Result<Error> {
     console.warn(err);
 
     if (err instanceof DomainError) {
@@ -43,16 +64,4 @@ export abstract class Controller<T, U> {
 
     return this.onInternalError(new Error("Unmapped error occurred"));
   }
-}
-
-export function handleErrorOrOutDTOResult(result: Error | OutDTO<unknown>) {
-  if (result instanceof Error) {
-    return { message: result.message };
-  }
-
-  if (result instanceof OutDTO) {
-    return result.toRaw();
-  }
-
-  throw new Error("Unexpected result type");
 }

@@ -4,7 +4,7 @@ import { HttpStatus } from "../http";
 import { Result } from "./result";
 
 export abstract class Controller<T, U> {
-  protected abstract handle(incoming: T): Promise<Result<U>>;
+  protected abstract handle(incoming: T): Promise<Result<OutDTO<U>>>;
 
   public async execute(incoming: T): Promise<Result<unknown>> {
     const result = await this.handle(incoming)
@@ -14,7 +14,7 @@ export abstract class Controller<T, U> {
     return this.serializeOnExecuteResult(result);
   }
 
-  protected onCreated(content: U): Result<U> {
+  protected onCreated(content: OutDTO<U>): Result<OutDTO<U>> {
     return { content, status: HttpStatus.created };
   }
 
@@ -32,7 +32,9 @@ export abstract class Controller<T, U> {
     };
   }
 
-  private serializeOnExecuteResult(result: Result<U | Error>): Result<unknown> {
+  private serializeOnExecuteResult(
+    result: Result<OutDTO<U> | Error>,
+  ): Result<unknown> {
     const { content, status } = result;
 
     if (content instanceof OutDTO) {

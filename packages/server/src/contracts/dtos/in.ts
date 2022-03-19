@@ -25,11 +25,19 @@ type ValodatorFunMapping = Record<DTOValidationMapping, ValidatorFun>;
 
 const isNil: ValidatorFun = (v: unknown) => v === undefined || v === null;
 
+const commonNilValidator = (v: unknown, validate: () => boolean) => {
+  if (isNil(v)) return true;
+
+  return validate();
+};
+
 const validatorMapping: ValodatorFunMapping = {
-  [DTOValidationMapping.optionalList]: (v) => !isNil(v) && Array.isArray(v),
-  [DTOValidationMapping.optionalNumber]: (v) => !isNil(v) && !Number.isNaN(v),
+  [DTOValidationMapping.optionalList]: (v) =>
+    commonNilValidator(v, () => Array.isArray(v)),
+  [DTOValidationMapping.optionalNumber]: (v) =>
+    commonNilValidator(v, () => !Number.isNaN(v)),
   [DTOValidationMapping.optionalString]: (v) =>
-    !isNil(v) && typeof v === "string",
+    commonNilValidator(v, () => typeof v === "string"),
   [DTOValidationMapping.requiredList]: (v) => Array.isArray(v),
   [DTOValidationMapping.requiredNumber]: (v) => !Number.isNaN(v),
   [DTOValidationMapping.requiredString]: (v) => typeof v === "string",
@@ -42,6 +50,8 @@ export abstract class InDTO {
     const paramsEntries = Object.entries(params);
 
     for (const [field, entry] of paramsEntries) {
+      console.log(field, entry);
+
       const validatorFun = validatorMapping[entry.validationType];
 
       if (!validatorFun) throw new Error("Unmapped validation type");

@@ -16,7 +16,7 @@ import {
   UserFactory,
 } from "~/domain/factories";
 import { CreateUserUseCase } from "~/domain/usecases";
-import { CreateUserIn, CreateUserOut } from "~/dtos";
+import { CreateUserIn } from "~/dtos";
 
 const idProvider: IdProvider = new NodeIdProvider();
 const passwordHandler: PasswordHandler = new BcryptPasswordHandler(

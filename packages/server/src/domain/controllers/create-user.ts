@@ -1,32 +1,24 @@
-import { Controller, HttpStatus, Result } from "~/contracts";
-import { CreateUserIn, CreateUserOut } from "~/dtos";
+import * as P from "~/contracts/presentation";
+import * as D from "~/dtos";
 import { CreateUserUseCase } from "~/domain/usecases";
-import { DomainError } from "~/errors";
+export class CreateUserController
+  extends P.Controller<D.CreateUserIn, D.CreateUserOut> {
+  private readonly createUserUseCase: CreateUserUseCase;
 
-export class CreateUserController implements Controller {
-  public constructor(private readonly createUserUseCase: CreateUserUseCase) {}
+  public constructor(
+    createUserUseCase: CreateUserUseCase,
+  ) {
+    super();
+    this.createUserUseCase = createUserUseCase;
+  }
 
-  async execute(incoming: any): Promise<Result> {
-    try {
-      const userIn = new CreateUserIn(
-        incoming.name,
-        incoming.surname,
-        incoming.email,
-        incoming.phone,
-        incoming.password,
-      );Result
+  protected override async handle(
+    incoming: D.CreateUserIn,
+  ): Promise<P.Result<D.CreateUserOut>> {
+    const userCreated = await this.createUserUseCase.create(incoming);
 
-      const user = await this.createUserUseCase.create(userIn);
-Result
-      const userOut = new CreateUserOut(user);
+    const outcoming = new D.CreateUserOut(userCreated);
 
-      return new Result(HttpStatus.created, userOut);
-    } catch (err) {
-      if (err instanceof DomainError) {
-        return new Result(HttpStatus.badRequest, err.message);
-      }
-
-      return new Result(HttpStatus.internalError);
-    }
+    return this.onCreated(outcoming);
   }
 }

@@ -5,7 +5,7 @@ export class User {
 
   public readonly name: string;
 
-  public readonly surname: string;
+  public readonly surname: string | null;
 
   public readonly email: Email;
 
@@ -16,7 +16,7 @@ export class User {
   public constructor(
     id: Id,
     name: string,
-    surname: string,
+    surname: string | null,
     email: Email,
     password: Password,
     phone: Phone,

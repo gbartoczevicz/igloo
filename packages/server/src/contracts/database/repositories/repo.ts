@@ -1,7 +1,9 @@
-export abstract class BaseRepo<T, U, V> {
-  protected readonly client: T;
+import { ClientDatabase } from "../client";
 
-  public constructor(client: T) {
+export abstract class BaseRepo<T, U, V> {
+  protected readonly client: ClientDatabase<T>;
+
+  public constructor(client: ClientDatabase<T>) {
     this.client = client;
   }
 

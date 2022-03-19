@@ -1,16 +1,17 @@
-import { Prisma, PrismaClient, User as PrismaUser } from "@prisma/client";
+import { PrismaClient, User as PrismaUser } from "@prisma/client";
 import { BaseRepo, UsersRepo } from "~/contracts/database/repositories";
 import { User } from "~/domain/entities";
 import { Email, Id, Password, Phone } from "~/domain/entities/values";
+import { PrismaClientDatabase } from "../client";
 
 export class PrismaUsersRepo extends BaseRepo<PrismaClient, PrismaUser, User>
   implements UsersRepo {
-  public constructor(client: PrismaClient) {
+  public constructor(client: PrismaClientDatabase) {
     super(client);
   }
 
   public async save(user: User): Promise<void> {
-    await this.client.user.upsert({
+    await this.client.client.user.upsert({
       create: {
         id: user.id.value,
         name: user.name,
@@ -31,7 +32,7 @@ export class PrismaUsersRepo extends BaseRepo<PrismaClient, PrismaUser, User>
   }
 
   public async findByEmail(email: Email): Promise<User | undefined> {
-    const foundUser = await this.client.user.findUnique({
+    const foundUser = await this.client.client.user.findUnique({
       where: { email: email.toString() },
     });
 
@@ -41,7 +42,7 @@ export class PrismaUsersRepo extends BaseRepo<PrismaClient, PrismaUser, User>
   }
 
   public async findByPhone(phone: Phone): Promise<User | undefined> {
-    const foundUser = await this.client.user.findUnique({
+    const foundUser = await this.client.client.user.findUnique({
       where: { phone: phone.toString() },
     });
 

@@ -1,5 +1,5 @@
 import { Prisma, PrismaClient, User as PrismaUser } from "@prisma/client";
-import { BaseRepo, UsersRepo } from "~/contracts/repositories";
+import { BaseRepo, UsersRepo } from "~/contracts/database/repositories";
 import { User } from "~/domain/entities";
 import { Email, Id, Password, Phone } from "~/domain/entities/values";
 

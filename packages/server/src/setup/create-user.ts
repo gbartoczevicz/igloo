@@ -1,11 +1,11 @@
 import { PrismaClient } from "@prisma/client";
 import { BcryptPasswordHandler, NodeIdProvider } from "~/adapters/hash";
 import { HttpRoute } from "~/adapters/http";
-import { PrismaUsersRepo } from "~/adapters/repositories";
+import { PrismaUsersRepo } from "~/adapters/database/repositories";
 import { EmailValidatorImpl, PhoneValidatorImpl } from "~/adapters/validators";
 import { IdProvider, PasswordHandler } from "~/contracts/hash";
 import { Method } from "~/contracts/http";
-import { UsersRepo } from "~/contracts/repositories";
+import { UsersRepo } from "~/contracts/database/repositories";
 import { EmailValidator, PhoneValidator } from "~/contracts/validators";
 import { CreateUserController } from "~/domain/controllers";
 import {

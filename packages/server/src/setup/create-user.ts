@@ -3,8 +3,10 @@ import { BcryptPasswordHandler, NodeIdProvider } from "~/adapters/hash";
 import { HttpRoute } from "~/adapters/http";
 import { PrismaUsersRepo } from "~/adapters/repositories";
 import { EmailValidatorImpl, PhoneValidatorImpl } from "~/adapters/validators";
+import { OutDTO } from "~/contracts/dtos";
 import { IdProvider, PasswordHandler } from "~/contracts/hash";
 import { Method } from "~/contracts/http";
+import { handleErrorOrOutDTOResult } from "~/contracts/presentation";
 import { UsersRepo } from "~/contracts/repositories";
 import { EmailValidator, PhoneValidator } from "~/contracts/validators";
 import { CreateUserController } from "~/domain/controllers";
@@ -16,7 +18,7 @@ import {
   UserFactory,
 } from "~/domain/factories";
 import { CreateUserUseCase } from "~/domain/usecases";
-import { CreateUserIn } from "~/dtos";
+import { CreateUserIn, CreateUserOut } from "~/dtos";
 
 const idProvider: IdProvider = new NodeIdProvider();
 const passwordHandler: PasswordHandler = new BcryptPasswordHandler(
@@ -49,12 +51,12 @@ export function setupCreateUsers() {
   return new HttpRoute(
     "/users",
     Method.post,
-    (req, res, next) => {
+    (req, res, _next) => {
       controller.execute((req as any).createUserIn).then((result) =>
-        res.status(result.status).json(result.content)
+        res.status(result.status).json(
+          handleErrorOrOutDTOResult(result.content),
+        )
       );
-
-      next();
     },
     (req, res, next) => {
       const result = CreateUserIn.create(req.body);

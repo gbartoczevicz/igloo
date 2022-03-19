@@ -3,7 +3,7 @@ import { PasswordHandler } from "~/contracts/hash";
 import { Password } from "~/domain/entities/values";
 
 export class BcryptPasswordHandler extends PasswordHandler {
-  public constructor(hashSalt: string) {
+  public constructor(hashSalt: number) {
     super(hashSalt);
   }
 

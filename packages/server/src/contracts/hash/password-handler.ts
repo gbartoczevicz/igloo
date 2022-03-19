@@ -1,9 +1,9 @@
 import { Password } from "~/domain/entities/values";
 
 export abstract class PasswordHandler {
-  protected readonly hashSalt: string;
+  protected readonly hashSalt: number;
 
-  public constructor(hashSalt: string) {
+  public constructor(hashSalt: number) {
     this.hashSalt = hashSalt;
   }
 

@@ -20,7 +20,7 @@ import { CreateUserIn } from "~/dtos";
 
 const idProvider: IdProvider = new NodeIdProvider();
 const passwordHandler: PasswordHandler = new BcryptPasswordHandler(
-  "igloo_hash",
+  8,
 );
 const emailValidator: EmailValidator = new EmailValidatorImpl();
 const phoneValidator: PhoneValidator = new PhoneValidatorImpl();

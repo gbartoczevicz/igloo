@@ -15,7 +15,7 @@ export class UserFactory implements Factory<CreateUserIn, User> {
     const id = this.idFactory.create();
     const email = this.emailFactory.create(incoming.email);
     const password = this.passwordFactory.create(incoming.password);
-    const phone = this.phoneFactory.create(incoming.email);
+    const phone = this.phoneFactory.create(incoming.phone);
 
     return new User(
       id,

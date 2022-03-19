@@ -1,3 +1,4 @@
+import { CommonErrorOut } from "~/dtos";
 import { DomainError } from "~/errors";
 import { OutDTO } from "../dtos";
 import { HttpStatus } from "../http";
@@ -6,64 +7,43 @@ import { Result } from "./result";
 export abstract class Controller<T, U> {
   protected abstract handle(incoming: T): Promise<Result<OutDTO<U>>>;
 
-  public async execute(incoming: T): Promise<Result<unknown>> {
-    const result = await this.handle(incoming)
+  public async execute(incoming: T): Promise<Result<OutDTO<unknown>>> {
+    return await this.handle(incoming)
       .then((result) => result)
       .catch((err) => this.serializeOnAnyError(err));
-
-    return this.serializeOnExecuteResult(result);
   }
 
   protected onCreated(content: OutDTO<U>): Result<OutDTO<U>> {
     return { content, status: HttpStatus.created };
   }
 
-  protected onDomainError(content: DomainError): Result<DomainError> {
+  protected onDomainError(content: CommonErrorOut): Result<CommonErrorOut> {
     return {
       content,
       status: HttpStatus.badRequest,
     };
   }
 
-  protected onInternalError(content: Error): Result<Error> {
+  protected onInternalError(content: CommonErrorOut): Result<CommonErrorOut> {
     return {
       content,
       status: HttpStatus.internalError,
     };
   }
 
-  private serializeOnExecuteResult(
-    result: Result<OutDTO<U> | Error>,
-  ): Result<unknown> {
-    const { content, status } = result;
-
-    if (content instanceof OutDTO) {
-      return { content: content.toRaw(), status };
-    }
-
-    if (content instanceof Error) {
-      return {
-        content: {
-          message: content.message,
-        },
-        status,
-      };
-    }
-
-    throw new Error("Invalid result content type");
-  }
-
-  private serializeOnAnyError(err: unknown): Result<Error> {
+  private serializeOnAnyError(err: unknown): Result<CommonErrorOut> {
     console.warn(err);
 
     if (err instanceof DomainError) {
-      return this.onDomainError(err);
+      return this.onDomainError(new CommonErrorOut(err));
     }
 
     if (err instanceof Error) {
-      return this.onInternalError(err);
+      return this.onInternalError(new CommonErrorOut(err));
     }
 
-    return this.onInternalError(new Error("Unmapped error occurred"));
+    const out = new CommonErrorOut(new Error("Unmapped error occurred"));
+
+    return this.onInternalError(out);
   }
 }

@@ -51,7 +51,7 @@ export function setupCreateUsers() {
     Method.post,
     (req, res, _next) => {
       controller.execute((req as any).createUserIn).then((result) =>
-        res.status(result.status).json(result.content)
+        res.status(result.status).json(result.content.toRaw())
       );
     },
     (req, res, next) => {

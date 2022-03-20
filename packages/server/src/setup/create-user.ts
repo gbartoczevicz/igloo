@@ -63,7 +63,7 @@ export function setupCreateUsers(databaseLifecycle: Database<PrismaClient>) {
       "/users",
       Method.post,
       (req, res, _next) => {
-        controller.execute((req as any).createUserIn).then((result) =>
+        controller.execute(req.createUser).then((result) =>
           res.status(result.status).json(result.content.toRaw())
         );
       },
@@ -71,7 +71,7 @@ export function setupCreateUsers(databaseLifecycle: Database<PrismaClient>) {
         const result = CreateUserIn.create(req.body);
 
         if (result instanceof CreateUserIn) {
-          (req as any).createUserIn = result;
+          req.createUser = result;
 
           return next();
         }

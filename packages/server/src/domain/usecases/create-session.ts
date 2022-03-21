@@ -2,7 +2,7 @@ import { UsersRepo } from "~/contracts/database/repositories";
 import { PasswordHandler } from "~/contracts/hash";
 import { CreateSessionIn } from "~/dtos";
 import { SessionToken } from "../entities";
-import { EmailFactory } from "../factories";
+import { EmailFactory, SessionTokenFacotry } from "../factories";
 
 export class CreateSessionUseCase {
   private readonly emailFactory: EmailFactory;
@@ -11,13 +11,13 @@ export class CreateSessionUseCase {
 
   private readonly passwordHandler: PasswordHandler;
 
-  private readonly tokenFactory: TokenFactory;
+  private readonly tokenFactory: SessionTokenFacotry;
 
   public constructor(
     emailFactory: EmailFactory,
     usersRepo: UsersRepo,
     passwordHandler: PasswordHandler,
-    tokenFactory: TokenFactory,
+    tokenFactory: SessionTokenFacotry,
   ) {
     this.emailFactory = emailFactory;
     this.usersRepo = usersRepo;

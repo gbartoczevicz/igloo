@@ -49,7 +49,7 @@ function setupCreateSession(databaseLifecycle: Database<PrismaClient>) {
           return next();
         }
 
-        return res.status(result.status).json(result.content);
+        return res.status(result.status).json(result.content.toRaw());
       },
     ),
   };

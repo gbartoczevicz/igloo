@@ -21,16 +21,16 @@ const databaseClient: ClientDatabase<PrismaClient> = new PrismaClientDatabase(
 
 const database = new Database(databaseClient);
 
-const createUser = Setup.setupCreateUsers(
-  database,
-);
+const createUser = Setup.setupCreateUsers(database);
+
+const createSession = Setup.setupCreateSession(database);
 
 const router: HttpContracts.Router<
   E.Router,
   E.Request,
   E.Response,
   E.NextFunction
-> = new HttpAdapters.HttpRouter([createUser.route]);
+> = new HttpAdapters.HttpRouter([createUser.route, createSession.route]);
 
 express.use(E.json());
 

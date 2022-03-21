@@ -37,7 +37,7 @@ function setupCreateSession(databaseLifecycle: Database<PrismaClient>) {
       Method.post,
       (req, res, _next) => {
         controller.execute(req.createSession).then((result) =>
-          res.status(result.status).json(result.content)
+          res.status(result.status).json(result.content.toRaw())
         );
       },
       (req, res, next) => {

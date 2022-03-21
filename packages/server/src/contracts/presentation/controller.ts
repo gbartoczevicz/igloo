@@ -1,19 +1,21 @@
 import { CommonErrorOut } from "~/dtos";
 import { DomainError } from "~/errors";
-import { OutDTO } from "../dtos";
+import { InDTO, OutDTO } from "../dtos";
 import { HttpStatus } from "../http";
 import { Result } from "./result";
 
-export abstract class Controller<T, U> {
-  protected abstract handle(incoming: T): Promise<Result<OutDTO<U>>>;
+type UnknownOutDTO = OutDTO<unknown>;
 
-  public async execute(incoming: T): Promise<Result<OutDTO<unknown>>> {
+export abstract class Controller<T extends InDTO, U extends UnknownOutDTO> {
+  protected abstract handle(incoming: T): Promise<Result<U>>;
+
+  public async execute(incoming: T): Promise<Result<UnknownOutDTO>> {
     return await this.handle(incoming)
       .then((result) => result)
       .catch((err) => this.serializeOnAnyError(err));
   }
 
-  protected onCreated(content: OutDTO<U>): Result<OutDTO<U>> {
+  protected onCreated(content: U): Result<U> {
     return { content, status: HttpStatus.created };
   }
 

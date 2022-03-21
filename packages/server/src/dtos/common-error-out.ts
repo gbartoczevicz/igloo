@@ -1,7 +1,10 @@
 import { OutDTO } from "~/contracts/dtos";
+import { InvalidField } from "~/errors";
 
-export class CommonErrorOut extends OutDTO<Error | Error[]> {
-  public constructor(outcoming: Error | Error[]) {
+type ExpectedErrors = Error | InvalidField | Error[] | InvalidField[];
+
+export class CommonErrorOut extends OutDTO<ExpectedErrors> {
+  public constructor(outcoming: ExpectedErrors) {
     super(outcoming);
   }
 
@@ -9,7 +12,13 @@ export class CommonErrorOut extends OutDTO<Error | Error[]> {
     let serializedError: unknown;
 
     if (Array.isArray(this.outcoming)) {
-      serializedError = this.outcoming.map((o) => ({ message: o.message }));
+      serializedError = this.outcoming.map((o) => {
+        if (o instanceof InvalidField) {
+          return { [o.field]: o.message };
+        }
+
+        return { message: o.message };
+      });
     } else {
       serializedError = { message: this.outcoming.message };
     }

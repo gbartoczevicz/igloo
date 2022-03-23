@@ -13,7 +13,6 @@ services:
       - "${PORT}:${PORT}"
     depends_on:
       - database
-    command: sh ./wait-for database:${DATABASE_PORT} -- npm run migrate -- npm run start'
 
   database:
     image: postgres:14.2

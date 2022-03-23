@@ -50,8 +50,6 @@ export abstract class InDTO {
     const paramsEntries = Object.entries(params);
 
     for (const [field, entry] of paramsEntries) {
-      console.log(field, entry);
-
       const validatorFun = validatorMapping[entry.validationType];
 
       if (!validatorFun) throw new Error("Unmapped validation type");

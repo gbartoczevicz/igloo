@@ -1,6 +1,7 @@
 import * as P from "~/contracts/presentation";
 import * as D from "~/dtos";
 import { CreateUserUseCase } from "~/domain/usecases";
+import { User } from "../entities";
 export class CreateUserController
   extends P.Controller<D.CreateUserIn, D.CreateUserOut> {
   private readonly createUserUseCase: CreateUserUseCase;

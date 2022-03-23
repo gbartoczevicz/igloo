@@ -7,11 +7,10 @@ WORKDIR /app
 
 COPY . .
 
-# Find a way to connect to database from container
 RUN npm i
 RUN npm run generate
 RUN npm run build
 
-CMD npm run start
-
-EXPOSE ${PORT}
+ADD https://raw.githubusercontent.com/eficode/wait-for/v2.2.3/wait-for wait-for
+RUN chmod +x wait-for
+RUN ls

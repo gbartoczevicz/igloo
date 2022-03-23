@@ -1,4 +1,4 @@
-import { UsersRepo } from "~/contracts/repositories";
+import { UsersRepo } from "~/contracts/database/repositories";
 import { User } from "~/domain/entities";
 import { Email, Phone } from "~/domain/entities/values";
 

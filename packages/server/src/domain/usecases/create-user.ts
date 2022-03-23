@@ -1,4 +1,4 @@
-import { UsersRepo } from "~/contracts/repositories";
+import { UsersRepo } from "~/contracts/database/repositories";
 import { CreateUserIn } from "~/dtos";
 import { UserFactory } from "~/domain/factories/user-factory";
 import { User } from "~/domain/entities";

@@ -1,5 +1,5 @@
 import { CommonErrorOut } from "~/dtos";
-import { DomainError } from "~/errors";
+import { DomainError, SignUpError } from "~/errors";
 import { InDTO, OutDTO } from "../dtos";
 import { HttpStatus } from "../http";
 import { Result } from "./result";
@@ -33,11 +33,22 @@ export abstract class Controller<T extends InDTO, U extends UnknownOutDTO> {
     };
   }
 
+  protected onUnauthorized(content: CommonErrorOut): Result<CommonErrorOut> {
+    return {
+      content,
+      status: HttpStatus.unauthorized,
+    };
+  }
+
   private serializeOnAnyError(err: unknown): Result<CommonErrorOut> {
     console.warn(err);
 
     if (err instanceof DomainError) {
       return this.onDomainError(new CommonErrorOut(err));
+    }
+
+    if (err instanceof SignUpError) {
+      return this.onUnauthorized(new CommonErrorOut(err));
     }
 
     if (err instanceof Error) {

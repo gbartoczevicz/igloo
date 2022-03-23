@@ -1,6 +1,7 @@
 import { UsersRepo } from "~/contracts/database/repositories";
 import { PasswordHandler } from "~/contracts/hash";
 import { CreateSessionIn } from "~/dtos";
+import { SignUpError } from "~/errors";
 import { SessionToken } from "../entities";
 import { EmailFactory, SessionTokenFacotry } from "../factories";
 
@@ -31,7 +32,7 @@ export class CreateSessionUseCase {
     const userFound = await this.usersRepo.findByEmail(email);
 
     if (!userFound) {
-      throw new Error("Invalid credentials");
+      throw new SignUpError("User not found");
     }
 
     const isTheSame = this.passwordHandler.compare(
@@ -40,7 +41,7 @@ export class CreateSessionUseCase {
     );
 
     if (!isTheSame) {
-      throw new Error("Invalid credentials");
+      throw new SignUpError("Password does not match");
     }
 
     return this.tokenFactory.create(userFound);

@@ -3,3 +3,4 @@ export * from "./create-user-out";
 export * from "./common-error-out";
 export * from "./create-session-in";
 export * from "./create-session-out";
+export * from "./create-institution-in";

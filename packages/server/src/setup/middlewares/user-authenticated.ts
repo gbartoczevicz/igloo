@@ -1,38 +1,35 @@
-import * as E from "express";
-import { HttpStatus, Middleware } from "~/contracts/http";
+import { HttpMiddleware } from "~/adapters/http";
+import { HttpStatus } from "~/contracts/http";
 import { SystemSetup } from "~/contracts/setup/system";
-import { GetUserUseCase } from "~/domain/usecases";
+import { AuthenticateUserController } from "~/domain/controllers";
+import { AuthenticateUserUseCase } from "~/domain/usecases";
+import { AuthenticateUserIn } from "~/dtos";
 
 export function userAuthenticated(
   systemSetup: SystemSetup,
-): Middleware<E.Request, E.Response, E.NextFunction> {
-  const usecase = new GetUserUseCase(systemSetup.repositories.usersRepo);
+): HttpMiddleware {
+  const usecase = new AuthenticateUserUseCase(
+    systemSetup.hash.tokenProvider,
+    systemSetup.factories.idFactory,
+    systemSetup.repositories.usersRepo,
+  );
+  const controller = new AuthenticateUserController(usecase);
 
   return (req, res, next) => {
-    const headerAuth = req.headers.authorization;
+    const result = AuthenticateUserIn.create(req.headers.authorization);
 
-    if (!headerAuth) {
-      return res.sendStatus(HttpStatus.unauthorized);
+    if (!(result instanceof AuthenticateUserIn)) {
+      return res.status(result.status).json(result.content.toRaw());
     }
 
-    const [, token] = headerAuth.split(" ");
+    controller.execute(result).then((userOut) => {
+      if (userOut.status !== HttpStatus.ok) {
+        return res.status(userOut.status).json(userOut.content.toRaw());
+      }
 
-    try {
-      const decoded = systemSetup.hash.tokenProvider.decode(token);
+      req.user = userOut.content.toRaw() as any;
 
-      const id = systemSetup.factories.idFactory.create(decoded.userId);
-
-      usecase.execute(id).then((user) => {
-        if (!user) return res.sendStatus(HttpStatus.unauthorized);
-
-        req.user = user;
-
-        return next();
-      }).catch((err) => {
-        return res.sendStatus(HttpStatus.internalError);
-      });
-    } catch (err) {
-      return res.sendStatus(HttpStatus.unauthorized);
-    }
+      return next();
+    });
   };
 }

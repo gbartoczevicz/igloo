@@ -35,7 +35,7 @@ export class PrismaInstitutionManagersRepo
   public async findByInstitutionId(
     institutionId: Id,
   ): Promise<InstitutionManager | null> {
-    const foundManager = await this.client.client.institutionManager.findFirst({
+    const foundManager = await this.client.client.institutionManager.findUnique({
       where: { institutionId: institutionId.value },
     });
 

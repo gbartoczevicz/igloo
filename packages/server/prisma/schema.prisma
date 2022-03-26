@@ -35,12 +35,10 @@ model Institution {
 model InstitutionManager {
   id            String @id @default(uuid())
   userId        String @map("user_id")
-  institutionId String @map("institution_id")
+  institutionId String @unique @map("institution_id")
 
   user        User        @relation(fields: [userId], references: [id])
   institution Institution @relation(fields: [institutionId], references: [id])
 
-
-  @@unique(fields: [userId, institutionId])
   @@map("institution_managers")
 }

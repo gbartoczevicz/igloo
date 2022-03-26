@@ -21,7 +21,8 @@ export function systemSetup(
     tokenSecret,
     tokenExpiresAt,
   );
-  const institutionManagersRepo = new RepositoryAdapters.PrismaInstitutionManagersRepo(database.client);
+  const institutionManagersRepo = new RepositoryAdapters
+    .PrismaInstitutionManagersRepo(database.client);
   const institutionsRepo = new RepositoryAdapters.PrismaInstitutionsRepo(
     database.client,
   );

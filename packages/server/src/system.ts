@@ -1,6 +1,7 @@
 import * as E from "express";
 
-import * as Setup from "~/setup/routes";
+import * as SetupRoutes from "~/setup/routes";
+import * as SystemSetup from "~/setup/system";
 
 import { createSystem } from "~/lib/component";
 import { Http } from "~/components/http";
@@ -21,16 +22,22 @@ const databaseClient: ClientDatabase<PrismaClient> = new PrismaClientDatabase(
 
 const database = new Database(databaseClient);
 
-const createUser = Setup.setupCreateUsers(database);
-
-const createSession = Setup.setupCreateSession(database);
+const systemSetup = SystemSetup.systemSetup(
+  database,
+  8,
+  "igloo_secret_token",
+  "1h",
+);
 
 const router: HttpContracts.Router<
   E.Router,
   E.Request,
   E.Response,
   E.NextFunction
-> = new HttpAdapters.HttpRouter([createUser.route, createSession.route]);
+> = new HttpAdapters.HttpRouter([
+  SetupRoutes.setupCreateUsers(systemSetup),
+  SetupRoutes.setupCreateSession(systemSetup),
+]);
 
 express.use(E.json());
 

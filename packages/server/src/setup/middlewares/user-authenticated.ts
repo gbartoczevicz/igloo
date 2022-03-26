@@ -11,20 +11,16 @@ export function userAuthenticated(
   return (req, res, next) => {
     const headerAuth = req.headers.authorization;
 
-    console.log("Header", headerAuth);
-
     if (!headerAuth) {
       return res.sendStatus(HttpStatus.unauthorized);
     }
 
     const [, token] = headerAuth.split(" ");
 
-    console.log("Token", token);
-
     try {
       const decoded = systemSetup.hash.tokenProvider.decode(token);
 
-      const id = systemSetup.factories.idFactory.create(decoded.sub);
+      const id = systemSetup.factories.idFactory.create(decoded.userId);
 
       usecase.execute(id).then((user) => {
         if (!user) return res.sendStatus(HttpStatus.unauthorized);
@@ -33,13 +29,9 @@ export function userAuthenticated(
 
         return next();
       }).catch((err) => {
-        console.log("Error", err);
-
         return res.sendStatus(HttpStatus.internalError);
       });
     } catch (err) {
-      console.log("Error", err);
-
       return res.sendStatus(HttpStatus.unauthorized);
     }
   };

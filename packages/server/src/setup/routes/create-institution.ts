@@ -11,7 +11,7 @@ export function setupCreateInstitutions(
   userAuthenticated: M,
 ) {
   return new HttpRoute("/institutions", Method.post, (req, res, next) => {
-    console.log("Institutions Route");
+    console.log("Institutions Route", req.user);
 
     return res.sendStatus(HttpStatus.created);
   }, userAuthenticated);

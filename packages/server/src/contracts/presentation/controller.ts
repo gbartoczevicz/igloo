@@ -1,5 +1,5 @@
 import { CommonErrorOut } from "~/dtos";
-import { DomainError, SignUpError } from "~/errors";
+import { AuthenticationError, DomainError, SignUpError } from "~/errors";
 import { InDTO, OutDTO } from "../dtos";
 import { HttpStatus } from "../http";
 import { Result } from "./result";
@@ -13,6 +13,10 @@ export abstract class Controller<T extends InDTO, U extends UnknownOutDTO> {
     return await this.handle(incoming)
       .then((result) => result)
       .catch((err) => this.serializeOnAnyError(err));
+  }
+
+  protected onOk(content: U): Result<U> {
+    return { content, status: HttpStatus.ok };
   }
 
   protected onCreated(content: U): Result<U> {
@@ -48,6 +52,10 @@ export abstract class Controller<T extends InDTO, U extends UnknownOutDTO> {
     }
 
     if (err instanceof SignUpError) {
+      return this.onUnauthorized(new CommonErrorOut(err));
+    }
+
+    if (err instanceof AuthenticationError) {
       return this.onUnauthorized(new CommonErrorOut(err));
     }
 

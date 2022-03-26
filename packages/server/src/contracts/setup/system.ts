@@ -16,7 +16,7 @@ export interface SystemSetup {
     institutionFactory: Factories.InstitutionFactory;
     passwordFactory: Factories.PasswordFactory;
     phoneFactory: Factories.PhoneFactory;
-    sessionToken: Factories.SessionTokenFacotry;
+    sessionTokenFactory: Factories.SessionTokenFacotry;
     userFactory: Factories.UserFactory;
   };
   hash: {

@@ -18,6 +18,7 @@ model User {
   password String  @db.VarChar(255)
   phone    String  @unique @db.VarChar(255)
 
+  InstitutionManager InstitutionManager[]
   @@map("users")
 }
 
@@ -27,5 +28,18 @@ model Institution {
   cnpj  String @unique @db.VarChar(255)
   phone String @unique @db.VarChar(255)
 
+  InstitutionManager InstitutionManager[]
   @@map("institutions")
+}
+
+model InstitutionManager {
+  userId        String @map("user_id")
+  institutionId String @map("institution_id")
+
+  user        User        @relation(fields: [userId], references: [id])
+  institution Institution @relation(fields: [institutionId], references: [id])
+
+  @@unique(fields: [userId, institutionId])
+
+  @@map("institution_managers")
 }

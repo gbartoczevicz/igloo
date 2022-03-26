@@ -1,6 +1,6 @@
 import * as E from "express";
 
-import * as Setup from "~/setup";
+import * as Setup from "~/setup/routes";
 
 import { createSystem } from "~/lib/component";
 import { Http } from "~/components/http";

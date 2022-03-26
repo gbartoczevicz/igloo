@@ -8,7 +8,6 @@ import {
   InstitutionsRepo,
 } from "~/contracts/database/repositories";
 import { SystemSetup } from "~/contracts/setup/system";
-import { CnpjValidator } from "~/contracts/validators";
 import * as DomainFactories from "~/domain/factories";
 
 export function systemSetup(
@@ -17,7 +16,7 @@ export function systemSetup(
   tokenSecret: string,
   tokenExpiresAt: string | number,
 ): SystemSetup {
-  const cnpjValidator = {} as CnpjValidator;
+  const cnpjValidator = new ValidatorAdapters.CnpjValidatorImpl();
   const emailValidator = new ValidatorAdapters.EmailValidatorImpl();
   const phoneValidator = new ValidatorAdapters.PhoneValidatorImpl();
   const idProvider = new HashAdapters.NodeIdProvider();

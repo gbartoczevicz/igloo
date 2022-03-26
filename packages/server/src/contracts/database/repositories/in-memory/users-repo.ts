@@ -1,6 +1,6 @@
 import { UsersRepo } from "~/contracts/database/repositories";
 import { User } from "~/domain/entities";
-import { Email, Phone } from "~/domain/entities/values";
+import { Email, Id, Phone } from "~/domain/entities/values";
 
 export class UsersRepoInMemory implements UsersRepo {
   private readonly users: User[];
@@ -9,18 +9,22 @@ export class UsersRepoInMemory implements UsersRepo {
     this.users = users;
   }
 
-  public async findByEmail(email: Email): Promise<User | undefined> {
-    const foundByEmail = this.users.find((u) =>
-      u.email.toString() === email.toString()
-    );
+  public async findById(id: Id): Promise<User | null> {
+    const foundById = this.users.find((u) => u.id.isEqual(id)) || null;
+
+    return Promise.resolve(foundById);
+  }
+
+  public async findByEmail(email: Email): Promise<User | null> {
+    const foundByEmail =
+      this.users.find((u) => u.email.toString() === email.toString()) || null;
 
     return Promise.resolve(foundByEmail);
   }
 
-  public async findByPhone(phone: Phone): Promise<User | undefined> {
-    const foundByPhone = this.users.find((u) =>
-      u.phone.toString() === phone.toString()
-    );
+  public async findByPhone(phone: Phone): Promise<User | null> {
+    const foundByPhone =
+      this.users.find((u) => u.phone.toString() === phone.toString()) || null;
 
     return Promise.resolve(foundByPhone);
   }

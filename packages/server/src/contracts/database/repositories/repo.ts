@@ -7,5 +7,5 @@ export abstract class BaseRepo<T, U, V> {
     this.client = client;
   }
 
-  protected abstract toEntity(persisted: U): V;
+  protected abstract toEntity(persisted: U | null): V | null;
 }

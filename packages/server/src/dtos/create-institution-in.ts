@@ -6,31 +6,31 @@ import { CommonErrorOut } from "./common-error-out";
 export class CreateInstitutionIn extends InDTO {
   public readonly name: string;
 
-  public readonly uniqueId: unknown;
+  public readonly cnpj: string;
 
   public readonly phone: string;
 
-  private constructor(name: string, uniqueId: unknown, phone: string) {
+  private constructor(name: string, cnpj: string, phone: string) {
     super();
 
     this.name = name;
-    this.uniqueId = uniqueId;
+    this.cnpj = cnpj;
     this.phone = phone;
   }
 
   public static create(
     income: unknown,
   ): InDTOResult<CreateInstitutionIn, CommonErrorOut> {
-    const { name, uniqueId, phone } = income as any || {};
+    const { name, cnpj, phone } = income as any || {};
 
     const errors = this.validate({
       name: {
         validationType: DTOValidationMapping.requiredString,
         value: name,
       },
-      uniqueId: {
+      cnpj: {
         validationType: DTOValidationMapping.requiredString,
-        value: uniqueId,
+        value: cnpj,
       },
       phone: {
         validationType: DTOValidationMapping.requiredString,
@@ -45,6 +45,6 @@ export class CreateInstitutionIn extends InDTO {
       } as Result<CommonErrorOut>;
     }
 
-    return new CreateInstitutionIn(name, uniqueId, phone);
+    return new CreateInstitutionIn(name, cnpj, phone);
   }
 }

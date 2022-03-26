@@ -6,3 +6,5 @@ export * from "./create-session-out";
 export * from "./create-institution-in";
 export * from "./create-institution-and-manager-in";
 export * from "./create-institution-and-manager-out";
+export * from "./authenticate-user-in";
+export * from "./authenticate-user-out";

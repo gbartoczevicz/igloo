@@ -3,7 +3,6 @@ import * as RepositoryAdapters from "~/adapters/database/repositories";
 import * as HashAdapters from "~/adapters/hash";
 import * as ValidatorAdapters from "~/adapters/validators";
 import { Database } from "~/components/database";
-import { InstitutionManagersRepo } from "~/contracts/database/repositories";
 import { SystemSetup } from "~/contracts/setup/system";
 import * as DomainFactories from "~/domain/factories";
 
@@ -22,7 +21,7 @@ export function systemSetup(
     tokenSecret,
     tokenExpiresAt,
   );
-  const institutionManagersRepo = {} as InstitutionManagersRepo;
+  const institutionManagersRepo = new RepositoryAdapters.PrismaInstitutionManagersRepo(database.client);
   const institutionsRepo = new RepositoryAdapters.PrismaInstitutionsRepo(
     database.client,
   );

@@ -2,6 +2,7 @@ import * as E from "express";
 
 import * as SetupRoutes from "~/setup/routes";
 import * as SystemSetup from "~/setup/system";
+import * as SetupMiddlewares from "~/setup/middlewares";
 
 import { createSystem } from "~/lib/component";
 import { Http } from "~/components/http";
@@ -29,6 +30,8 @@ const systemSetup = SystemSetup.systemSetup(
   "1h",
 );
 
+const userAuthenticated = SetupMiddlewares.userAuthenticated(systemSetup);
+
 const router: HttpContracts.Router<
   E.Router,
   E.Request,
@@ -37,14 +40,10 @@ const router: HttpContracts.Router<
 > = new HttpAdapters.HttpRouter([
   SetupRoutes.setupCreateUsers(systemSetup),
   SetupRoutes.setupCreateSession(systemSetup),
+  SetupRoutes.setupCreateInstitutions(systemSetup, userAuthenticated),
 ]);
 
 express.use(E.json());
-
-express.use((_req, _res, next) => {
-  console.log("Common middleware", Date.now());
-  next();
-});
 
 express.use(
   (router as HttpAdapters.HttpRouter).create(),

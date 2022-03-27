@@ -45,6 +45,8 @@ const router: HttpContracts.Router<
 
 express.use(E.json());
 
+express.use(SetupMiddlewares.commonRequest());
+
 express.use(
   (router as HttpAdapters.HttpRouter).create(),
 );

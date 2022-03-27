@@ -1,6 +1,6 @@
 import {
-  ProfessorsRepo,
   InstitutionsRepo,
+  ProfessorsRepo,
 } from "~/contracts/database/repositories";
 import { DomainError } from "~/errors";
 import { Institution, Professor, User } from "../entities";
@@ -37,9 +37,11 @@ export class CreateProfessorUseCase {
 
     const alreadyRegistered = await this.professorsRepo
       .findByInstitutionAndUser(institution.id, user.id);
-      
+
     if (alreadyRegistered) {
-      throw new DomainError("The professor is already created in this institution");
+      throw new DomainError(
+        "The professor is already created in this institution",
+      );
     }
 
     const professor = this.professorFactory.create({

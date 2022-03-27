@@ -3,5 +3,8 @@ import { Id } from "~/domain/entities/values";
 
 export interface ProfessorsRepo {
   save(professor: Professor): Promise<void>;
-  findByInstitutionAndUser(institutionId: Id, userId: Id): Promise<Professor | null>;
+  findByInstitutionAndUser(
+    institutionId: Id,
+    userId: Id,
+  ): Promise<Professor | null>;
 }

@@ -18,15 +18,7 @@ export class CommonErrorOut extends OutDTO<ExpectedErrors> {
         return { message: o.message };
       });
     }
-
-    if (this.outcoming instanceof AuthenticationError) {
-      return undefined;
-    }
-
-    if (this.outcoming instanceof SignUpError) {
-      return undefined;
-    }
-
-    return { message: this.outcoming.message };
+    
+    return undefined;
   }
 }

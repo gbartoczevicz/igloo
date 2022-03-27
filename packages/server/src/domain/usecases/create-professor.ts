@@ -1,42 +1,39 @@
-import {
-  InstitutionsRepo,
-  ProfessorsRepo,
-} from "~/contracts/database/repositories";
+import { ProfessorsRepo, UsersRepo } from "~/contracts/database/repositories";
+import { CreateProfessorIn } from "~/dtos";
 import { DomainError } from "~/errors";
-import { Institution, Professor, User } from "../entities";
-import { ProfessorFactory } from "../factories";
+import { Professor } from "../entities";
+import { IdFactory, ProfessorFactory } from "../factories";
 
 export class CreateProfessorUseCase {
   private readonly professorsRepo: ProfessorsRepo;
 
-  private readonly institutionsRepo: InstitutionsRepo;
+  private readonly usersRepo: UsersRepo;
 
   private readonly professorFactory: ProfessorFactory;
 
+  private readonly idFactory: IdFactory;
+
   public constructor(
     professorsRepo: ProfessorsRepo,
-    institutionsRepo: InstitutionsRepo,
+    usersRepo: UsersRepo,
     professorFactory: ProfessorFactory,
+    idFactory: IdFactory,
   ) {
     this.professorsRepo = professorsRepo;
-    this.institutionsRepo = institutionsRepo;
+    this.usersRepo = usersRepo;
     this.professorFactory = professorFactory;
+    this.idFactory = idFactory;
   }
 
   public async execute(
-    user: User,
-    institution: Institution,
+    incoming: CreateProfessorIn,
   ): Promise<Professor> {
-    const doesInstitutionExists = await this.institutionsRepo.findById(
-      institution.id,
-    );
+    const { manager } = incoming;
 
-    if (!doesInstitutionExists) {
-      throw new DomainError("The institution does not exists");
-    }
+    const professorUserId = this.idFactory.create(incoming.professorUserId);
 
     const alreadyRegistered = await this.professorsRepo
-      .findByInstitutionAndUser(institution.id, user.id);
+      .findByInstitutionAndUser(manager.institutionId, professorUserId);
 
     if (alreadyRegistered) {
       throw new DomainError(
@@ -44,9 +41,15 @@ export class CreateProfessorUseCase {
       );
     }
 
+    const userExists = await this.usersRepo.findById(professorUserId);
+
+    if (!userExists) {
+      throw new DomainError("User to be professor does not exists");
+    }
+
     const professor = this.professorFactory.create({
-      institution: doesInstitutionExists,
-      user,
+      institutionId: manager.institutionId,
+      userId: professorUserId,
     });
 
     await this.professorsRepo.save(professor);

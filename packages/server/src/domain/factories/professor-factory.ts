@@ -1,10 +1,11 @@
 import { Factory } from "~/contracts/domain";
-import { Institution, Professor, User } from "../entities";
+import { Professor } from "../entities";
+import { Id } from "../entities/values";
 import { IdFactory } from "./id-factory";
 
 type FactoryParams = {
-  institution: Institution;
-  user: User;
+  institutionId: Id;
+  userId: Id;
 };
 
 export class ProfessorFactory implements Factory<FactoryParams, Professor> {
@@ -17,8 +18,8 @@ export class ProfessorFactory implements Factory<FactoryParams, Professor> {
   public create(incoming: FactoryParams): Professor {
     const id = this.idFactory.create();
 
-    const { institution, user } = incoming;
+    const { institutionId, userId } = incoming;
 
-    return new Professor(id, user.id, institution.id);
+    return new Professor(id, userId, institutionId);
   }
 }

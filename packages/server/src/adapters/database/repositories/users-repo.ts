@@ -31,43 +31,40 @@ export class PrismaUsersRepo extends BaseRepo<PrismaClient, PrismaUser, User>
     });
   }
 
-  public async findByEmail(email: Email): Promise<User | undefined> {
+  public async findById(id: Id): Promise<User | null> {
+    const foundUser = await this.client.client.user.findUnique({
+      where: { id: id.value },
+    });
+
+    return this.toEntity(foundUser);
+  }
+
+  public async findByEmail(email: Email): Promise<User | null> {
     const foundUser = await this.client.client.user.findUnique({
       where: { email: email.toString() },
     });
 
-    if (!foundUser) return undefined;
-
     return this.toEntity(foundUser);
   }
 
-  public async findByPhone(phone: Phone): Promise<User | undefined> {
+  public async findByPhone(phone: Phone): Promise<User | null> {
     const foundUser = await this.client.client.user.findUnique({
       where: { phone: phone.toString() },
     });
 
-    if (!foundUser) return undefined;
-
     return this.toEntity(foundUser);
   }
 
-  protected toEntity(persisted: PrismaUser): User {
-    const {
-      id,
-      name,
-      surname,
-      email,
-      phone,
-      password,
-    } = persisted;
+  protected toEntity(persisted: PrismaUser | null): User | null {
+    if (!persisted) return null;
 
     return new User(
-      new Id(id),
-      name,
-      surname,
-      new Email(email),
-      new Password(password),
-      new Phone(phone),
+      new Id(persisted.id),
+      persisted.name,
+      persisted.surname,
+      new Email(persisted.email),
+      new Password(persisted.password),
+      new Phone(persisted.phone),
     );
   }
 }

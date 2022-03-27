@@ -60,3 +60,9 @@ export class HttpRouter extends C.Router<
     return router;
   }
 }
+
+export type HttpMiddleware = C.Middleware<
+  E.Request,
+  E.Response,
+  E.NextFunction
+>;

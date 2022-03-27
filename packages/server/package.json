@@ -28,6 +28,7 @@
   "dependencies": {
     "@prisma/client": "^3.11.0",
     "bcrypt": "^5.0.1",
+    "cpf-cnpj-validator": "^1.0.3",
     "email-validator": "^2.0.4",
     "express": "^4.17.3",
     "jsonwebtoken": "^8.5.1",

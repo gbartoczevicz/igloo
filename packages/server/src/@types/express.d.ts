@@ -1,4 +1,4 @@
-import { User } from "~/domain/entities";
+import { InstitutionManager, User } from "~/domain/entities";
 import {
   CreateInstitutionAndManagerIn,
   CreateSessionIn,
@@ -9,6 +9,7 @@ declare global {
   namespace Express {
     interface Request {
       user: User;
+      manager: InstitutionManager;
       createInstitutionAndManager: CreateInstitutionAndManagerIn;
       createUser: CreateUserIn;
       createSession: CreateSessionIn;

@@ -30,6 +30,11 @@ export function createServer(systemSetup: SystemSetup) {
       userAuthenticated,
       managerAuthenticated,
     ),
+    SetupRoutes.setupCreateStudent(
+      systemSetup,
+      userAuthenticated,
+      managerAuthenticated,
+    ),
   ]);
 
   express.use(E.json());

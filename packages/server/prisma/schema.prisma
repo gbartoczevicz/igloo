@@ -19,6 +19,8 @@ model User {
   phone    String  @unique @db.VarChar(255)
 
   InstitutionManager InstitutionManager[]
+  Professor          Professor[]
+
   @@map("users")
 }
 
@@ -29,6 +31,8 @@ model Institution {
   phone String @unique @db.VarChar(255)
 
   InstitutionManager InstitutionManager[]
+  Professor          Professor[]
+
   @@map("institutions")
 }
 
@@ -41,4 +45,17 @@ model InstitutionManager {
   institution Institution @relation(fields: [institutionId], references: [id])
 
   @@map("institution_managers")
+}
+
+model Professor {
+  id            String @id @default(uuid())
+  userId        String @map("user_id")
+  institutionId String @map("institution_id")
+
+  user        User        @relation(fields: [userId], references: [id])
+  institution Institution @relation(fields: [institutionId], references: [id])
+
+  @@unique([userId, institutionId])
+
+  @@map("professors")
 }

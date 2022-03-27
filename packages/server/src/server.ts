@@ -12,6 +12,9 @@ export function createServer(systemSetup: SystemSetup) {
 
   const commonLogger = SetupMiddlewares.commonRequest();
   const userAuthenticated = SetupMiddlewares.userAuthenticated(systemSetup);
+  const managerAuthenticated = SetupMiddlewares.managerAuthenticated(
+    systemSetup,
+  );
 
   const router: HttpContracts.Router<
     E.Router,
@@ -22,6 +25,11 @@ export function createServer(systemSetup: SystemSetup) {
     SetupRoutes.setupCreateUsers(systemSetup),
     SetupRoutes.setupCreateSession(systemSetup),
     SetupRoutes.setupCreateInstitutions(systemSetup, userAuthenticated),
+    SetupRoutes.setupCreateProfessor(
+      systemSetup,
+      userAuthenticated,
+      managerAuthenticated,
+    ),
   ]);
 
   express.use(E.json());

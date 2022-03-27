@@ -8,6 +8,7 @@ export interface SystemSetup {
     usersRepo: Repositories.UsersRepo;
     institutionsRepo: Repositories.InstitutionsRepo;
     institutionManagersRepo: Repositories.InstitutionManagersRepo;
+    professorsRepo: Repositories.ProfessorsRepo;
   };
   factories: {
     cnpjFactory: Factories.CnpjFactory;
@@ -19,6 +20,7 @@ export interface SystemSetup {
     sessionTokenFactory: Factories.SessionTokenFacotry;
     userFactory: Factories.UserFactory;
     managerFactory: Factories.InstitutionManagerFactory;
+    professorFactory: Factories.ProfessorFactory;
   };
   hash: {
     idProvider: Hash.IdProvider;

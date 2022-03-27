@@ -26,6 +26,9 @@ export function systemSetup(
   const institutionsRepo = new RepositoryAdapters.PrismaInstitutionsRepo(
     database.client,
   );
+  const professorsRepo = new RepositoryAdapters.PrismaProfessorsRepo(
+    database.client,
+  );
   const usersRepo = new RepositoryAdapters.PrismaUsersRepo(database.client);
   const cnpjFactory = new DomainFactories.CnpjFactory(cnpjValidator);
   const emailFactory = new DomainFactories.EmailFactory(emailValidator);
@@ -49,6 +52,7 @@ export function systemSetup(
   const managerFactory = new DomainFactories.InstitutionManagerFactory(
     idFactory,
   );
+  const professorFactory = new DomainFactories.ProfessorFactory(idFactory);
 
   return {
     factories: {
@@ -61,6 +65,7 @@ export function systemSetup(
       sessionTokenFactory,
       userFactory,
       managerFactory,
+      professorFactory,
     },
     hash: {
       idProvider,
@@ -71,6 +76,7 @@ export function systemSetup(
       institutionManagersRepo,
       institutionsRepo,
       usersRepo,
+      professorsRepo,
     },
     validators: {
       cnpjValidator,

@@ -1,6 +1,7 @@
 import { InstitutionManager, User } from "~/domain/entities";
 import {
   CreateInstitutionAndManagerIn,
+  CreateProfessorIn,
   CreateSessionIn,
   CreateUserIn,
 } from "~/dtos";
@@ -13,6 +14,7 @@ declare global {
       createInstitutionAndManager: CreateInstitutionAndManagerIn;
       createUser: CreateUserIn;
       createSession: CreateSessionIn;
+      createProfessor: CreateProfessorIn;
     }
   }
 }

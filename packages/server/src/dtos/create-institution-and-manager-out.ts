@@ -15,9 +15,10 @@ export class CreateInstitutionAndManagerOut extends OutDTO<EntityTouple> {
     return {
       id: institution.id.value,
       name: institution.name,
-      cnpj: institution.cnpj,
+      cnpj: institution.cnpj.toString(),
       phone: institution.phone.toString(),
       manager: {
+        id: manager.id.value,
         userId: manager.userId.value,
       },
     };

@@ -4,18 +4,23 @@ import {
 } from "~/contracts/database/repositories";
 import { DomainError } from "~/errors";
 import { Institution, InstitutionManager, User } from "../entities";
+import { InstitutionManagerFactory } from "../factories";
 
 export class CreateInstitutionManagerUseCase {
   private readonly institutionManagersRepo: InstitutionManagersRepo;
 
   private readonly institutionsRepo: InstitutionsRepo;
 
+  private readonly managerFactory: InstitutionManagerFactory;
+
   public constructor(
     institutionManagersRepo: InstitutionManagersRepo,
     institutionsRepo: InstitutionsRepo,
+    managerFactory: InstitutionManagerFactory,
   ) {
     this.institutionManagersRepo = institutionManagersRepo;
     this.institutionsRepo = institutionsRepo;
+    this.managerFactory = managerFactory;
   }
 
   public async execute(
@@ -37,7 +42,10 @@ export class CreateInstitutionManagerUseCase {
       throw new DomainError("The institution already have a manager");
     }
 
-    const manager = new InstitutionManager(user.id, institution.id);
+    const manager = this.managerFactory.create({
+      institution: doesInstitutionExists,
+      user,
+    });
 
     await this.institutionManagersRepo.save(manager);
 

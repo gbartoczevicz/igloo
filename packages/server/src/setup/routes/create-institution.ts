@@ -20,6 +20,7 @@ export function setupCreateInstitutions(
   const createManagerUseCase = new CreateInstitutionManagerUseCase(
     systemSetup.repositories.institutionManagersRepo,
     systemSetup.repositories.institutionsRepo,
+    systemSetup.factories.managerFactory,
   );
 
   const controller = new CreateInstitutionAndManagerController(

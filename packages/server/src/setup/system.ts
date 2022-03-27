@@ -46,6 +46,9 @@ export function systemSetup(
     passwordFactory,
     phoneFactory,
   );
+  const managerFactory = new DomainFactories.InstitutionManagerFactory(
+    idFactory,
+  );
 
   return {
     factories: {
@@ -57,6 +60,7 @@ export function systemSetup(
       phoneFactory,
       sessionTokenFactory,
       userFactory,
+      managerFactory,
     },
     hash: {
       idProvider,

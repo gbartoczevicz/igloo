@@ -18,6 +18,7 @@ export interface SystemSetup {
     phoneFactory: Factories.PhoneFactory;
     sessionTokenFactory: Factories.SessionTokenFacotry;
     userFactory: Factories.UserFactory;
+    managerFactory: Factories.InstitutionManagerFactory;
   };
   hash: {
     idProvider: Hash.IdProvider;

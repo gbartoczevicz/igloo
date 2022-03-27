@@ -1,5 +1,5 @@
 import { OutDTO } from "~/contracts/dtos";
-import { AuthenticationError, InvalidField, SignUpError } from "~/errors";
+import { AuthenticationError, DomainError, InvalidField, SignUpError } from "~/errors";
 
 type ExpectedErrors = Error | InvalidField | Error[] | InvalidField[];
 
@@ -18,7 +18,11 @@ export class CommonErrorOut extends OutDTO<ExpectedErrors> {
         return { message: o.message };
       });
     }
-    
+
+    if (this.outcoming instanceof DomainError) {
+      return { message: this.outcoming.message };
+    }
+
     return undefined;
   }
 }

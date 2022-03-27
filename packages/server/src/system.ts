@@ -1,20 +1,14 @@
-import * as E from "express";
-
-import * as SetupRoutes from "~/setup/routes";
 import * as SystemSetup from "~/setup/system";
-import * as SetupMiddlewares from "~/setup/middlewares";
 
 import { createSystem } from "~/lib/component";
 import { Http } from "~/components/http";
 
-import * as HttpContracts from "~/contracts/http";
-import * as HttpAdapters from "~/adapters/http";
 import { Database } from "./components/database";
 import { ClientDatabase } from "./contracts/database/client";
 import { PrismaClient } from "@prisma/client";
 import { PrismaClientDatabase } from "./adapters/database/client";
+import { createServer } from "./server";
 
-const express = E.default();
 const prisma = new PrismaClient();
 
 const databaseClient: ClientDatabase<PrismaClient> = new PrismaClientDatabase(
@@ -30,29 +24,7 @@ const systemSetup = SystemSetup.systemSetup(
   "1h",
 );
 
-const userAuthenticated = SetupMiddlewares.userAuthenticated(systemSetup);
-
-const router: HttpContracts.Router<
-  E.Router,
-  E.Request,
-  E.Response,
-  E.NextFunction
-> = new HttpAdapters.HttpRouter([
-  SetupRoutes.setupCreateUsers(systemSetup),
-  SetupRoutes.setupCreateSession(systemSetup),
-  SetupRoutes.setupCreateInstitutions(systemSetup, userAuthenticated),
-]);
-
-express.use(E.json());
-
-express.use(SetupMiddlewares.commonRequest());
-
-express.use(
-  (router as HttpAdapters.HttpRouter).create(),
-);
-
-const httpService: HttpContracts.Service<E.Application> = new HttpAdapters
-  .HttpService(express);
+const httpService = createServer(systemSetup);
 
 export const system = createSystem({
   database,

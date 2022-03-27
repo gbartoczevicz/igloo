@@ -8,3 +8,4 @@ export * from "./create-institution-and-manager-in";
 export * from "./create-institution-and-manager-out";
 export * from "./authenticate-user-in";
 export * from "./authenticate-user-out";
+export * from "./authenticate-manager-in";

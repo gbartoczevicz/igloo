@@ -7,3 +7,4 @@ export * from "./session-token-factory";
 export * from "./institution-factory";
 export * from "./cnpj-factory";
 export * from "./institution-manager-factory";
+export * from "./professor-factory";

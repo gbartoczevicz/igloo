@@ -1,5 +1,10 @@
 import { OutDTO } from "~/contracts/dtos";
-import { AuthenticationError, DomainError, InvalidField, SignUpError } from "~/errors";
+import {
+  AuthenticationError,
+  DomainError,
+  InvalidField,
+  SignUpError,
+} from "~/errors";
 
 type ExpectedErrors = Error | InvalidField | Error[] | InvalidField[];
 

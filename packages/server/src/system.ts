@@ -3,19 +3,10 @@ import * as SystemSetup from "~/setup/system";
 import { createSystem } from "~/lib/component";
 import { Http } from "~/components/http";
 
-import { Database } from "./components/database";
-import { ClientDatabase } from "./contracts/database/client";
-import { PrismaClient } from "@prisma/client";
-import { PrismaClientDatabase } from "./adapters/database/client";
 import { createServer } from "./server";
+import { createDatabase } from "./database";
 
-const prisma = new PrismaClient();
-
-const databaseClient: ClientDatabase<PrismaClient> = new PrismaClientDatabase(
-  prisma,
-);
-
-const database = new Database(databaseClient);
+const database = createDatabase();
 
 const systemSetup = SystemSetup.systemSetup(
   database,

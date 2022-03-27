@@ -3,6 +3,7 @@ import {
   CreateInstitutionAndManagerIn,
   CreateProfessorIn,
   CreateSessionIn,
+  CreateStudentIn,
   CreateUserIn,
 } from "~/dtos";
 
@@ -15,6 +16,7 @@ declare global {
       createUser: CreateUserIn;
       createSession: CreateSessionIn;
       createProfessor: CreateProfessorIn;
+      createStudent: CreateStudentIn;
     }
   }
 }

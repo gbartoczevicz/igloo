@@ -5,14 +5,15 @@ import { Http } from "~/components/http";
 
 import { createServer } from "./server";
 import { createDatabase } from "./database";
+import { config } from "./config";
 
-const database = createDatabase();
+console.log("Config", config);
+
+const database = createDatabase(config);
 
 const systemSetup = SystemSetup.systemSetup(
-  database,
-  8,
-  "igloo_secret_token",
-  "1h",
+  config,
+  database
 );
 
 const httpService = createServer(systemSetup);

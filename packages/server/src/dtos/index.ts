@@ -12,3 +12,5 @@ export * from "./authenticate-manager-in";
 export * from "./authenticate-manager-out";
 export * from "./create-professor-in";
 export * from "./create-professor-out";
+export * from "./create-student-in";
+export * from "./create-student-out";

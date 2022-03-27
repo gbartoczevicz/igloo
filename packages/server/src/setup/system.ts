@@ -3,23 +3,24 @@ import * as RepositoryAdapters from "~/adapters/database/repositories";
 import * as HashAdapters from "~/adapters/hash";
 import * as ValidatorAdapters from "~/adapters/validators";
 import { Database } from "~/components/database";
+import { ApplicationConfig } from "~/config";
 import { SystemSetup } from "~/contracts/setup/system";
 import * as DomainFactories from "~/domain/factories";
 
 export function systemSetup(
+  config: ApplicationConfig,
   database: Database<PrismaClient>,
-  hashSalt: number,
-  tokenSecret: string,
-  tokenExpiresAt: string | number,
 ): SystemSetup {
   const cnpjValidator = new ValidatorAdapters.CnpjValidatorImpl();
   const emailValidator = new ValidatorAdapters.EmailValidatorImpl();
   const phoneValidator = new ValidatorAdapters.PhoneValidatorImpl();
   const idProvider = new HashAdapters.NodeIdProvider();
-  const passwordHandler = new HashAdapters.BcryptPasswordHandler(hashSalt);
+  const passwordHandler = new HashAdapters.BcryptPasswordHandler(
+    config.hashSalt,
+  );
   const tokenProvider = new HashAdapters.JwtTokenProvider(
-    tokenSecret,
-    tokenExpiresAt,
+    config.tokenSecret,
+    config.tokenExpiresAt,
   );
   const institutionManagersRepo = new RepositoryAdapters
     .PrismaInstitutionManagersRepo(database.client);
@@ -27,6 +28,9 @@ export function systemSetup(
     database.client,
   );
   const professorsRepo = new RepositoryAdapters.PrismaProfessorsRepo(
+    database.client,
+  );
+  const studentsRepo = new RepositoryAdapters.PrismaProfessorsRepo(
     database.client,
   );
   const usersRepo = new RepositoryAdapters.PrismaUsersRepo(database.client);
@@ -53,6 +57,7 @@ export function systemSetup(
     idFactory,
   );
   const professorFactory = new DomainFactories.ProfessorFactory(idFactory);
+  const studentFactory = new DomainFactories.StudentFactory(idFactory);
 
   return {
     factories: {
@@ -66,6 +71,7 @@ export function systemSetup(
       userFactory,
       managerFactory,
       professorFactory,
+      studentFactory,
     },
     hash: {
       idProvider,
@@ -77,6 +83,7 @@ export function systemSetup(
       institutionsRepo,
       usersRepo,
       professorsRepo,
+      studentsRepo,
     },
     validators: {
       cnpjValidator,

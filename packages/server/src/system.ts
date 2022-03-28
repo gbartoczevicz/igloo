@@ -13,12 +13,12 @@ const database = createDatabase(config);
 
 const systemSetup = SystemSetup.systemSetup(
   config,
-  database
+  database,
 );
 
 const httpService = createServer(systemSetup);
 
 export const system = createSystem({
   database,
-  http: new Http(httpService, 3333),
+  http: new Http(httpService, config.port),
 });

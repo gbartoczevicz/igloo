@@ -27,7 +27,9 @@
 
 ## Using it
 
-You can import the [`request collection`](.github/docs/request_collection.json) file into the [Insomnia HTTP Client](https://insomnia.rest) to consult and test all the system routes.
+You can import the [`request collection`](.github/docs/request_collection.json)
+file into the [Insomnia HTTP Client](https://insomnia.rest) to consult and test
+all the system routes.
 
 ---
 

@@ -1,7 +1,6 @@
 import { ProfessorsRepo, UsersRepo } from "~/contracts/database/repositories";
-import { InstitutionManager, Professor, User } from "../entities";
+import { InstitutionManager, ProfessorUserComposition } from "../entities";
 
-type Result = Map<number, { user: User; professor: Professor }>;
 export class GetProfessorsByManagerUseCase {
   private readonly professorsRepository: ProfessorsRepo;
 
@@ -15,7 +14,9 @@ export class GetProfessorsByManagerUseCase {
     this.usersRepository = usersRepository;
   }
 
-  public async execute(manager: InstitutionManager): Promise<Result> {
+  public async execute(
+    manager: InstitutionManager,
+  ): Promise<ProfessorUserComposition[]> {
     const professors = await this.professorsRepository.findAllByInstitution(
       manager.institutionId,
     );
@@ -24,17 +25,19 @@ export class GetProfessorsByManagerUseCase {
       professors.map((professor) => professor.id),
     );
 
-    const result: Result = new Map();
+    const result: ProfessorUserComposition[] = [];
 
-    professors.forEach((professor, position) => {
+    for (const professor of professors) {
       const userFound = users.find((user) => user.id.isEqual(professor.id));
 
       if (!userFound) {
         throw new Error(`User not found with professor ${professor.id.value}`);
       }
 
-      result.set(position, { user: userFound, professor });
-    });
+      result.push(
+        new ProfessorUserComposition(professor, userFound),
+      );
+    }
 
     return result;
   }

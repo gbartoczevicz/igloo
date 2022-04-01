@@ -22,13 +22,13 @@ export class GetProfessorsByManagerUseCase {
     );
 
     const users = await this.usersRepository.findAllById(
-      professors.map((professor) => professor.id),
+      professors.map((professor) => professor.userId),
     );
 
     const result: ProfessorUserComposition[] = [];
 
     for (const professor of professors) {
-      const userFound = users.find((user) => user.id.isEqual(professor.id));
+      const userFound = users.find((user) => user.id.isEqual(professor.userId));
 
       if (!userFound) {
         throw new Error(`User not found with professor ${professor.id.value}`);

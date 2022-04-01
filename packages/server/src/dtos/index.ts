@@ -14,3 +14,5 @@ export * from "./create-professor-in";
 export * from "./create-professor-out";
 export * from "./create-student-in";
 export * from "./create-student-out";
+export * from "./get-professors-by-manager-in";
+export * from "./get-professors-by-manager-out";

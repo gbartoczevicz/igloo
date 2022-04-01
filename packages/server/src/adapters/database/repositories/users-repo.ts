@@ -55,6 +55,14 @@ export class PrismaUsersRepo extends BaseRepo<PrismaClient, PrismaUser, User>
     return this.toEntity(foundUser);
   }
 
+  public async findAllById(ids: Id[]): Promise<User[]> {
+    const foundUsers = await this.client.client.user.findMany({
+      where: { id: { in: ids.map((id) => id.value) } },
+    });
+
+    return foundUsers.map((user) => this.toEntity(user)) as User[];
+  }
+
   protected toEntity(persisted: PrismaUser | null): User | null {
     if (!persisted) return null;
 

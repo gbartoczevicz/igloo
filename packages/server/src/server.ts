@@ -35,6 +35,11 @@ export function createServer(systemSetup: SystemSetup) {
       userAuthenticated,
       managerAuthenticated,
     ),
+    SetupRoutes.setupGetProfessorsByManager(
+      systemSetup,
+      userAuthenticated,
+      managerAuthenticated,
+    ),
   ]);
 
   express.use(E.json());

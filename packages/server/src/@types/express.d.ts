@@ -6,6 +6,7 @@ declare global {
     interface Request {
       user: User;
       manager: InstitutionManager;
+      authenticatedUserIn: D.AuthenticatedUserIn;
       createInstitutionAndManager: D.CreateInstitutionAndManagerIn;
       createUser: D.CreateUserIn;
       createSession: D.CreateSessionIn;

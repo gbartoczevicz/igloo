@@ -11,7 +11,7 @@ export function setupGetStudentsByManager(
   managerAuthenticated: HttpMiddleware,
 ) {
   const getStudentsByManagerUseCase = new GetStudentsByManagerUseCase(
-    systemSetup.repositories.professorsRepo,
+    systemSetup.repositories.studentsRepo,
     systemSetup.repositories.usersRepo,
   );
 

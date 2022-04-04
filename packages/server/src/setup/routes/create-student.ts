@@ -11,7 +11,7 @@ export function setupCreateStudent(
   managerAuthenticated: HttpMiddleware,
 ) {
   const createStudentUseCase = new CreateStudentUseCase(
-    systemSetup.repositories.professorsRepo,
+    systemSetup.repositories.studentsRepo,
     systemSetup.repositories.usersRepo,
     systemSetup.factories.studentFactory,
     systemSetup.factories.idFactory,

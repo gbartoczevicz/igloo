@@ -30,7 +30,7 @@ export function systemSetup(
   const professorsRepo = new RepositoryAdapters.PrismaProfessorsRepo(
     database.client,
   );
-  const studentsRepo = new RepositoryAdapters.PrismaProfessorsRepo(
+  const studentsRepo = new RepositoryAdapters.PrismaStudentsRepo(
     database.client,
   );
   const usersRepo = new RepositoryAdapters.PrismaUsersRepo(database.client);

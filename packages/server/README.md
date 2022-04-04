@@ -25,6 +25,12 @@
 - Run `npm run start` to start the project
   - You can skip the build and start steps by running `npm run dev`
 
+## Using it
+
+You can import the [`request collection`](.github/docs/request_collection.json)
+file into the [Insomnia HTTP Client](https://insomnia.rest) to consult and test
+all the system routes.
+
 ---
 
 Made with 💜 by me! [Stay in touch 👋](https://www.linkedin.com/in/gbartoczevicz)

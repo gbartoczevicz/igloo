@@ -16,6 +16,7 @@
     "@swc/cli": "^0.1.55",
     "@swc/core": "^1.2.158",
     "@types/bcrypt": "^5.0.0",
+    "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
     "@types/jsonwebtoken": "^8.5.8",
     "@types/node": "^17.0.21",
@@ -28,6 +29,7 @@
   "dependencies": {
     "@prisma/client": "^3.11.0",
     "bcrypt": "^5.0.1",
+    "cors": "^2.8.5",
     "cpf-cnpj-validator": "^1.0.3",
     "email-validator": "^2.0.4",
     "express": "^4.17.3",

@@ -1,4 +1,5 @@
 import * as E from "express";
+import cors from "cors";
 
 import * as SetupRoutes from "~/setup/routes";
 import * as SetupMiddlewares from "~/setup/middlewares";
@@ -41,6 +42,8 @@ export function createServer(systemSetup: SystemSetup) {
       managerAuthenticated,
     ),
   ]);
+
+  express.use(cors());
 
   express.use(E.json());
   express.use(commonLogger);

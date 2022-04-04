@@ -3,5 +3,6 @@ import { Id } from "~/domain/entities/values";
 
 export interface InstitutionManagersRepo {
   save(manager: InstitutionManager): Promise<void>;
+  findAllByUserId(userId: Id): Promise<InstitutionManager[]>;
   findByInstitutionId(institutionId: Id): Promise<InstitutionManager | null>;
 }

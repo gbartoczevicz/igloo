@@ -1,40 +1,37 @@
 import { HttpMiddleware, HttpRoute } from "~/adapters/http";
 import { Method } from "~/contracts/http";
 import { SystemSetup } from "~/contracts/setup/system";
-import { CreateStudentController } from "~/domain/controllers";
-import { CreateStudentUseCase } from "~/domain/usecases";
-import { CreateStudentIn } from "~/dtos";
+import { GetStudentsByManagerController } from "~/domain/controllers";
+import { GetStudentsByManagerUseCase } from "~/domain/usecases";
+import { GetStudentsByManagerIn } from "~/dtos";
 
-export function setupCreateStudent(
+export function setupGetStudentsByManager(
   systemSetup: SystemSetup,
   userAuthenticated: HttpMiddleware,
   managerAuthenticated: HttpMiddleware,
 ) {
-  const createStudentUseCase = new CreateStudentUseCase(
+  const getStudentsByManagerUseCase = new GetStudentsByManagerUseCase(
     systemSetup.repositories.studentsRepo,
     systemSetup.repositories.usersRepo,
-    systemSetup.factories.studentFactory,
-    systemSetup.factories.idFactory,
   );
 
-  const controller = new CreateStudentController(createStudentUseCase);
+  const controller = new GetStudentsByManagerController(
+    getStudentsByManagerUseCase,
+  );
 
   return new HttpRoute(
     "/institutions/:institutionId/students",
-    Method.post,
+    Method.get,
     (req, res, _next) => {
-      controller.execute(req.createStudent).then((result) =>
+      controller.execute(req.getStudentsByManager).then((result) =>
         res.status(result.status).json(result.content.toRaw())
       );
     },
     [userAuthenticated, managerAuthenticated, (req, res, next) => {
-      const result = CreateStudentIn.create({
-        ...req.body,
-        manager: req.manager,
-      });
+      const result = GetStudentsByManagerIn.create({ manager: req.manager });
 
-      if (result instanceof CreateStudentIn) {
-        req.createStudent = result;
+      if (result instanceof GetStudentsByManagerIn) {
+        req.getStudentsByManager = result;
 
         return next();
       }

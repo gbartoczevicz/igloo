@@ -7,4 +7,5 @@ export interface StudentsRepo {
     institutionId: Id,
     userId: Id,
   ): Promise<Student | null>;
+  findAllByInstitution(institutionId: Id): Promise<Student[]>;
 }

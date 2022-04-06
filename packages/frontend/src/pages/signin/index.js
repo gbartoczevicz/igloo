@@ -1,12 +1,62 @@
-import { useNavigate } from "react-router-dom";
+import { useRef } from "react";
+import { Form } from "@unform/web";
+import { Input } from "../../components/form";
+import {
+  signinFormValidationSchema,
+  setErrorsFromForm,
+  validateForm,
+} from "../../validations";
+import * as fireToast from '../../utils/fireToast';
+import api from '../../services/api';
 
 const Signin = () => {
-  let navigate = useNavigate();
+  const loginFormRef = useRef(null);
+
+  const handleLoginSubmit = (data) => {
+    validateForm({ 
+      data, 
+      formRef: loginFormRef, 
+      schema:  signinFormValidationSchema,
+    })
+    .then(result => {
+      api.post('/sessions', data)
+        .then(response => {
+          fireToast.success('Bem vindo!');
+        })
+        .catch(errors => {
+          // set back end errors
+        })
+    })
+     .catch(error => {
+      setErrorsFromForm({ errors: error, formRef: loginFormRef });
+    })
+  }
+
   return (
     <>
-      <div>
-        <button onClick={() => navigate('/courses')}>Signin</button>
-      </div>
+      <div className="flex flex-wrap justify-center mt-20">
+        <div className="w-full max-w-sm">
+          <Form className="shadow-md bg-white rounded px-8 pt-6 pb-8 mb-4" onSubmit={handleLoginSubmit} ref={loginFormRef} >
+            <div className="mb-4">
+              <Input name="email" /*type="email"*/ label="Email" placeholder="Email"/>
+            </div>
+            <div className="mb-6">
+              <Input name="password" type="password" label="Senha" placeholder="Senha"/>
+            </div>
+            <div className="flex items-center justify-between">
+              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" >
+                Sign In
+              </button>
+              <a className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-700" href="/forgot-password">
+                Esqueceu a senha?
+              </a>
+            </div>
+          </Form>
+          <a className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-700" href="/signup">
+            Crie uma nova conta
+          </a>
+        </div>
+	    </div>
     </>
   );
 }

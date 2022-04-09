@@ -1,3 +1,4 @@
+import { useAuth } from './store/auth';
 import {
   ForgotPassword,
   Signin,
@@ -6,7 +7,14 @@ import {
   Projects
 } from './pages'
 
-import { BrowserRouter, Routes, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom';
+
+const PrivateOutlet = () => {
+  const { token } = useAuth();
+  /* TODO: não está funcionando utilizando o token direto, pq? */
+  /* return token ? <Outlet /> : <Navigate to="/" />; */  
+  return localStorage.getItem('@userToken') ? <Outlet /> : <Navigate to="/" />;
+}
 
 const Router = () => (
   <BrowserRouter>
@@ -14,8 +22,10 @@ const Router = () => (
         <Route exact path="/" element={<Signin />} />
         <Route exact path="/signup" element={<Signup />} />
         <Route exact path="/forgot-password" element={<ForgotPassword />} />
-        <Route exact path="/courses" element={<Courses />} />
-        <Route exact path="/projects" element={<Projects />} />
+        <Route element={<PrivateOutlet />}>
+          <Route path="/projects" element={<Projects />} />
+          <Route exact path="/courses" element={<Courses />} />
+        </Route>
     </Routes>
   </BrowserRouter>
 );

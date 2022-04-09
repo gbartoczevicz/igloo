@@ -1,10 +1,13 @@
+import { AuthProvider } from './store/auth';
 import './index.css';
 import Routes from './router';
 
 function App() {
   return (
     <div className="App">
-      <Routes />
+      <AuthProvider>
+        <Routes />
+      </AuthProvider>
     </div>
   );
 }

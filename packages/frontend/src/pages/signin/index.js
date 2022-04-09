@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Form } from "@unform/web";
 import { Input } from "../../components/form";
 import {
@@ -6,13 +6,19 @@ import {
   setErrorsFromForm,
   validateForm,
 } from "../../validations";
-import * as fireToast from '../../utils/fireToast';
 import api from '../../services/api';
+import * as fireToast from '../../utils/fire-toast';
+import { useAuth } from "../../store/auth";
+import httpStatus from "../../misc/http-status";
 
 const Signin = () => {
   const loginFormRef = useRef(null);
+  const [backEndError, setBackEndError] = useState(null);
+
+  const { signIn } = useAuth();
 
   const handleLoginSubmit = (data) => {
+    setBackEndError("");
     validateForm({ 
       data, 
       formRef: loginFormRef, 
@@ -21,10 +27,13 @@ const Signin = () => {
     .then(result => {
       api.post('/sessions', data)
         .then(response => {
-          fireToast.success('Bem vindo!');
+          fireToast.success('Bem vindo! ', response.data);
+          signIn(response.data);
         })
-        .catch(errors => {
-          // set back end errors
+        .catch(error => {
+          if(error.response.status === httpStatus.UNAUTHORIZED) {
+            setBackEndError("Login incorreto");
+          }
         })
     })
      .catch(error => {
@@ -43,6 +52,10 @@ const Signin = () => {
             <div className="mb-6">
               <Input name="password" type="password" label="Senha" placeholder="Senha"/>
             </div>
+            {
+              backEndError &&
+              <small className="error text-red-400">{`*${backEndError}`}</small>
+            }
             <div className="flex items-center justify-between">
               <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" >
                 Sign In

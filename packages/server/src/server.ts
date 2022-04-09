@@ -16,6 +16,7 @@ export function createServer(systemSetup: SystemSetup) {
   const managerAuthenticated = SetupMiddlewares.managerAuthenticated(
     systemSetup,
   );
+  const isUserAManager = SetupMiddlewares.isUserAManager(systemSetup);
 
   const router: HttpContracts.Router<
     E.Router,
@@ -45,6 +46,11 @@ export function createServer(systemSetup: SystemSetup) {
       systemSetup,
       userAuthenticated,
       managerAuthenticated,
+    ),
+    SetupRoutes.setupGetUsersAsManager(
+      systemSetup,
+      userAuthenticated,
+      isUserAManager,
     ),
   ]);
 

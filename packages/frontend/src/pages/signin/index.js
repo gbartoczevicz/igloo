@@ -7,7 +7,7 @@ import {
   validateForm,
 } from "../../validations";
 import api from '../../services/api';
-import * as fireToast from '../../utils/fireToast';
+import * as fireToast from '../../utils/fire-toast';
 import { useAuth } from "../../store/auth";
 import httpStatus from "../../misc/http-status";
 

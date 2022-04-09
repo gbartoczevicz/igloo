@@ -1,6 +1,6 @@
 import * as Yup from "yup";
-import { schema as signinFormValidationSchema } from "./signinFormValidationSchema";
-import { schema as signupFormValidationSchema } from "./signupFormValidationSchema";
+import { schema as signinFormValidationSchema } from "./signin-form-validation-schema";
+import { schema as signupFormValidationSchema } from "./signup-form-validation-schema";
 
 async function validateForm({ schema, data, formRef }) {
   await schema.validate(data, {

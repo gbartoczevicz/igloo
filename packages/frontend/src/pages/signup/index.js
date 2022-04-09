@@ -6,7 +6,7 @@ import {
   setErrorsFromForm,
   validateForm,
 } from "../../validations";
-import * as fireToast from '../../utils/fireToast';
+import * as fireToast from '../../utils/fire-toast';
 import api from '../../services/api';
 import messages from "../../misc/messages";
 import { useNavigate } from "react-router-dom";

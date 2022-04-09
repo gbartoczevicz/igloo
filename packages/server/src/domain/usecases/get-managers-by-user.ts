@@ -1,7 +1,7 @@
 import { InstitutionManagersRepo } from "~/contracts/database/repositories";
 import { InstitutionManager, User } from "../entities";
 
-export class GetManagersByUser {
+export class GetManagersByUserUseCase {
   private readonly managersRepo: InstitutionManagersRepo;
 
   public constructor(managersRepo: InstitutionManagersRepo) {

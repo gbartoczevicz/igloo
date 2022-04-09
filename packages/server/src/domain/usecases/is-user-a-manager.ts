@@ -11,6 +11,6 @@ export class IsUserAManagerUseCase {
   public async execute(user: User): Promise<boolean> {
     const managersFound = await this.managersRepo.findAllByUserId(user.id);
 
-    return managersFound.length > 0
+    return managersFound.length > 0;
   }
 }

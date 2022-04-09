@@ -16,7 +16,7 @@ export class GetManagersByUserController
   ): Promise<P.Result<D.GetManagersByUserOut>> {
     const managersFound = await this.usecase.execute(incoming.user);
 
-    const outcoming = D.GetManagersByUserOut(managersFound);
+    const outcoming = new D.GetManagersByUserOut(managersFound);
 
     return this.onOk(outcoming);
   }

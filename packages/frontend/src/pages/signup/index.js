@@ -10,6 +10,7 @@ import * as fireToast from '../../utils/fireToast';
 import api from '../../services/api';
 import messages from "../../misc/messages";
 import { useNavigate } from "react-router-dom";
+import httpStatus from "../../misc/http-status";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -30,7 +31,7 @@ const Signup = () => {
           navigate('/');
         })
         .catch(error => {
-          if(error.response.status === 400) {
+          if(error.response.status === httpStatus.BAD_REQUEST) {
             setBackEndError(error.response.data.message);
           }
         })

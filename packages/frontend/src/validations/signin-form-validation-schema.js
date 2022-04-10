@@ -1,10 +1,12 @@
 import * as Yup from "yup";
 import messages from "../misc/messages";
 
+const signin = messages.form.signin;
+
 export const schema = Yup.object().shape({
   email: Yup.string()
-    .email(messages.form.signin.email_format)
-    .required(messages.form.signin.email_required),
+    .email(signin.email_format)
+    .required(signin.email_required),
   password: Yup.string()
-    .required(messages.form.signin.password_required),
+    .required(signin.password_required),
 });

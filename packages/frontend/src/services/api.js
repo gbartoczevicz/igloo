@@ -10,4 +10,15 @@ const api = axios.create({
     }
 })
 
+api.interceptors.request.use(
+    config => {
+        config.headers['Authorization'] = `Bearer ${localStorage.getItem('@userToken')}`;
+
+        return config;
+    },
+    error => {
+        return Promise.reject(error)
+    },
+)
+
 export default api;

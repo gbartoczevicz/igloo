@@ -32,6 +32,16 @@ export class PrismaInstitutionManagersRepo
     });
   }
 
+  public async findAllByUserId(userId: Id): Promise<InstitutionManager[]> {
+    const foundManagers = await this.client.client.institutionManager.findMany({
+      where: { userId: userId.value },
+    });
+
+    return foundManagers.map((foundManager) =>
+      this.toEntity(foundManager)
+    ) as InstitutionManager[];
+  }
+
   public async findByInstitutionId(
     institutionId: Id,
   ): Promise<InstitutionManager | null> {

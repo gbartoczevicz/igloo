@@ -42,7 +42,7 @@ export function setupCreateInstitutions(
       if (result instanceof CreateInstitutionIn) {
         const createInstitutionAndManagerIn = new CreateInstitutionAndManagerIn(
           result,
-          req.user,
+          req.authenticatedUserIn.user,
         );
 
         req.createInstitutionAndManager = createInstitutionAndManagerIn;

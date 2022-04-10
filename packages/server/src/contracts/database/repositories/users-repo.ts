@@ -6,5 +6,6 @@ export interface UsersRepo {
   findByEmail(email: Email): Promise<User | null>;
   findByPhone(phone: Phone): Promise<User | null>;
   findAllById(ids: Id[]): Promise<User[]>;
+  findAll(): Promise<User[]>;
   save(user: User): Promise<void>;
 }

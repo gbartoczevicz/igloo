@@ -15,6 +15,18 @@ export class UsersRepoInMemory implements UsersRepo {
     return Promise.resolve(foundById);
   }
 
+  public async findAllById(ids: Id[]): Promise<User[]> {
+    const foundByIds = this.users.filter((u) =>
+      ids.find((id) => u.id.isEqual(id)) !== undefined
+    );
+
+    return Promise.resolve(foundByIds);
+  }
+
+  public async findAll(): Promise<User[]> {
+    return Promise.resolve(Array.from(this.users));
+  }
+
   public async findByEmail(email: Email): Promise<User | null> {
     const foundByEmail =
       this.users.find((u) => u.email.toString() === email.toString()) || null;

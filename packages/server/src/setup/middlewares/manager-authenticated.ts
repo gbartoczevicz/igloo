@@ -16,7 +16,7 @@ export function managerAuthenticated(
 
   return (req, res, next) => {
     const result = AuthenticateManagerIn.create({
-      user: req.user,
+      user: req.authenticatedUserIn.user,
       institutionId: req.params.institutionId,
     });
 

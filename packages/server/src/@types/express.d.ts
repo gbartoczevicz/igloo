@@ -4,7 +4,6 @@ import * as D from "~/dtos";
 declare global {
   namespace Express {
     interface Request {
-      user: User;
       manager: InstitutionManager;
       authenticatedUserIn: D.AuthenticatedUserIn;
       createInstitutionAndManager: D.CreateInstitutionAndManagerIn;

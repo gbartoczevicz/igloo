@@ -11,7 +11,7 @@ export function isUserAManager(
   );
 
   return (req, res, next) => {
-    usecase.execute(req.user).then((isAManager) => {
+    usecase.execute(req.authenticatedUserIn.user).then((isAManager) => {
       if (isAManager) {
         return next();
       }

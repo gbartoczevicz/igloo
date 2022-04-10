@@ -3,7 +3,7 @@ import { HttpStatus } from "~/contracts/http";
 import { SystemSetup } from "~/contracts/setup/system";
 import { AuthenticateUserController } from "~/domain/controllers";
 import { AuthenticateUserUseCase } from "~/domain/usecases";
-import { AuthenticateUserIn } from "~/dtos";
+import { AuthenticatedUserIn, AuthenticateUserIn } from "~/dtos";
 
 export function userAuthenticated(
   systemSetup: SystemSetup,
@@ -27,7 +27,11 @@ export function userAuthenticated(
         return res.status(userOut.status).json(userOut.content.toRaw());
       }
 
-      req.user = userOut.content.toRaw() as any;
+      const authenticatedUser = userOut.content.toRaw() as any;
+
+      const result = new AuthenticatedUserIn(authenticatedUser);
+
+      req.authenticatedUserIn = result;
 
       return next();
     });

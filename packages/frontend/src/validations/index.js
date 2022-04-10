@@ -1,6 +1,8 @@
 import * as Yup from "yup";
 import { schema as signinFormValidationSchema } from "./signin-form-validation-schema";
 import { schema as signupFormValidationSchema } from "./signup-form-validation-schema";
+import { schema as institutionCreationFormValidationSchema } from "./institution-creation-form-validation-schema";
+
 
 async function validateForm({ schema, data, formRef }) {
   await schema.validate(data, {
@@ -23,6 +25,7 @@ function setErrorsFromForm({ errors, formRef }) {
 export {
   signinFormValidationSchema,
   signupFormValidationSchema,
+  institutionCreationFormValidationSchema,
   validateForm,
   setErrorsFromForm
 };

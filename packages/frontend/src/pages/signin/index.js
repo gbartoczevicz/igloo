@@ -12,16 +12,16 @@ import { useAuth } from "../../store/auth";
 import httpStatus from "../../misc/http-status";
 
 const Signin = () => {
-  const loginFormRef = useRef(null);
+  const signinFormRef = useRef(null);
   const [backEndError, setBackEndError] = useState(null);
 
   const { signIn } = useAuth();
 
-  const handleLoginSubmit = (data) => {
+  const handleSigninSubmit = (data) => {
     setBackEndError("");
     validateForm({ 
       data, 
-      formRef: loginFormRef, 
+      formRef: signinFormRef, 
       schema:  signinFormValidationSchema,
     })
     .then(result => {
@@ -32,12 +32,12 @@ const Signin = () => {
         })
         .catch(error => {
           if(error.response.status === httpStatus.UNAUTHORIZED) {
-            setBackEndError("Login incorreto");
+            setBackEndError("Email ou senha inválidos.");
           }
         })
     })
      .catch(error => {
-      setErrorsFromForm({ errors: error, formRef: loginFormRef });
+      setErrorsFromForm({ errors: error, formRef: signinFormRef });
     })
   }
 
@@ -45,7 +45,7 @@ const Signin = () => {
     <>
       <div className="flex flex-wrap justify-center mt-20">
         <div className="w-full max-w-sm">
-          <Form className="shadow-md bg-white rounded px-8 pt-6 pb-8 mb-4" onSubmit={handleLoginSubmit} ref={loginFormRef} >
+          <Form className="shadow-md bg-white rounded px-8 pt-6 pb-8 mb-4" onSubmit={handleSigninSubmit} ref={signinFormRef} >
             <div className="mb-4">
               <Input name="email" /*type="email"*/ label="Email" placeholder="Email"/>
             </div>

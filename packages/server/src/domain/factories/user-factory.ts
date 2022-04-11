@@ -1,9 +1,8 @@
 import { User } from "~/domain/entities";
-import { CreateUserIn } from "~/dtos";
 import { Factory } from "~/contracts/domain";
 import * as Factories from "~/domain/factories";
 
-export class UserFactory implements Factory<CreateUserIn, User> {
+export class UserFactory implements Factory<UserFactory.Params, User> {
   public constructor(
     public readonly idFactory: Factories.IdFactory,
     public readonly emailFactory: Factories.EmailFactory,
@@ -11,8 +10,8 @@ export class UserFactory implements Factory<CreateUserIn, User> {
     public readonly phoneFactory: Factories.PhoneFactory,
   ) {}
 
-  public create(incoming: CreateUserIn): User {
-    const id = this.idFactory.create();
+  public create(incoming: UserFactory.Params): User {
+    const id = this.idFactory.create(incoming.id);
     const email = this.emailFactory.create(incoming.email);
     const password = this.passwordFactory.create(incoming.password);
     const phone = this.phoneFactory.create(incoming.phone);
@@ -26,4 +25,15 @@ export class UserFactory implements Factory<CreateUserIn, User> {
       phone,
     );
   }
+}
+
+namespace UserFactory {
+  export type Params = {
+    id?: string;
+    name: string;
+    surname: string | null;
+    email: string;
+    password: string;
+    phone: string;
+  };
 }

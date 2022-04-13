@@ -37,7 +37,7 @@ export class UpdateUserUseCase {
       return false;
     }
 
-    return userFound.id.isEqual(user.id) &&
+    return !userFound.id.isEqual(user.id) &&
       userFound.email.toString() === user.email.toString();
   }
 
@@ -48,7 +48,7 @@ export class UpdateUserUseCase {
       return false;
     }
 
-    return userFound.id.isEqual(user.id) &&
+    return !userFound.id.isEqual(user.id) &&
       userFound.phone.toString() === user.phone.toString();
   }
 }

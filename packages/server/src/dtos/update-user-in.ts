@@ -1,6 +1,7 @@
 import { DTOValidationMapping, InDTO, InDTOResult } from "~/contracts/dtos";
 import { HttpStatus } from "~/contracts/http";
 import { Result } from "~/contracts/presentation";
+import { CommonErrorOut } from "./common-error-out";
 import { InvalidField } from "~/errors";
 
 export class UpdateUserIn extends InDTO {
@@ -17,7 +18,7 @@ export class UpdateUserIn extends InDTO {
 
   public static create(
     income: unknown,
-  ): InDTOResult<UpdateUserIn, InvalidField[]> {
+  ): InDTOResult<UpdateUserIn, CommonErrorOut> {
     const { id, name, surname, email, phone, password } = income as any || {};
 
     const errors = this.validate({
@@ -49,9 +50,9 @@ export class UpdateUserIn extends InDTO {
 
     if (errors.length > 0) {
       return {
-        content: errors,
+        content: new CommonErrorOut(errors),
         status: HttpStatus.badRequest,
-      } as Result<InvalidField[]>;
+      };
     }
 
     return new UpdateUserIn(

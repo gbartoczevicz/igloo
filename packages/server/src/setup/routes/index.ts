@@ -6,3 +6,4 @@ export * from "./create-student";
 export * from "./get-professors-by-manager";
 export * from "./get-students-by-manager";
 export * from "./get-users-as-manager";
+export * from "./update-user";

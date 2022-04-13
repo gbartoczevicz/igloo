@@ -52,6 +52,10 @@ export function createServer(systemSetup: SystemSetup) {
       userAuthenticated,
       isUserAManager,
     ),
+    SetupRoutes.setupUpdateUser(
+      systemSetup,
+      userAuthenticated,
+    ),
   ]);
 
   express.use(cors());

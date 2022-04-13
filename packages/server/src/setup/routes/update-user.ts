@@ -11,7 +11,7 @@ export function setupUpdateUser(
 ) {
   const usecase = new UpdateUserUseCase(
     systemSetup.factories.userFactory,
-    systemSetup.repositories.usersRepo
+    systemSetup.repositories.usersRepo,
   );
 
   const controller = new UpdateUserController(usecase);

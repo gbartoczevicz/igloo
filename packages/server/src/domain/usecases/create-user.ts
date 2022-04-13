@@ -8,7 +8,7 @@ export class CreateUserUseCase {
   public constructor(
     private readonly userFactory: UserFactory,
     private readonly usersRepo: UsersRepo,
-  ) { }
+  ) {}
 
   public async create(incoming: CreateUserIn): Promise<User> {
     const user = this.userFactory.create({
@@ -16,7 +16,7 @@ export class CreateUserUseCase {
       surname: incoming.surname,
       email: incoming.email,
       phone: incoming.phone,
-      password: incoming.password
+      password: incoming.password,
     });
 
     const emailAlreadyInUse = await this.usersRepo.findByEmail(user.email);

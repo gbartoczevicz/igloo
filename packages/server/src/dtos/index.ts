@@ -20,3 +20,5 @@ export * from "./get-students-by-manager-in";
 export * from "./get-students-by-manager-out";
 export * from "./authenticated-user-in";
 export * from "./get-users-out";
+export * from "./update-user-in";
+export * from "./update-user-out";

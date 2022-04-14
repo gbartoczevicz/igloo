@@ -22,3 +22,4 @@ export * from "./authenticated-user-in";
 export * from "./get-users-out";
 export * from "./update-user-in";
 export * from "./update-user-out";
+export * from "./user-profile-out";

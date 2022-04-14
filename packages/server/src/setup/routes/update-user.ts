@@ -17,7 +17,7 @@ export function setupUpdateUser(
   const controller = new UpdateUserController(usecase);
 
   return new HttpRoute(
-    "/users",
+    "/profile",
     Method.put,
     (req, res, _next) => {
       controller.execute(req.updateUser).then((result) =>

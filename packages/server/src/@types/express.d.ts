@@ -8,6 +8,7 @@ declare global {
       authenticatedUserIn: D.AuthenticatedUserIn;
       createInstitutionAndManager: D.CreateInstitutionAndManagerIn;
       createUser: D.CreateUserIn;
+      updateUser: D.UpdateUserIn;
       createSession: D.CreateSessionIn;
       createProfessor: D.CreateProfessorIn;
       createStudent: D.CreateStudentIn;

@@ -1,4 +1,5 @@
 import { UsersRepo } from "~/contracts/database/repositories";
+import { UpdateUserIn } from "~/dtos";
 import { DomainError } from "~/errors";
 import { User } from "../entities";
 import { UserFactory } from "../factories";
@@ -13,7 +14,7 @@ export class UpdateUserUseCase {
     this.usersRepo = usersRepo;
   }
 
-  public async execute(incoming: any): Promise<User> {
+  public async execute(incoming: UpdateUserIn): Promise<User> {
     const user = this.usersFactory.create(incoming);
 
     if (await this.isEmailAlreadyInUse(user)) {
@@ -36,7 +37,7 @@ export class UpdateUserUseCase {
       return false;
     }
 
-    return userFound.id.isEqual(user.id) &&
+    return !userFound.id.isEqual(user.id) &&
       userFound.email.toString() === user.email.toString();
   }
 
@@ -47,7 +48,7 @@ export class UpdateUserUseCase {
       return false;
     }
 
-    return userFound.id.isEqual(user.id) &&
+    return !userFound.id.isEqual(user.id) &&
       userFound.phone.toString() === user.phone.toString();
   }
 }

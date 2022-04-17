@@ -4,7 +4,7 @@ import { validatorMapping } from "./mapper";
 
 type Params = Record<string, {
   option: Options;
-  field: unknown;
+  value: unknown;
 }>;
 
 export function validator(params: Params): InvalidField[] {
@@ -17,7 +17,7 @@ export function validator(params: Params): InvalidField[] {
 
     if (!validatorFun) throw new Error("Unmapped validation type");
 
-    const isValid = validatorFun(entry.field);
+    const isValid = validatorFun(entry.value);
 
     if (isValid) continue;
 

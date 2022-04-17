@@ -2,43 +2,42 @@ import { DTOValidationMapping, InDTO } from "~/contracts/dtos";
 import { User } from "~/domain/entities";
 import { CommonErrorOut } from "~/dtos";
 import { Either, left, right } from "~/lib/logic/either";
+import { Options, validator } from "~/lib/validators";
 
 export namespace CreateUserDTO {
-  export class In extends InDTO {
+  export class In {
     private constructor(
       public readonly name: string,
       public readonly surname: string | null,
       public readonly email: string,
       public readonly phone: string,
       public readonly password: string,
-    ) {
-      super();
-    }
+    ) {}
 
     public static create(
       income: unknown,
     ): Either<In, CommonErrorOut> {
       const { name, surname, email, phone, password } = income as any || {};
 
-      const errors = this.validate({
+      const errors = validator({
         name: {
-          validationType: DTOValidationMapping.requiredString,
+          option: Options.requiredString,
           value: name,
         },
         surname: {
-          validationType: DTOValidationMapping.optionalString,
+          option: Options.optionalString,
           value: surname,
         },
         email: {
-          validationType: DTOValidationMapping.requiredString,
+          option: Options.requiredString,
           value: email,
         },
         phone: {
-          validationType: DTOValidationMapping.requiredString,
+          option: Options.requiredString,
           value: phone,
         },
         password: {
-          validationType: DTOValidationMapping.requiredString,
+          option: Options.requiredString,
           value: password,
         },
       });

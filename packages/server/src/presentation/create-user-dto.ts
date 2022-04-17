@@ -1,6 +1,5 @@
-import { DTOValidationMapping, InDTO } from "~/contracts/dtos";
 import { User } from "~/domain/entities";
-import { CommonErrorOut } from "~/dtos";
+import { InvalidField } from "~/errors/field-tmp";
 import { Either, left, right } from "~/lib/logic/either";
 import { Options, validator } from "~/lib/validators";
 
@@ -16,7 +15,7 @@ export namespace CreateUserDTO {
 
     public static create(
       income: unknown,
-    ): Either<In, CommonErrorOut> {
+    ): Either<In, InvalidField[]> {
       const { name, surname, email, phone, password } = income as any || {};
 
       const errors = validator({
@@ -43,7 +42,7 @@ export namespace CreateUserDTO {
       });
 
       if (errors.length > 0) {
-        return right(new CommonErrorOut(errors));
+        return right(errors);
       }
 
       return left(

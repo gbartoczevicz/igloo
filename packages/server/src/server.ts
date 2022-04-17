@@ -56,7 +56,7 @@ export function createServer(systemSetup: SystemSetup) {
       systemSetup,
       userAuthenticated,
     ),
-    SetupRoutes.setupGetSelfProfile(userAuthenticated)
+    SetupRoutes.setupGetSelfProfile(userAuthenticated),
   ]);
 
   express.use(cors());

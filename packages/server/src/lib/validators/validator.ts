@@ -1,13 +1,14 @@
-import { InvalidField } from "~/errors/field-tmp";
+import { InvalidField, InvalidFields } from "~/errors/field-tmp";
 import { ValidationOptions as Options } from "./options";
 import { validatorMapping } from "./mapper";
+import { Either, left, right } from "../logic/either";
 
 type Params = Record<string, {
   option: Options;
   value: unknown;
 }>;
 
-export function validator(params: Params): InvalidField[] {
+export function validator(params: Params): Either<null, InvalidFields> {
   const invalidFields: InvalidField[] = [];
 
   const entries = Object.entries(params);
@@ -21,8 +22,15 @@ export function validator(params: Params): InvalidField[] {
 
     if (isValid) continue;
 
-    invalidFields.push(new InvalidField(field, entry.option));
+    invalidFields.push({
+      field,
+      reason: entry.option
+    });
   }
 
-  return invalidFields;
+  if (invalidFields.length > 0) {
+    return right(new InvalidFields(invalidFields));
+  }
+
+  return left(null);
 }

@@ -1,5 +1,5 @@
 import { User } from "~/domain/entities";
-import { InvalidField } from "~/errors/field-tmp";
+import { InvalidFields } from "~/errors/field-tmp";
 import { Either, left, right } from "~/lib/logic/either";
 import { Options, validator } from "~/lib/validators";
 
@@ -11,14 +11,14 @@ export namespace CreateUserDTO {
       public readonly email: string,
       public readonly phone: string,
       public readonly password: string,
-    ) {}
+    ) { }
 
     public static create(
       income: unknown,
-    ): Either<In, InvalidField[]> {
+    ): Either<In, InvalidFields> {
       const { name, surname, email, phone, password } = income as any || {};
 
-      const errors = validator({
+      const result = validator({
         name: {
           option: Options.requiredString,
           value: name,
@@ -41,8 +41,8 @@ export namespace CreateUserDTO {
         },
       });
 
-      if (errors.length > 0) {
-        return right(errors);
+      if (result.isRight()) {
+        return right(result.value)
       }
 
       return left(

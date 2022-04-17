@@ -1,6 +1,6 @@
 import { Result } from "~/contracts/presentation";
 import { CreateUserUseCase } from "~/domain/usecases";
-import { CommonErrorOut, CreateUserIn, CreateUserOut } from "~/dtos";
+import { CreateUserDTO } from "./create-user-dto";
 import { Controller } from "~/presentation/controller";
 
 export class CreateUserController extends Controller {
@@ -13,15 +13,15 @@ export class CreateUserController extends Controller {
   }
 
   protected override async handle(incoming: unknown): Promise<Result<unknown>> {
-    const toCreateUser = CreateUserIn.create(incoming);
+    const toCreateUser = CreateUserDTO.In.create(incoming);
 
-    if (!(toCreateUser instanceof CreateUserIn)) {
-      return this.onDomainError(new CommonErrorOut(toCreateUser.content));
+    if (toCreateUser.isRight()) {
+      return this.onDomainError(toCreateUser.value);
     }
 
-    const userCreated = await this.usecase.create(toCreateUser);
+    const userCreated = await this.usecase.create(toCreateUser.value);
 
-    const outcoming = new CreateUserOut(userCreated).toRaw();
+    const outcoming = CreateUserDTO.Out.toRaw(userCreated);
 
     return this.onCreated(outcoming);
   }

@@ -1,6 +1,6 @@
 import { DTOValidationMapping, InDTO, InDTOResult } from "~/contracts/dtos";
 import { HttpStatus } from "~/contracts/http";
-import { Result } from "~/contracts/presentation";
+import { HttpResult } from "~/contracts/presentation";
 import { InvalidField } from "~/errors";
 
 export class CreateUserIn extends InDTO {
@@ -46,7 +46,7 @@ export class CreateUserIn extends InDTO {
       return {
         content: errors,
         status: HttpStatus.badRequest,
-      } as Result<InvalidField[]>;
+      } as HttpResult<InvalidField[]>;
     }
 
     return new CreateUserIn(

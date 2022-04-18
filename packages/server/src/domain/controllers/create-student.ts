@@ -14,7 +14,7 @@ export class CreateStudentController
 
   protected override async handle(
     incoming: D.CreateStudentIn,
-  ): Promise<P.Result<D.CreateStudentOut>> {
+  ): Promise<P.HttpResult<D.CreateStudentOut>> {
     const studentCreated = await this.usecase.execute(incoming);
 
     const outcoming = new CreateStudentOut(studentCreated);

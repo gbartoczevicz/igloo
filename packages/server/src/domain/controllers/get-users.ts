@@ -15,7 +15,7 @@ export class GetUsersController extends P.Controller<
 
   protected override async handle(
     _: D.AuthenticatedUserIn,
-  ): Promise<P.Result<D.GetUsersOut>> {
+  ): Promise<P.HttpResult<D.GetUsersOut>> {
     const usersFound = await this.usecase.execute();
 
     const outcoming = new D.GetUsersOut(usersFound);

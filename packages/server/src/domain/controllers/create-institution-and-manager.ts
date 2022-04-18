@@ -29,7 +29,7 @@ export class CreateInstitutionAndManagerController extends P.Controller<
 
   protected override async handle(
     incoming: CreateInstitutionAndManagerIn,
-  ): Promise<P.Result<CreateInstitutionAndManagerOut>> {
+  ): Promise<P.HttpResult<CreateInstitutionAndManagerOut>> {
     const institutionCreated = await this.createInstitutionUseCase.execute(
       incoming.createInstitutionIn,
     );

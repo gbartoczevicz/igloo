@@ -1,7 +1,7 @@
 import { InvalidField } from "~/errors";
-import { Result } from "../presentation";
+import { HttpResult } from "../presentation";
 
-export type InDTOResult<T, U> = T | Result<U>;
+export type InDTOResult<T, U> = T | HttpResult<U>;
 
 export const enum DTOValidationMapping {
   requiredString = "is a required string",

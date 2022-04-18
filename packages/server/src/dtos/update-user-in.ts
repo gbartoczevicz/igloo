@@ -1,6 +1,6 @@
 import { DTOValidationMapping, InDTO, InDTOResult } from "~/contracts/dtos";
 import { HttpStatus } from "~/contracts/http";
-import { Result } from "~/contracts/presentation";
+import { HttpResult } from "~/contracts/presentation";
 import { CommonErrorOut } from "./common-error-out";
 import { InvalidField } from "~/errors";
 

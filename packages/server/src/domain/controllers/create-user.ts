@@ -15,7 +15,7 @@ export class CreateUserController
 
   protected override async handle(
     incoming: D.CreateUserIn,
-  ): Promise<P.Result<D.CreateUserOut>> {
+  ): Promise<P.HttpResult<D.CreateUserOut>> {
     const userCreated = await this.createUserUseCase.create(incoming);
 
     const outcoming = new D.CreateUserOut(userCreated);

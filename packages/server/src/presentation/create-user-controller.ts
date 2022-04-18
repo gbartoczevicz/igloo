@@ -1,4 +1,4 @@
-import { Result } from "~/contracts/presentation";
+import { HttpResult } from "~/contracts/presentation";
 import { CreateUserUseCase } from "~/domain/usecases";
 import { CreateUserDTO } from "./create-user-dto";
 import { Controller } from "~/presentation/controller";
@@ -13,7 +13,7 @@ export class CreateUserController extends Controller {
     this.usecase = usecase;
   }
 
-  protected override async handle(incoming: unknown): Promise<Result<unknown>> {
+  protected override async handle(incoming: unknown): Promise<HttpResult> {
     const toCreateUser = CreateUserDTO.In.create(incoming);
 
     if (toCreateUser.isRight()) {

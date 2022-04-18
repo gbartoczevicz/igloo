@@ -14,7 +14,7 @@ export class CreateSessionController
 
   protected override async handle(
     incoming: D.CreateSessionIn,
-  ): Promise<P.Result<D.CreateSessionOut>> {
+  ): Promise<P.HttpResult<D.CreateSessionOut>> {
     const sessionCreated = await this.createSessionUseCase.create(incoming);
 
     const outcoming = new D.CreateSessionOut(sessionCreated);

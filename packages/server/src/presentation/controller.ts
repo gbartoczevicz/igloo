@@ -1,47 +1,47 @@
 import { AuthenticationError, DomainError, SignUpError } from "~/errors";
 import { HttpStatus } from "~/contracts/http";
-import { Result } from "~/contracts/presentation";
+import { HttpResult } from "~/contracts/presentation";
 import { CommonError } from "~/errors/common";
 
 export abstract class Controller {
-  protected abstract handle(incoming: unknown): Promise<Result<unknown>>;
+  protected abstract handle(incoming: unknown): Promise<HttpResult>;
 
-  public async execute(incoming: unknown): Promise<Result<unknown>> {
+  public async execute(incoming: unknown): Promise<HttpResult> {
     return await this.handle(incoming)
       .then((result) => result)
       .catch((err) => this.serializeOnAnyError(err));
   }
 
-  protected onOk(content: unknown): Result<unknown> {
+  protected onOk(content: unknown): HttpResult {
     return { content, status: HttpStatus.ok };
   }
 
-  protected onCreated(content: unknown): Result<unknown> {
+  protected onCreated(content: unknown): HttpResult {
     return { content, status: HttpStatus.created };
   }
 
-  protected onDomainError(content: unknown): Result<unknown> {
+  protected onDomainError(content: unknown): HttpResult {
     return {
       content,
       status: HttpStatus.badRequest,
     };
   }
 
-  protected onInternalError(content: unknown): Result<unknown> {
+  protected onInternalError(content: unknown): HttpResult {
     return {
       content,
       status: HttpStatus.internalError,
     };
   }
 
-  protected onUnauthorized(content: unknown): Result<unknown> {
+  protected onUnauthorized(content: unknown): HttpResult {
     return {
       content,
       status: HttpStatus.unauthorized,
     };
   }
 
-  private serializeOnAnyError(err: unknown): Result<unknown> {
+  private serializeOnAnyError(err: unknown): HttpResult {
     console.warn(err);
 
     if (err instanceof DomainError) {

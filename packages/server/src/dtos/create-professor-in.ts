@@ -1,6 +1,6 @@
 import { DTOValidationMapping, InDTO, InDTOResult } from "~/contracts/dtos";
 import { HttpStatus } from "~/contracts/http";
-import { Result } from "~/contracts/presentation";
+import { HttpResult } from "~/contracts/presentation";
 import { InstitutionManager } from "~/domain/entities";
 import { AuthenticationError } from "~/errors";
 import { CommonErrorOut } from "./common-error-out";
@@ -33,7 +33,7 @@ export class CreateProfessorIn extends InDTO {
       return {
         content: new CommonErrorOut(errors),
         status: HttpStatus.badRequest,
-      } as Result<CommonErrorOut>;
+      } as HttpResult<CommonErrorOut>;
     }
 
     if (!(manager instanceof InstitutionManager)) {

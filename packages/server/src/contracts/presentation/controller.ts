@@ -2,49 +2,49 @@ import { CommonErrorOut } from "~/dtos";
 import { AuthenticationError, DomainError, SignUpError } from "~/errors";
 import { InDTO, OutDTO } from "../dtos";
 import { HttpStatus } from "../http";
-import { Result } from "./result";
+import { HttpResult } from "./result";
 
 type UnknownOutDTO = OutDTO<unknown>;
 
 export abstract class Controller<T extends InDTO, U extends UnknownOutDTO> {
-  protected abstract handle(incoming: T): Promise<Result<U>>;
+  protected abstract handle(incoming: T): Promise<HttpResult<U>>;
 
-  public async execute(incoming: T): Promise<Result<UnknownOutDTO>> {
+  public async execute(incoming: T): Promise<HttpResult<UnknownOutDTO>> {
     return await this.handle(incoming)
       .then((result) => result)
       .catch((err) => this.serializeOnAnyError(err));
   }
 
-  protected onOk(content: U): Result<U> {
+  protected onOk(content: U): HttpResult<U> {
     return { content, status: HttpStatus.ok };
   }
 
-  protected onCreated(content: U): Result<U> {
+  protected onCreated(content: U): HttpResult<U> {
     return { content, status: HttpStatus.created };
   }
 
-  protected onDomainError(content: CommonErrorOut): Result<CommonErrorOut> {
+  protected onDomainError(content: CommonErrorOut): HttpResult<CommonErrorOut> {
     return {
       content,
       status: HttpStatus.badRequest,
     };
   }
 
-  protected onInternalError(content: CommonErrorOut): Result<CommonErrorOut> {
+  protected onInternalError(content: CommonErrorOut): HttpResult<CommonErrorOut> {
     return {
       content,
       status: HttpStatus.internalError,
     };
   }
 
-  protected onUnauthorized(content: CommonErrorOut): Result<CommonErrorOut> {
+  protected onUnauthorized(content: CommonErrorOut): HttpResult<CommonErrorOut> {
     return {
       content,
       status: HttpStatus.unauthorized,
     };
   }
 
-  private serializeOnAnyError(err: unknown): Result<CommonErrorOut> {
+  private serializeOnAnyError(err: unknown): HttpResult<CommonErrorOut> {
     console.warn(err);
 
     if (err instanceof DomainError) {

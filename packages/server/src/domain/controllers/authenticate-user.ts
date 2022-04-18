@@ -13,7 +13,7 @@ export class AuthenticateUserController
 
   protected override async handle(
     incoming: D.AuthenticateUserIn,
-  ): Promise<P.Result<D.AuthenticateUserOut>> {
+  ): Promise<P.HttpResult<D.AuthenticateUserOut>> {
     const authenticatedUser = await this.usecase.execute(incoming.token);
 
     const outcoming = new D.AuthenticateUserOut(authenticatedUser);

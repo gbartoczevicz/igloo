@@ -15,7 +15,7 @@ export class GetStudentsByManagerController extends P.Controller<
 
   protected override async handle(
     incoming: D.GetStudentsByManagerIn,
-  ): Promise<P.Result<D.GetStudentsByManagerOut>> {
+  ): Promise<P.HttpResult<D.GetStudentsByManagerOut>> {
     const studentsFound = await this.usecase.execute(incoming.manager);
 
     const outcoming = new D.GetStudentsByManagerOut(studentsFound);

@@ -1,6 +1,6 @@
 import { DTOValidationMapping, InDTO, InDTOResult } from "~/contracts/dtos";
 import { HttpStatus } from "~/contracts/http";
-import { Result } from "~/contracts/presentation";
+import { HttpResult } from "~/contracts/presentation";
 import { CommonErrorOut } from "./common-error-out";
 
 export class CreateInstitutionIn extends InDTO {
@@ -42,7 +42,7 @@ export class CreateInstitutionIn extends InDTO {
       return {
         content: new CommonErrorOut(errors),
         status: HttpStatus.badRequest,
-      } as Result<CommonErrorOut>;
+      } as HttpResult<CommonErrorOut>;
     }
 
     return new CreateInstitutionIn(name, cnpj, phone);

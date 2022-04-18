@@ -13,7 +13,7 @@ export class AuthenticateManagerController
 
   protected override async handle(
     incoming: D.AuthenticateManagerIn,
-  ): Promise<P.Result<D.AuthenticateManagerOut>> {
+  ): Promise<P.HttpResult<D.AuthenticateManagerOut>> {
     const authenticatedManager = await this.usecase.execute(incoming);
 
     const outcoming = new D.AuthenticateManagerOut(authenticatedManager);

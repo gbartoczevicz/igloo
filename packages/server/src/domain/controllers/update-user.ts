@@ -15,7 +15,7 @@ export class UpdateUserController
 
   protected override async handle(
     incoming: D.UpdateUserIn,
-  ): Promise<P.Result<D.UpdateUserOut>> {
+  ): Promise<P.HttpResult<D.UpdateUserOut>> {
     const userUpdated = await this.usecase.execute(incoming);
 
     const outcoming = new D.UpdateUserOut(userUpdated);

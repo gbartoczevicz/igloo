@@ -1,4 +1,4 @@
-import { InvalidField, InvalidFields } from "~/errors/field-tmp";
+import { InvalidField, InvalidFields } from "~/errors";
 import { ValidationOptions as Options } from "./options";
 import { validatorMapping } from "./mapper";
 import { Either, left, right } from "../logic/either";

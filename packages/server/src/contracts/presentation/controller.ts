@@ -26,7 +26,7 @@ export abstract class Controller<T extends InDTO, U extends UnknownOutDTO> {
   protected onDomainError(content: CommonErrorOut): HttpResult<CommonErrorOut> {
     return {
       content,
-      status: HttpStatus.badRequest,
+      status: HttpStatus.unprocessableEntity ,
     };
   }
 

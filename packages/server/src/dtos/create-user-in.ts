@@ -45,7 +45,7 @@ export class CreateUserIn extends InDTO {
     if (errors.length > 0) {
       return {
         content: errors,
-        status: HttpStatus.badRequest,
+        status: HttpStatus.unprocessableEntity ,
       } as HttpResult<InvalidField[]>;
     }
 

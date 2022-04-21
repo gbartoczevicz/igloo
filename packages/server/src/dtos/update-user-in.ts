@@ -51,7 +51,7 @@ export class UpdateUserIn extends InDTO {
     if (errors.length > 0) {
       return {
         content: new CommonErrorOut(errors),
-        status: HttpStatus.badRequest,
+        status: HttpStatus.unprocessableEntity ,
       };
     }
 

@@ -19,10 +19,10 @@ export abstract class Controller {
     return { content, status: HttpStatus.created };
   }
 
-  protected onDomainError(content: unknown): HttpResult {
+  protected onUnprocessableEntity(content: unknown): HttpResult {
     return {
       content,
-      status: HttpStatus.badRequest,
+      status: HttpStatus.unprocessableEntity ,
     };
   }
 
@@ -48,7 +48,7 @@ export abstract class Controller {
     console.warn(err);
 
     if (err instanceof Errors.InvalidFields) {
-      return this.onDomainError({
+      return this.onUnprocessableEntity({
         message: err.message,
         fields: err.fields.map((field) => (
           { name: field.field, reason: field.reason }
@@ -65,7 +65,7 @@ export abstract class Controller {
     }
 
     if (err instanceof Errors.DomainError) {
-      return this.onDomainError({ message: err.message });
+      return this.onUnprocessableEntity({ message: err.message });
     }
 
     return this.onInternalError();

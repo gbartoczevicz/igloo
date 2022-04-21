@@ -22,7 +22,7 @@ export abstract class Controller {
   protected onUnprocessableEntity(content: unknown): HttpResult {
     return {
       content,
-      status: HttpStatus.unprocessableEntity ,
+      status: HttpStatus.unprocessableEntity,
     };
   }
 
@@ -48,12 +48,7 @@ export abstract class Controller {
     console.warn(err);
 
     if (err instanceof Errors.InvalidFields) {
-      return this.onUnprocessableEntity({
-        message: err.message,
-        fields: err.fields.map((field) => (
-          { name: field.field, reason: field.reason }
-        )),
-      });
+      return this.onUnprocessableEntity(err.toRaw());
     }
 
     if (err instanceof Errors.ForbiddenError) {

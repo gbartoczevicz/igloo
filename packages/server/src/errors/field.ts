@@ -19,6 +19,6 @@ export class InvalidFields extends Error {
       fields: this.fields.map((field) => (
         { name: field.name, reason: field.reason }
       )),
-    }
+    };
   }
 }

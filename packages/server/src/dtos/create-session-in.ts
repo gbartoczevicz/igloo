@@ -30,7 +30,7 @@ export class CreateSessionIn extends InDTO {
     if (errors.length > 0) {
       return {
         content: new CommonErrorOut(errors),
-        status: HttpStatus.unprocessableEntity ,
+        status: HttpStatus.unprocessableEntity,
       } as HttpResult<CommonErrorOut>;
     }
 

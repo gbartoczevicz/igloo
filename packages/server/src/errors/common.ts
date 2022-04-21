@@ -1,6 +1,4 @@
-import {
-  DomainError,
-} from "~/errors";
+import { DomainError } from "~/errors";
 
 import { InvalidFields } from "./field-tmp";
 
@@ -11,10 +9,10 @@ export class CommonError {
     if (errors instanceof InvalidFields) {
       return {
         message: errors.message,
-        fields: errors.fields.map(field => (
+        fields: errors.fields.map((field) => (
           { name: field.field, reason: field.reason }
-        ))
-      }
+        )),
+      };
     }
 
     if (errors instanceof DomainError) {

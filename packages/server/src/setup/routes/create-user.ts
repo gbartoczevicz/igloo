@@ -18,6 +18,6 @@ export function setupCreateUsers(systemSetup: SystemSetup) {
       controller.execute(req.body).then((result) =>
         res.status(result.status).json(result.content)
       );
-    }
+    },
   );
 }

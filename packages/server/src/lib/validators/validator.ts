@@ -24,7 +24,7 @@ export function validator(params: Params): Either<null, InvalidFields> {
 
     invalidFields.push({
       field,
-      reason: entry.option
+      reason: entry.option,
     });
   }
 

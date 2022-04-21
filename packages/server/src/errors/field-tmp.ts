@@ -3,7 +3,7 @@ import { ValidationOptions } from "~/lib/validators/options";
 export type InvalidField = {
   field: string;
   reason: ValidationOptions;
-}
+};
 
 export class InvalidFields extends Error {
   public readonly fields: InvalidField[];

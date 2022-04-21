@@ -47,10 +47,10 @@ export abstract class Controller {
     if (err instanceof InvalidFields) {
       return this.onDomainError({
         message: err.message,
-        fields: err.fields.map(field => (
+        fields: err.fields.map((field) => (
           { name: field.field, reason: field.reason }
-        ))
-      })
+        )),
+      });
     }
 
     if (err instanceof DomainError) {

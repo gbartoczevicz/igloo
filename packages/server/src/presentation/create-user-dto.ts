@@ -11,7 +11,7 @@ export namespace CreateUserDTO {
       public readonly email: string,
       public readonly phone: string,
       public readonly password: string,
-    ) { }
+    ) {}
 
     public static create(
       income: unknown,

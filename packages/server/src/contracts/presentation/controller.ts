@@ -30,14 +30,18 @@ export abstract class Controller<T extends InDTO, U extends UnknownOutDTO> {
     };
   }
 
-  protected onInternalError(content: CommonErrorOut): HttpResult<CommonErrorOut> {
+  protected onInternalError(
+    content: CommonErrorOut,
+  ): HttpResult<CommonErrorOut> {
     return {
       content,
       status: HttpStatus.internalError,
     };
   }
 
-  protected onUnauthorized(content: CommonErrorOut): HttpResult<CommonErrorOut> {
+  protected onUnauthorized(
+    content: CommonErrorOut,
+  ): HttpResult<CommonErrorOut> {
     return {
       content,
       status: HttpStatus.unauthorized,

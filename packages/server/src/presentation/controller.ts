@@ -1,7 +1,7 @@
 import { AuthenticationError, DomainError, SignUpError } from "~/errors";
 import { HttpStatus } from "~/contracts/http";
 import { HttpResult } from "~/contracts/presentation";
-import { CommonError } from "~/errors/common";
+import { InvalidFields } from "~/errors/field-tmp";
 
 export abstract class Controller {
   protected abstract handle(incoming: unknown): Promise<HttpResult>;
@@ -44,24 +44,27 @@ export abstract class Controller {
   private serializeOnAnyError(err: unknown): HttpResult {
     console.warn(err);
 
+    if (err instanceof InvalidFields) {
+      return this.onDomainError({
+        message: err.message,
+        fields: err.fields.map(field => (
+          { name: field.field, reason: field.reason }
+        ))
+      })
+    }
+
     if (err instanceof DomainError) {
-      return this.onDomainError(CommonError.toRaw(err));
+      return this.onDomainError({ message: err.message });
     }
 
     if (err instanceof SignUpError) {
-      return this.onUnauthorized(CommonError.toRaw(err));
+      return this.onUnauthorized(undefined);
     }
 
     if (err instanceof AuthenticationError) {
-      return this.onUnauthorized(CommonError.toRaw(err));
+      return this.onUnauthorized(undefined);
     }
 
-    if (err instanceof Error) {
-      return this.onInternalError(CommonError.toRaw(err));
-    }
-
-    const unmappedError = new Error("Unmapped error occurred");
-
-    return this.onInternalError(CommonError.toRaw(unmappedError));
+    return this.onInternalError(undefined);
   }
 }

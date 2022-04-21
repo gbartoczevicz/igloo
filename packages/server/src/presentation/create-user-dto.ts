@@ -15,7 +15,7 @@ export namespace CreateUserDTO {
 
     public static create(
       income: unknown,
-    ): Either<In, InvalidFields> {
+    ): In {
       const { name, surname, email, phone, password } = income as any || {};
 
       const result = validator({
@@ -42,17 +42,15 @@ export namespace CreateUserDTO {
       });
 
       if (result.isRight()) {
-        return right(result.value)
+        throw result.value;
       }
 
-      return left(
-        new In(
-          name,
-          surname || null,
-          email,
-          phone,
-          password,
-        ),
+      return new In(
+        name,
+        surname || null,
+        email,
+        phone,
+        password,
       );
     }
   }

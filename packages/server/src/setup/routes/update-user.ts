@@ -19,7 +19,7 @@ export function setupUpdateUser(
     "/profile",
     Method.put,
     (req, res, _next) => {
-      controller.execute(req.updateUser).then((result) =>
+      controller.execute(req.body).then((result) =>
         res.status(result.status).json(result.content)
       );
     },

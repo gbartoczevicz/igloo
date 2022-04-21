@@ -1,6 +1,4 @@
 import { User } from "~/domain/entities";
-import { InvalidFields } from "~/errors/field-tmp";
-import { Either, left, right } from "~/lib/logic/either";
 import { Options, validator } from "~/lib/validators";
 
 export namespace CreateUserDTO {

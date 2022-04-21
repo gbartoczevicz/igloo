@@ -1,7 +1,7 @@
 import { HttpRoute } from "~/adapters/http";
 import { Method } from "~/contracts/http";
 import { SystemSetup } from "~/contracts/setup/system";
-import { CreateUserController } from "~/presentation/create-user-controller";
+import { CreateUserController } from "~/presentation";
 import { CreateUserUseCase } from "~/domain/usecases";
 
 export function setupCreateUsers(systemSetup: SystemSetup) {

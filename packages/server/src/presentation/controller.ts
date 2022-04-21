@@ -34,11 +34,15 @@ export abstract class Controller {
     };
   }
 
-  protected onUnauthorized(content: unknown): HttpResult {
+  protected onUnauthorized(): HttpResult {
     return {
-      content,
+      content: undefined,
       status: HttpStatus.unauthorized,
     };
+  }
+
+  protected onForbidden(): HttpResult {
+    return { content: undefined, status: HttpStatus.forbidden };
   }
 
   private serializeOnAnyError(err: unknown): HttpResult {

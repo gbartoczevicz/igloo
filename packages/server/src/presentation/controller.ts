@@ -1,4 +1,4 @@
-import { AuthenticationError, DomainError, SignUpError } from "~/errors";
+import * as Errors from "~/errors";
 import { HttpStatus } from "~/contracts/http";
 import { HttpResult } from "~/contracts/presentation";
 import { InvalidFields } from "~/errors/field-tmp";
@@ -27,9 +27,9 @@ export abstract class Controller {
     };
   }
 
-  protected onInternalError(content: unknown): HttpResult {
+  protected onInternalError(): HttpResult {
     return {
-      content,
+      content: undefined,
       status: HttpStatus.internalError,
     };
   }
@@ -57,18 +57,18 @@ export abstract class Controller {
       });
     }
 
-    if (err instanceof DomainError) {
+    if (err instanceof Errors.ForbiddenError) {
+      return this.onForbidden();
+    }
+
+    if (err instanceof Errors.UnauthorizedError) {
+      return this.onUnauthorized();
+    }
+
+    if (err instanceof Errors.DomainError) {
       return this.onDomainError({ message: err.message });
     }
 
-    if (err instanceof SignUpError) {
-      return this.onUnauthorized(undefined);
-    }
-
-    if (err instanceof AuthenticationError) {
-      return this.onUnauthorized(undefined);
-    }
-
-    return this.onInternalError(undefined);
+    return this.onInternalError();
   }
 }

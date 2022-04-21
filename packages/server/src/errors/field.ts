@@ -1,10 +1,15 @@
-import { DTOValidationMapping } from "~/contracts/dtos";
+import { ValidationOptions } from "~/lib/validators/options";
 
-export class InvalidField extends Error {
-  public readonly field: string;
+export type InvalidField = {
+  field: string;
+  reason: ValidationOptions;
+};
 
-  public constructor(field: string, reason: DTOValidationMapping) {
-    super(reason);
-    this.field = field;
+export class InvalidFields extends Error {
+  public readonly fields: InvalidField[];
+
+  public constructor(fields: InvalidField[]) {
+    super("Some of the sent fields are invalid");
+    this.fields = fields;
   }
 }

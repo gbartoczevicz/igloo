@@ -1,7 +1,6 @@
-import * as Errors from "~/errors";
 import { HttpStatus } from "~/contracts/http";
 import { HttpResult } from "~/contracts/presentation";
-import { InvalidFields } from "~/errors/field-tmp";
+import * as Errors from "~/errors";
 
 export abstract class Controller {
   protected abstract handle(incoming: unknown): Promise<HttpResult>;
@@ -48,7 +47,7 @@ export abstract class Controller {
   private serializeOnAnyError(err: unknown): HttpResult {
     console.warn(err);
 
-    if (err instanceof InvalidFields) {
+    if (err instanceof Errors.InvalidFields) {
       return this.onDomainError({
         message: err.message,
         fields: err.fields.map((field) => (

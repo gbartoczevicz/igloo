@@ -1,7 +1,7 @@
 import { ValidationOptions } from "~/lib/validators/options";
 
 export type InvalidField = {
-  field: string;
+  name: string;
   reason: ValidationOptions;
 };
 
@@ -17,7 +17,7 @@ export class InvalidFields extends Error {
     return {
       message: this.message,
       fields: this.fields.map((field) => (
-        { name: field.field, reason: field.reason }
+        { name: field.name, reason: field.reason }
       )),
     }
   }

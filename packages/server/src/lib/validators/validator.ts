@@ -13,7 +13,7 @@ export function validator(params: Params): Either<null, InvalidFields> {
 
   const entries = Object.entries(params);
 
-  for (const [field, entry] of entries) {
+  for (const [name, entry] of entries) {
     const validatorFun = validatorMapping[entry.option];
 
     if (!validatorFun) throw new Error("Unmapped validation type");
@@ -23,7 +23,7 @@ export function validator(params: Params): Either<null, InvalidFields> {
     if (isValid) continue;
 
     invalidFields.push({
-      field,
+      name,
       reason: entry.option,
     });
   }

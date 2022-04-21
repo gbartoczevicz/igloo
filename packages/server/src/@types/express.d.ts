@@ -5,6 +5,7 @@ declare global {
   namespace Express {
     interface Request {
       manager: InstitutionManager;
+      currentUser: User;
       authenticatedUserIn: D.AuthenticatedUserIn;
       createInstitutionAndManager: D.CreateInstitutionAndManagerIn;
       createUser: D.CreateUserIn;

@@ -1,6 +1,6 @@
 import { HttpResult } from "~/contracts/presentation";
 import { GetUsersUseCase } from "~/domain/usecases";
-import { Controller } from "./controller";
+import { Controller } from "../contracts/presentation/controller";
 import { GetUsersDTO } from "./get-users-dto";
 
 export class GetUsersController extends Controller {

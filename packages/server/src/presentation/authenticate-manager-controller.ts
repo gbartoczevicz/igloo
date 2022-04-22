@@ -1,4 +1,4 @@
-import { Controller } from "./controller";
+import { Controller } from "../contracts/presentation/controller";
 import { AuthenticateManagerUseCase } from "~/domain/usecases";
 import { AuthenticateManagerDTO } from "./authenticate-manager-dto";
 import { HttpResult } from "~/contracts/presentation";

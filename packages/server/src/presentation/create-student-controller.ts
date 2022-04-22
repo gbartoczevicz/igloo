@@ -1,6 +1,6 @@
 import { HttpResult } from "~/contracts/presentation";
 import { CreateStudentUseCase } from "~/domain/usecases";
-import { Controller } from "./controller";
+import { Controller } from "../contracts/presentation/controller";
 import { CreateStudentDTO } from "./create-student-dto";
 
 export class CreateStudentController extends Controller {

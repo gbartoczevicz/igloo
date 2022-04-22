@@ -1,7 +1,7 @@
 import { HttpResult } from "~/contracts/presentation";
 import { CreateUserUseCase } from "~/domain/usecases";
 import { CreateUserDTO } from "./create-user-dto";
-import { Controller } from "~/presentation/controller";
+import { Controller } from "~/contracts/presentation/controller";
 
 export class CreateUserController extends Controller {
   private readonly usecase: CreateUserUseCase;

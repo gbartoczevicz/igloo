@@ -1,6 +1,6 @@
 import { HttpResult } from "~/contracts/presentation";
 import { GetStudentsByManagerUseCase } from "~/domain/usecases";
-import { Controller } from "./controller";
+import { Controller } from "../contracts/presentation/controller";
 import { GetStudentsByManagerDTO } from "./get-students-by-manager-dto";
 
 export class GetStudentsByManagerController extends Controller {

@@ -1,6 +1,6 @@
 import { HttpResult } from "~/contracts/presentation";
 import { CreateSessionUseCase } from "~/domain/usecases";
-import { Controller } from "./controller";
+import { Controller } from "../contracts/presentation/controller";
 import { CreateUserSessionDTO } from "./create-user-session-dto";
 
 export class CreateSessionController extends Controller {

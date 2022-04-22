@@ -1,74 +1,68 @@
-import { CommonErrorOut } from "~/dtos";
-import { AuthenticationError, DomainError, SignUpError } from "~/errors";
-import { InDTO, OutDTO } from "../dtos";
-import { HttpStatus } from "../http";
-import { HttpResult } from "./result";
+import { HttpStatus } from "~/contracts/http";
+import { HttpResult } from "~/contracts/presentation";
+import * as Errors from "~/errors";
 
-type UnknownOutDTO = OutDTO<unknown>;
+export abstract class Controller {
+  protected abstract handle(incoming?: unknown): Promise<HttpResult>;
 
-export abstract class Controller<T extends InDTO, U extends UnknownOutDTO> {
-  protected abstract handle(incoming: T): Promise<HttpResult<U>>;
-
-  public async execute(incoming: T): Promise<HttpResult<UnknownOutDTO>> {
+  public async execute(incoming?: unknown): Promise<HttpResult> {
     return await this.handle(incoming)
       .then((result) => result)
       .catch((err) => this.serializeOnAnyError(err));
   }
 
-  protected onOk(content: U): HttpResult<U> {
+  protected onOk(content: unknown): HttpResult {
     return { content, status: HttpStatus.ok };
   }
 
-  protected onCreated(content: U): HttpResult<U> {
+  protected onCreated(content: unknown): HttpResult {
     return { content, status: HttpStatus.created };
   }
 
-  protected onDomainError(content: CommonErrorOut): HttpResult<CommonErrorOut> {
+  protected onUnprocessableEntity(content: unknown): HttpResult {
     return {
       content,
       status: HttpStatus.unprocessableEntity,
     };
   }
 
-  protected onInternalError(
-    content: CommonErrorOut,
-  ): HttpResult<CommonErrorOut> {
+  protected onInternalError(): HttpResult {
     return {
-      content,
+      content: undefined,
       status: HttpStatus.internalError,
     };
   }
 
-  protected onUnauthorized(
-    content: CommonErrorOut,
-  ): HttpResult<CommonErrorOut> {
+  protected onUnauthorized(): HttpResult {
     return {
-      content,
+      content: undefined,
       status: HttpStatus.unauthorized,
     };
   }
 
-  private serializeOnAnyError(err: unknown): HttpResult<CommonErrorOut> {
+  protected onForbidden(): HttpResult {
+    return { content: undefined, status: HttpStatus.forbidden };
+  }
+
+  private serializeOnAnyError(err: unknown): HttpResult {
     console.warn(err);
 
-    if (err instanceof DomainError) {
-      return this.onDomainError(new CommonErrorOut(err));
+    if (err instanceof Errors.InvalidFields) {
+      return this.onUnprocessableEntity(err.toRaw());
     }
 
-    if (err instanceof SignUpError) {
-      return this.onUnauthorized(new CommonErrorOut(err));
+    if (err instanceof Errors.ForbiddenError) {
+      return this.onForbidden();
     }
 
-    if (err instanceof AuthenticationError) {
-      return this.onUnauthorized(new CommonErrorOut(err));
+    if (err instanceof Errors.UnauthorizedError) {
+      return this.onUnauthorized();
     }
 
-    if (err instanceof Error) {
-      return this.onInternalError(new CommonErrorOut(err));
+    if (err instanceof Errors.DomainError) {
+      return this.onUnprocessableEntity({ message: err.message });
     }
 
-    const out = new CommonErrorOut(new Error("Unmapped error occurred"));
-
-    return this.onInternalError(out);
+    return this.onInternalError();
   }
 }

@@ -1,6 +1,6 @@
 import { HttpResult } from "~/contracts/presentation";
 import { UpdateUserUseCase } from "~/domain/usecases";
-import { Controller } from "./controller";
+import { Controller } from "../contracts/presentation/controller";
 import { UpdateUserDTO } from "./update-user-dto";
 
 export class UpdateUserController extends Controller {

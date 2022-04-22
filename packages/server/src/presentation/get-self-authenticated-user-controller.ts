@@ -1,5 +1,5 @@
 import { HttpResult } from "~/contracts/presentation";
-import { Controller } from "./controller";
+import { Controller } from "../contracts/presentation/controller";
 import { GetSelfAuthenticatedUserDTO } from "./get-self-authenticated-user-dto";
 
 export class GetSelfAuthenticatedUserController extends Controller {

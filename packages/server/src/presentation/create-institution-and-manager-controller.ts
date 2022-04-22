@@ -3,7 +3,7 @@ import {
   CreateInstitutionManagerUseCase,
   CreateInstitutionUseCase,
 } from "~/domain/usecases";
-import { Controller } from "./controller";
+import { Controller } from "../contracts/presentation/controller";
 import { CreateInstitutionAndManagerDTO } from "./create-institution-and-manager-dto";
 
 export class CreateInstitutionAndManagerController extends Controller {

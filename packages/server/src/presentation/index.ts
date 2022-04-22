@@ -3,3 +3,4 @@ export * from "./update-user-controller";
 export * from "./authenticate-user-controller";
 export * from "./create-user-session-controller";
 export * from "./authenticate-manager-controller";
+export * from "./create-institution-and-manager-controller";

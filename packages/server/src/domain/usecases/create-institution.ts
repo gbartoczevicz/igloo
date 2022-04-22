@@ -1,8 +1,13 @@
 import { InstitutionsRepo } from "~/contracts/database/repositories";
-import { CreateInstitutionIn } from "~/dtos";
 import { DomainError } from "~/errors";
 import { Institution } from "../entities";
 import { InstitutionFactory } from "../factories";
+
+type Params = {
+  name: string;
+  cnpj: string;
+  phone: string;
+};
 
 export class CreateInstitutionUseCase {
   private readonly institutionFactory: InstitutionFactory;
@@ -17,7 +22,7 @@ export class CreateInstitutionUseCase {
     this.institutionsRepo = institutionsRepo;
   }
 
-  public async execute(incoming: CreateInstitutionIn): Promise<Institution> {
+  public async execute(incoming: Params): Promise<Institution> {
     const institution = this.institutionFactory.create(incoming);
 
     const phoneAlreadyInUse = await this.institutionsRepo.findByPhone(

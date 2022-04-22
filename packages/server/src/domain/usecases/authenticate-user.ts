@@ -4,6 +4,10 @@ import { AuthenticationError } from "~/errors";
 import { User } from "../entities";
 import { IdFactory } from "../factories";
 
+type Params = {
+  token: string;
+};
+
 export class AuthenticateUserUseCase {
   private readonly tokenProvider: TokenProvider;
 
@@ -21,12 +25,12 @@ export class AuthenticateUserUseCase {
     this.tokenProvider = tokenProvider;
   }
 
-  public async execute(incoming: string): Promise<User> {
-    if (!incoming) {
+  public async execute(incoming: Params): Promise<User> {
+    if (!incoming.token) {
       throw new AuthenticationError("Invalid bearer token");
     }
 
-    const [, bearerToken] = incoming.split(" ");
+    const [, bearerToken] = incoming.token.split(" ");
 
     let decoded: any;
 

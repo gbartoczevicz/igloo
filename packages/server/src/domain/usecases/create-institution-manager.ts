@@ -6,6 +6,11 @@ import { DomainError } from "~/errors";
 import { Institution, InstitutionManager, User } from "../entities";
 import { InstitutionManagerFactory } from "../factories";
 
+type Params = {
+  user: User;
+  institution: Institution;
+};
+
 export class CreateInstitutionManagerUseCase {
   private readonly institutionManagersRepo: InstitutionManagersRepo;
 
@@ -23,10 +28,9 @@ export class CreateInstitutionManagerUseCase {
     this.managerFactory = managerFactory;
   }
 
-  public async execute(
-    user: User,
-    institution: Institution,
-  ): Promise<InstitutionManager> {
+  public async execute(incoming: Params): Promise<InstitutionManager> {
+    const { institution, user } = incoming;
+
     const doesInstitutionExists = await this.institutionsRepo.findById(
       institution.id,
     );

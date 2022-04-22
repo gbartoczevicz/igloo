@@ -1,8 +1,12 @@
 import { StudentsRepo, UsersRepo } from "~/contracts/database/repositories";
-import { CreateStudentIn } from "~/dtos";
 import { DomainError } from "~/errors";
-import { Student } from "../entities";
+import { InstitutionManager, Student } from "../entities";
 import { IdFactory, StudentFactory } from "../factories";
+
+type Params = {
+  studentUserId: string;
+  manager: InstitutionManager;
+};
 
 export class CreateStudentUseCase {
   private readonly studentsRepo: StudentsRepo;
@@ -25,9 +29,7 @@ export class CreateStudentUseCase {
     this.idFactory = idFactory;
   }
 
-  public async execute(
-    incoming: CreateStudentIn,
-  ): Promise<Student> {
+  public async execute(incoming: Params): Promise<Student> {
     const { manager } = incoming;
 
     const studentUserId = this.idFactory.create(incoming.studentUserId);

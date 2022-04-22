@@ -14,7 +14,7 @@ export class AuthenticateUserController extends Controller {
   protected override async handle(incoming: unknown): Promise<HttpResult> {
     const incomingToken = AuthenticateUserDTO.In.create(incoming);
 
-    const authenticatedUser = await this.usecase.execute(incomingToken.token);
+    const authenticatedUser = await this.usecase.execute(incomingToken);
 
     const outcoming = AuthenticateUserDTO.Out.toRaw(authenticatedUser);
 

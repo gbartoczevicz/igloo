@@ -1,8 +1,12 @@
 import { InstitutionManagersRepo } from "~/contracts/database/repositories";
-import { AuthenticateManagerIn } from "~/dtos";
 import { AuthenticationError } from "~/errors";
-import { InstitutionManager } from "../entities";
+import { InstitutionManager, User } from "../entities";
 import { IdFactory } from "../factories";
+
+type Params = {
+  institutionId: string;
+  user: User;
+};
 
 export class AuthenticateManagerUseCase {
   private readonly idFactory: IdFactory;
@@ -17,9 +21,7 @@ export class AuthenticateManagerUseCase {
     this.managersRepo = managersRepo;
   }
 
-  public async execute(
-    incoming: AuthenticateManagerIn,
-  ): Promise<InstitutionManager> {
+  public async execute(incoming: Params): Promise<InstitutionManager> {
     const institutionId = this.idFactory.create(incoming.institutionId);
 
     const managerFound = await this.managersRepo.findByInstitutionId(

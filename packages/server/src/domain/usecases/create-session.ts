@@ -1,9 +1,13 @@
 import { UsersRepo } from "~/contracts/database/repositories";
 import { PasswordHandler } from "~/contracts/hash";
-import { CreateSessionIn } from "~/dtos";
 import { SignUpError } from "~/errors";
 import { SessionToken } from "../entities";
 import { EmailFactory, SessionTokenFacotry } from "../factories";
+
+type Params = {
+  email: string;
+  password: string;
+};
 
 export class CreateSessionUseCase {
   private readonly emailFactory: EmailFactory;
@@ -26,7 +30,7 @@ export class CreateSessionUseCase {
     this.tokenFactory = tokenFactory;
   }
 
-  public async create(incoming: CreateSessionIn): Promise<SessionToken> {
+  public async create(incoming: Params): Promise<SessionToken> {
     const email = this.emailFactory.create(incoming.email);
 
     const userFound = await this.usersRepo.findByEmail(email);

@@ -1,9 +1,8 @@
 import { HttpMiddleware, HttpRoute } from "~/adapters/http";
 import { Method } from "~/contracts/http";
 import { SystemSetup } from "~/contracts/setup/system";
-import { CreateProfessorController } from "~/domain/controllers";
+import { CreateProfessorController } from "~/presentation";
 import { CreateProfessorUseCase } from "~/domain/usecases";
-import { CreateProfessorIn } from "~/dtos";
 
 export function setupCreateProfessor(
   systemSetup: SystemSetup,
@@ -23,23 +22,15 @@ export function setupCreateProfessor(
     "/institutions/:institutionId/professors",
     Method.post,
     (req, res, _next) => {
-      controller.execute(req.createProfessor).then((result) =>
-        res.status(result.status).json(result.content.toRaw())
+      const incoming = {
+        ...(req.body) || {},
+        manager: req.currentManager,
+      };
+
+      controller.execute(incoming).then((result) =>
+        res.status(result.status).json(result.content)
       );
     },
-    [userAuthenticated, managerAuthenticated, (req, res, next) => {
-      const result = CreateProfessorIn.create({
-        ...req.body,
-        manager: req.manager,
-      });
-
-      if (result instanceof CreateProfessorIn) {
-        req.createProfessor = result;
-
-        return next();
-      }
-
-      return res.status(result.status).json(result.content.toRaw());
-    }],
+    [userAuthenticated, managerAuthenticated],
   );
 }

@@ -1,4 +1,3 @@
-export * from "./create-institution-and-manager";
 export * from "./create-professor";
 export * from "./create-student";
 export * from "./get-professors-by-manager";

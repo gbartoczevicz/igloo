@@ -6,3 +6,4 @@ export * from "./authenticate-manager-controller";
 export * from "./create-institution-and-manager-controller";
 export * from "./create-professor-controller";
 export * from "./create-student-controller";
+export * from "./get-professors-by-manager-controller";

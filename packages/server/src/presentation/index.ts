@@ -9,3 +9,4 @@ export * from "./create-student-controller";
 export * from "./get-professors-by-manager-controller";
 export * from "./get-students-by-manager-controller";
 export * from "./get-self-authenticated-user-controller";
+export * from "./get-users-controller";

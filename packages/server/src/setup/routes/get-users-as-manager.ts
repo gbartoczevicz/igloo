@@ -1,7 +1,7 @@
 import { HttpMiddleware, HttpRoute } from "~/adapters/http";
 import { Method } from "~/contracts/http";
 import { SystemSetup } from "~/contracts/setup/system";
-import { GetUsersController } from "~/domain/controllers";
+import { GetUsersController } from "~/presentation";
 import { GetUsersUseCase } from "~/domain/usecases";
 
 export function setupGetUsersAsManager(
@@ -20,9 +20,9 @@ export function setupGetUsersAsManager(
   return new HttpRoute(
     "/users",
     Method.get,
-    (req, res, _next) => {
-      controller.execute(req.authenticatedUserIn).then((result) =>
-        res.status(result.status).json(result.content.toRaw())
+    (_req, res, _next) => {
+      controller.execute({}).then((result) =>
+        res.status(result.status).json(result.content)
       );
     },
     [userAuthenticated, isUserAManager],

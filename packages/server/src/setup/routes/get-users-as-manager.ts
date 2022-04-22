@@ -21,7 +21,7 @@ export function setupGetUsersAsManager(
     "/users",
     Method.get,
     (_req, res, _next) => {
-      controller.execute({}).then((result) =>
+      controller.execute().then((result) =>
         res.status(result.status).json(result.content)
       );
     },

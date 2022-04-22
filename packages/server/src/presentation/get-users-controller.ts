@@ -11,7 +11,7 @@ export class GetUsersController extends Controller {
     this.usecase = usecase;
   }
 
-  protected override async handle(incoming: unknown): Promise<HttpResult> {
+  protected override async handle(): Promise<HttpResult> {
     const usersFound = await this.usecase.execute();
 
     const outcoming = GetUsersDTO.Out.toRaw(usersFound);

@@ -3,9 +3,9 @@ import { HttpResult } from "~/contracts/presentation";
 import * as Errors from "~/errors";
 
 export abstract class Controller {
-  protected abstract handle(incoming: unknown): Promise<HttpResult>;
+  protected abstract handle(incoming?: unknown): Promise<HttpResult>;
 
-  public async execute(incoming: unknown): Promise<HttpResult> {
+  public async execute(incoming?: unknown): Promise<HttpResult> {
     return await this.handle(incoming)
       .then((result) => result)
       .catch((err) => this.serializeOnAnyError(err));

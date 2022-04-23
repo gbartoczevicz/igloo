@@ -1,5 +1,5 @@
 import { InstitutionManagersRepo } from "~/contracts/database/repositories";
-import { AuthenticationError } from "~/errors";
+import { ForbiddenError } from "~/errors";
 import { InstitutionManager, User } from "../entities";
 import { IdFactory } from "../factories";
 
@@ -29,13 +29,13 @@ export class AuthenticateManagerUseCase {
     );
 
     if (!managerFound) {
-      throw new AuthenticationError("Manager not found");
+      throw new ForbiddenError("Manager not found");
     }
 
     const isManager = managerFound.userId.isEqual(incoming.user.id);
 
     if (!isManager) {
-      throw new AuthenticationError("Current user is not the manager");
+      throw new ForbiddenError("Current user is not the manager");
     }
 
     return managerFound;

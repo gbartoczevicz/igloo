@@ -29,10 +29,10 @@ export class CreateInstitutionAndManagerController extends Controller {
       incomingManagerAndInstitution,
     );
 
-    const managerCreated = await this.createManagerUseCase.execute(
-      incomingManagerAndInstitution.user,
-      institutionCreated,
-    );
+    const managerCreated = await this.createManagerUseCase.execute({
+      institution: institutionCreated,
+      user: incomingManagerAndInstitution.user,
+    });
 
     const outcoming = CreateInstitutionAndManagerDTO.Out.toRaw(
       managerCreated,

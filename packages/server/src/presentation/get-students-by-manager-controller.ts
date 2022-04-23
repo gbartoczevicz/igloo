@@ -15,7 +15,9 @@ export class GetStudentsByManagerController extends Controller {
   protected override async handle(incoming: unknown): Promise<HttpResult> {
     const incomingManager = GetStudentsByManagerDTO.In.create(incoming);
 
-    const professorsFound = await this.usecase.execute(incomingManager.manager);
+    const professorsFound = await this.usecase.execute({
+      manager: incomingManager.manager,
+    });
 
     const outcoming = GetStudentsByManagerDTO.Out.toRaw(professorsFound);
 

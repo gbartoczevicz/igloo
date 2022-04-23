@@ -1,8 +1,7 @@
-import { Factory } from "~/contracts/domain";
 import { TokenProvider } from "~/contracts/hash";
 import { SessionToken, User } from "../entities";
 
-export class SessionTokenFacotry implements Factory<User, SessionToken> {
+export class SessionTokenFacotry {
   private readonly tokenProvider: TokenProvider;
 
   public constructor(tokenProvider: TokenProvider) {

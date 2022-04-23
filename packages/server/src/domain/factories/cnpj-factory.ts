@@ -1,9 +1,8 @@
-import { Factory } from "~/contracts/domain";
 import { CnpjValidator } from "~/contracts/validators";
 import { DomainError } from "~/errors";
 import { Cnpj } from "../entities/values";
 
-export class CnpjFactory implements Factory<string, Cnpj> {
+export class CnpjFactory {
   private readonly cnpjValidator: CnpjValidator;
 
   public constructor(cnpjValidator: CnpjValidator) {

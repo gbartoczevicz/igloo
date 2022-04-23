@@ -1,25 +1,23 @@
-import { Factory } from "~/contracts/domain";
 import { Student } from "../entities";
 import { Id } from "../entities/values";
 import { IdFactory } from "./id-factory";
 
-type FactoryParams = {
+type Params = {
+  id?: string;
   institutionId: Id;
   userId: Id;
 };
 
-export class StudentFactory implements Factory<FactoryParams, Student> {
+export class StudentFactory {
   private readonly idFactory: IdFactory;
 
   public constructor(idFactory: IdFactory) {
     this.idFactory = idFactory;
   }
 
-  public create(incoming: FactoryParams): Student {
-    const id = this.idFactory.create();
+  public create(incoming: Params): Student {
+    const id = this.idFactory.create(incoming.id);
 
-    const { institutionId, userId } = incoming;
-
-    return new Student(id, userId, institutionId);
+    return new Student(id, incoming.userId, incoming.institutionId);
   }
 }

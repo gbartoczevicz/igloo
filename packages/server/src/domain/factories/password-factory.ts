@@ -1,8 +1,7 @@
-import { Factory } from "~/contracts/domain";
 import { PasswordHandler } from "~/contracts/hash";
 import { Password } from "~/domain/entities/values";
 
-export class PasswordFactory implements Factory<string, Password> {
+export class PasswordFactory {
   private readonly passwordHandler: PasswordHandler;
 
   public constructor(passwordHandler: PasswordHandler) {

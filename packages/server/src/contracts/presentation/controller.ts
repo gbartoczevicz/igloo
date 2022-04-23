@@ -60,7 +60,7 @@ export abstract class Controller {
     }
 
     if (err instanceof Errors.DomainError) {
-      return this.onUnprocessableEntity({ message: err.message });
+      return this.onUnprocessableEntity(err.toRaw());
     }
 
     return this.onInternalError();

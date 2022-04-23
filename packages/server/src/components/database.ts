@@ -10,14 +10,14 @@ export class Database<T> extends Lifecycle {
     this.client = client;
   }
 
-  public override start(): Lifecycle {
-    this.client.connect();
+  public override async start(): Promise<Lifecycle> {
+    await this.client.connect();
 
     return new Database(this.client);
   }
 
-  public override stop(): Lifecycle {
-    this.client.disconnect();
+  public override async stop(): Promise<Lifecycle> {
+    await this.client.disconnect();
 
     return new Database(this.client);
   }

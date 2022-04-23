@@ -1,6 +1,10 @@
 import { system } from "~/system";
 
-const startedSystem = system.start();
+async function main() {
+  const startedSystem = await system.start();
 
-process.addListener("SIGINT", () => startedSystem.stop());
-process.addListener("SIGTERM", () => startedSystem.stop());
+  process.addListener("SIGINT", () => startedSystem.stop());
+  process.addListener("SIGTERM", () => startedSystem.stop());
+}
+
+main();

@@ -13,8 +13,8 @@ export abstract class Lifecycle {
     this.deps = Lifecycle.dependenciesToMap(deps);
   }
 
-  abstract start(): Lifecycle;
-  abstract stop(): Lifecycle;
+  abstract start(): Promise<Lifecycle>;
+  abstract stop(): Promise<Lifecycle>;
 
   protected static dependenciesToMap(deps?: ContructorParams<Lifecycle>) {
     if (!deps) {
@@ -33,23 +33,23 @@ export abstract class Lifecycle {
   }
 }
 
-export function update(
+export async function update(
   params: UpdateFnParams<Lifecycle>,
-): ComponentMap<Lifecycle> {
+): Promise<ComponentMap<Lifecycle>> {
   const deps = Array.from(params.lifecycle.deps);
 
-  return actionRunner({
+  return await actionRunner({
     action: params.action,
     iterable: deps,
   });
 }
 
-export function reverseUpdate(
+export async function reverseUpdate(
   params: UpdateFnParams<Lifecycle>,
-): ComponentMap<Lifecycle> {
+): Promise<ComponentMap<Lifecycle>> {
   const reversedDeps = Array.from(params.lifecycle.deps).reverse();
 
-  const deps = actionRunner({
+  const deps = await actionRunner({
     action: params.action,
     iterable: reversedDeps,
   });
@@ -57,13 +57,13 @@ export function reverseUpdate(
   return new Map(Array.from(deps).reverse());
 }
 
-function actionRunner(
+async function actionRunner(
   params: ActionRunnerFnParams<Lifecycle>,
-): ComponentMap<Lifecycle> {
+): Promise<ComponentMap<Lifecycle>> {
   const deps = new Map();
 
-  for (const [key, entry] of params.iterable) {
-    deps.set(key, params.action(entry));
+  for await (const [key, entry] of params.iterable) {
+    deps.set(key, await params.action(entry));
   }
 
   return deps;

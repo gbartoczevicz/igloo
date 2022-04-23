@@ -12,13 +12,13 @@ export class Http<T> extends Lifecycle {
     this.port = port;
   }
 
-  public override start(): Lifecycle {
+  public override async start(): Promise<Lifecycle> {
     this.service.listen(this.port);
 
     return new Http(this.service, this.port);
   }
 
-  public override stop(): Lifecycle {
+  public override async stop(): Promise<Lifecycle> {
     this.service.close();
 
     return new Http(this.service, this.port);

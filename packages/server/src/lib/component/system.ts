@@ -13,18 +13,18 @@ export class System extends Lifecycle {
     super(deps);
   }
 
-  public override start(): System {
-    const updatedDeps = update({
-      action: (dep: Lifecycle) => dep.start(),
+  public override async start(): Promise<System> {
+    const updatedDeps = await update({
+      action: async (dep: Lifecycle) => dep.start(),
       lifecycle: this,
     });
 
     return new System(updatedDeps);
   }
 
-  public override stop(): System {
-    const updatedDeps = reverseUpdate({
-      action: (dep: Lifecycle) => dep.stop(),
+  public override async stop(): Promise<System> {
+    const updatedDeps = await reverseUpdate({
+      action: async (dep: Lifecycle) => dep.stop(),
       lifecycle: this,
     });
 

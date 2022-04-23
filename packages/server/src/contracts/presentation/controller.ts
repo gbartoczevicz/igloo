@@ -28,20 +28,18 @@ export abstract class Controller {
 
   protected onInternalError(): HttpResult {
     return {
-      content: undefined,
       status: HttpStatus.internalError,
     };
   }
 
   protected onUnauthorized(): HttpResult {
     return {
-      content: undefined,
       status: HttpStatus.unauthorized,
     };
   }
 
   protected onForbidden(): HttpResult {
-    return { content: undefined, status: HttpStatus.forbidden };
+    return { status: HttpStatus.forbidden };
   }
 
   private serializeOnAnyError(err: unknown): HttpResult {

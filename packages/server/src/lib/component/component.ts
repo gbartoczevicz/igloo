@@ -1,64 +1,69 @@
 import {
-  ComponenMapRecord,
-  ComponentAction,
-  ComponentIterable,
+  ActionRunnerFnParams,
   ComponentMap,
+  ContructorParams,
+  UpdateFnParams,
 } from "./contracts";
-
-import { componentMapFromValue } from "./helpers";
-import { LifecycleNotFound } from "./errors";
+import { InvalidDependencies } from "./errors";
 
 export abstract class Lifecycle {
   public readonly deps: ComponentMap<Lifecycle>;
 
-  protected constructor(
-    deps?: ComponenMapRecord<Lifecycle>,
-  ) {
-    this.deps = componentMapFromValue(deps);
+  protected constructor(deps?: ContructorParams<Lifecycle>) {
+    this.deps = Lifecycle.dependenciesToMap(deps);
   }
 
   abstract start(): Lifecycle;
   abstract stop(): Lifecycle;
-}
 
-export function getDependency(
-  lifecycle: Lifecycle,
-  key: string,
-): Lifecycle {
-  const dependencyFound = lifecycle.deps.get(key);
+  protected static dependenciesToMap(deps?: ContructorParams<Lifecycle>) {
+    if (!deps) {
+      return new Map();
+    }
 
-  if (dependencyFound === undefined) {
-    throw new LifecycleNotFound(key);
+    if (deps instanceof Map) {
+      return deps;
+    }
+
+    if (deps instanceof Object) {
+      return new Map(Object.entries(deps));
+    }
+
+    throw new InvalidDependencies();
   }
-
-  return dependencyFound;
 }
 
 export function update(
-  lifecycle: Lifecycle,
-  action: ComponentAction<Lifecycle>,
+  params: UpdateFnParams<Lifecycle>,
 ): ComponentMap<Lifecycle> {
-  return actionRunner(Array.from(lifecycle.deps), action);
+  const deps = Array.from(params.lifecycle.deps);
+
+  return actionRunner({
+    action: params.action,
+    iterable: deps,
+  });
 }
 
 export function reverseUpdate(
-  lifecycle: Lifecycle,
-  action: ComponentAction<Lifecycle>,
+  params: UpdateFnParams<Lifecycle>,
 ): ComponentMap<Lifecycle> {
-  const reversedDeps = Array.from(lifecycle.deps).reverse();
-  const deps = actionRunner(reversedDeps, action);
+  const reversedDeps = Array.from(params.lifecycle.deps).reverse();
+
+  const deps = actionRunner({
+    action: params.action,
+    iterable: reversedDeps,
+  });
 
   return new Map(Array.from(deps).reverse());
 }
 
 function actionRunner(
-  iterable: ComponentIterable<Lifecycle>,
-  action: ComponentAction<Lifecycle>,
+  params: ActionRunnerFnParams<Lifecycle>,
 ): ComponentMap<Lifecycle> {
   const deps = new Map();
 
-  for (const [key, entry] of iterable) {
-    deps.set(key, action(entry));
+  for (const [key, entry] of params.iterable) {
+    deps.set(key, params.action(entry));
   }
 
   return deps;

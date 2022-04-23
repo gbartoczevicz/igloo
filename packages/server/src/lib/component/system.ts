@@ -1,31 +1,37 @@
-import { ComponenMapRecord } from "./contracts";
-
+import { ContructorParams } from "./contracts";
 import { Lifecycle, reverseUpdate, update } from "./component";
-import { componentMapFromValue } from "./helpers";
-import { RequiredDependencies } from "./errors";
+import { InvalidDependencies } from "./errors";
 
 export class System extends Lifecycle {
-  public constructor(
-    deps: ComponenMapRecord<Lifecycle>,
-  ) {
-    const _deps = componentMapFromValue(deps);
+  public constructor(deps: ContructorParams<Lifecycle>) {
+    const depsMapped = Lifecycle.dependenciesToMap(deps);
 
-    if (_deps.size === 0) {
-      throw new RequiredDependencies();
+    if (depsMapped.size === 0) {
+      throw new InvalidDependencies();
     }
 
-    super(_deps);
+    super(deps);
   }
 
   public override start(): System {
-    return new System(update(this, (dep) => dep.start()));
+    const updatedDeps = update({
+      action: (dep: Lifecycle) => dep.start(),
+      lifecycle: this,
+    });
+
+    return new System(updatedDeps);
   }
 
   public override stop(): System {
-    return new System(reverseUpdate(this, (dep) => dep.stop()));
+    const updatedDeps = reverseUpdate({
+      action: (dep: Lifecycle) => dep.stop(),
+      lifecycle: this,
+    });
+
+    return new System(updatedDeps);
   }
 }
 
-export function createSystem(deps: ComponenMapRecord<Lifecycle>) {
+export function createSystem(deps: ContructorParams<Lifecycle>) {
   return new System(deps);
 }

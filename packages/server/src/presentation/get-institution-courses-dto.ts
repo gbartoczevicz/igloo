@@ -8,7 +8,7 @@ export namespace GetInstitutionCoursesDTO {
     ) {}
 
     public static create(income: unknown): In {
-      const { name, manager } = income as any || {};
+      const { manager } = income as any || {};
 
       if (!(manager instanceof InstitutionManager)) {
         throw new UnauthorizedError("Manager is invalid");

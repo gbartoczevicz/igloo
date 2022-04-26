@@ -8,3 +8,4 @@ export * from "./get-students-by-manager";
 export * from "./get-users-as-manager";
 export * from "./update-user";
 export * from "./get-self-profile";
+export * from "./create-course";

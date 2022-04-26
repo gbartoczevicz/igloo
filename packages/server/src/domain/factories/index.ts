@@ -9,3 +9,4 @@ export * from "./cnpj-factory";
 export * from "./institution-manager-factory";
 export * from "./professor-factory";
 export * from "./student-factory";
+export * from "./course-factory";

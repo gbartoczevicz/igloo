@@ -34,6 +34,7 @@ model Institution {
   InstitutionManager InstitutionManager[]
   Professor          Professor[]
   Student            Student[]
+  Course             Course[]
 
   @@map("institutions")
 }
@@ -71,4 +72,14 @@ model Student {
 
   @@unique([userId, institutionId])
   @@map("students")
+}
+
+model Course {
+  id            String @id @default(uuid())
+  name          String
+  institutionId String @map("institution_id")
+
+  institution Institution @relation(fields: [institutionId], references: [id])
+
+  @@map("courses")
 }

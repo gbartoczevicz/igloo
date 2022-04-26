@@ -57,6 +57,16 @@ export function createServer(systemSetup: SystemSetup) {
       userAuthenticated,
     ),
     SetupRoutes.setupGetSelfProfile(userAuthenticated),
+    SetupRoutes.setupCreateCourse(
+      systemSetup,
+      userAuthenticated,
+      managerAuthenticated,
+    ),
+    SetupRoutes.setupGetInstitutionCourses(
+      systemSetup,
+      userAuthenticated,
+      managerAuthenticated,
+    ),
   ]);
 
   express.use(cors());

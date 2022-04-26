@@ -1,8 +1,16 @@
 import { UsersRepo } from "~/contracts/database/repositories";
-import { UpdateUserIn } from "~/dtos";
 import { DomainError } from "~/errors";
 import { User } from "../entities";
 import { UserFactory } from "../factories";
+
+type Params = {
+  id: string;
+  name: string;
+  surname: string | null;
+  email: string;
+  phone: string;
+  password: string;
+};
 
 export class UpdateUserUseCase {
   private readonly usersFactory: UserFactory;
@@ -14,7 +22,7 @@ export class UpdateUserUseCase {
     this.usersRepo = usersRepo;
   }
 
-  public async execute(incoming: UpdateUserIn): Promise<User> {
+  public async execute(incoming: Params): Promise<User> {
     const user = this.usersFactory.create(incoming);
 
     if (await this.isEmailAlreadyInUse(user)) {

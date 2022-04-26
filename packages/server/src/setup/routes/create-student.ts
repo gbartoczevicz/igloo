@@ -1,9 +1,8 @@
 import { HttpMiddleware, HttpRoute } from "~/adapters/http";
 import { Method } from "~/contracts/http";
 import { SystemSetup } from "~/contracts/setup/system";
-import { CreateStudentController } from "~/domain/controllers";
+import { CreateStudentController } from "~/presentation";
 import { CreateStudentUseCase } from "~/domain/usecases";
-import { CreateStudentIn } from "~/dtos";
 
 export function setupCreateStudent(
   systemSetup: SystemSetup,
@@ -23,23 +22,15 @@ export function setupCreateStudent(
     "/institutions/:institutionId/students",
     Method.post,
     (req, res, _next) => {
-      controller.execute(req.createStudent).then((result) =>
-        res.status(result.status).json(result.content.toRaw())
+      const incoming = {
+        ...(req.body) || {},
+        manager: req.currentManager,
+      };
+
+      controller.execute(incoming).then((result) =>
+        res.status(result.status).json(result.content)
       );
     },
-    [userAuthenticated, managerAuthenticated, (req, res, next) => {
-      const result = CreateStudentIn.create({
-        ...req.body,
-        manager: req.manager,
-      });
-
-      if (result instanceof CreateStudentIn) {
-        req.createStudent = result;
-
-        return next();
-      }
-
-      return res.status(result.status).json(result.content.toRaw());
-    }],
+    [userAuthenticated, managerAuthenticated],
   );
 }

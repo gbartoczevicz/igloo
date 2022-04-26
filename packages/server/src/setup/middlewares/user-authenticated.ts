@@ -1,9 +1,8 @@
 import { HttpMiddleware } from "~/adapters/http";
 import { HttpStatus } from "~/contracts/http";
 import { SystemSetup } from "~/contracts/setup/system";
-import { AuthenticateUserController } from "~/domain/controllers";
+import { AuthenticateUserController } from "~/presentation";
 import { AuthenticateUserUseCase } from "~/domain/usecases";
-import { AuthenticatedUserIn, AuthenticateUserIn } from "~/dtos";
 
 export function userAuthenticated(
   systemSetup: SystemSetup,
@@ -16,22 +15,14 @@ export function userAuthenticated(
   const controller = new AuthenticateUserController(usecase);
 
   return (req, res, next) => {
-    const result = AuthenticateUserIn.create(req.headers.authorization);
+    const token = req.headers.authorization;
 
-    if (!(result instanceof AuthenticateUserIn)) {
-      return res.status(result.status).json(result.content.toRaw());
-    }
-
-    controller.execute(result).then((userOut) => {
-      if (userOut.status !== HttpStatus.ok) {
-        return res.status(userOut.status).json(userOut.content.toRaw());
+    controller.execute({ token }).then((outcoming) => {
+      if (outcoming.status !== HttpStatus.ok) {
+        return res.status(outcoming.status).json(outcoming.content);
       }
 
-      const authenticatedUser = userOut.content.toRaw() as any;
-
-      const result = new AuthenticatedUserIn(authenticatedUser);
-
-      req.authenticatedUserIn = result;
+      req.currentUser = outcoming.content as any;
 
       return next();
     });

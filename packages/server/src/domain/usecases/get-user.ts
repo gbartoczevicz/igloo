@@ -2,6 +2,10 @@ import { UsersRepo } from "~/contracts/database/repositories";
 import { User } from "../entities";
 import { Id } from "../entities/values";
 
+type Params = {
+  id: Id;
+};
+
 export class GetUserUseCase {
   private readonly usersRepo: UsersRepo;
 
@@ -9,7 +13,7 @@ export class GetUserUseCase {
     this.usersRepo = usersRepo;
   }
 
-  public async execute(id: Id): Promise<User | null> {
-    return await this.usersRepo.findById(id);
+  public async execute(incoming: Params): Promise<User | null> {
+    return await this.usersRepo.findById(incoming.id);
   }
 }

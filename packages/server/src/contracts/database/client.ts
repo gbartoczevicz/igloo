@@ -5,6 +5,6 @@ export abstract class ClientDatabase<T> {
     this.client = client;
   }
 
-  public abstract connect(): void;
-  public abstract disconnect(): void;
+  public abstract connect(): Promise<void>;
+  public abstract disconnect(): Promise<void>;
 }

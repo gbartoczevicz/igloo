@@ -1,9 +1,8 @@
 import { HttpMiddleware, HttpRoute } from "~/adapters/http";
 import { Method } from "~/contracts/http";
 import { SystemSetup } from "~/contracts/setup/system";
-import { GetStudentsByManagerController } from "~/domain/controllers";
+import { GetStudentsByManagerController } from "~/presentation";
 import { GetStudentsByManagerUseCase } from "~/domain/usecases";
-import { GetStudentsByManagerIn } from "~/dtos";
 
 export function setupGetStudentsByManager(
   systemSetup: SystemSetup,
@@ -23,20 +22,10 @@ export function setupGetStudentsByManager(
     "/institutions/:institutionId/students",
     Method.get,
     (req, res, _next) => {
-      controller.execute(req.getStudentsByManager).then((result) =>
-        res.status(result.status).json(result.content.toRaw())
+      controller.execute({ manager: req.currentManager }).then((result) =>
+        res.status(result.status).json(result.content)
       );
     },
-    [userAuthenticated, managerAuthenticated, (req, res, next) => {
-      const result = GetStudentsByManagerIn.create({ manager: req.manager });
-
-      if (result instanceof GetStudentsByManagerIn) {
-        req.getStudentsByManager = result;
-
-        return next();
-      }
-
-      return res.status(result.status).json(result.content.toRaw());
-    }],
+    [userAuthenticated, managerAuthenticated],
   );
 }

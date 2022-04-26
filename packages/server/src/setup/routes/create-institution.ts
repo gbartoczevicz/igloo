@@ -2,12 +2,11 @@ import { HttpMiddleware, HttpRoute } from "~/adapters/http";
 
 import { Method } from "~/contracts/http";
 import { SystemSetup } from "~/contracts/setup/system";
-import { CreateInstitutionAndManagerController } from "~/domain/controllers";
+import { CreateInstitutionAndManagerController } from "~/presentation";
 import {
   CreateInstitutionManagerUseCase,
   CreateInstitutionUseCase,
 } from "~/domain/usecases";
-import { CreateInstitutionAndManagerIn, CreateInstitutionIn } from "~/dtos";
 
 export function setupCreateInstitutions(
   systemSetup: SystemSetup,
@@ -32,25 +31,15 @@ export function setupCreateInstitutions(
     "/institutions",
     Method.post,
     (req, res, _next) => {
-      controller.execute(req.createInstitutionAndManager).then((result) =>
-        res.status(result.status).json(result.content.toRaw())
+      const incoming = {
+        ...(req.body || {}),
+        user: req.currentUser,
+      };
+
+      controller.execute(incoming).then((result) =>
+        res.status(result.status).json(result.content)
       );
     },
-    [userAuthenticated, (req, res, next) => {
-      const result = CreateInstitutionIn.create(req.body);
-
-      if (result instanceof CreateInstitutionIn) {
-        const createInstitutionAndManagerIn = new CreateInstitutionAndManagerIn(
-          result,
-          req.authenticatedUserIn.user,
-        );
-
-        req.createInstitutionAndManager = createInstitutionAndManagerIn;
-
-        return next();
-      }
-
-      return res.status(result.status).json(result.content.toRaw());
-    }],
+    [userAuthenticated],
   );
 }

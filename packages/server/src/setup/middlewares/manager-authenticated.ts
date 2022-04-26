@@ -1,9 +1,8 @@
 import { HttpMiddleware } from "~/adapters/http";
 import { HttpStatus } from "~/contracts/http";
 import { SystemSetup } from "~/contracts/setup/system";
-import { AuthenticateManagerController } from "~/domain/controllers";
+import { AuthenticateManagerController } from "~/presentation";
 import { AuthenticateManagerUseCase } from "~/domain/usecases";
-import { AuthenticateManagerIn } from "~/dtos";
 
 export function managerAuthenticated(
   systemSetup: SystemSetup,
@@ -15,21 +14,17 @@ export function managerAuthenticated(
   const controller = new AuthenticateManagerController(usecase);
 
   return (req, res, next) => {
-    const result = AuthenticateManagerIn.create({
-      user: req.authenticatedUserIn.user,
+    const incoming = {
+      user: req.currentUser,
       institutionId: req.params.institutionId,
-    });
+    };
 
-    if (!(result instanceof AuthenticateManagerIn)) {
-      return res.status(result.status).json(result.content.toRaw());
-    }
-
-    controller.execute(result).then((managerOut) => {
+    controller.execute(incoming).then((managerOut) => {
       if (managerOut.status !== HttpStatus.ok) {
-        return res.status(managerOut.status).json(managerOut.content.toRaw());
+        return res.status(managerOut.status).json(managerOut.content);
       }
 
-      req.manager = managerOut.content.toRaw() as any;
+      req.currentManager = managerOut.content as any;
 
       return next();
     });

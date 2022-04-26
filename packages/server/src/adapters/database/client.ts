@@ -6,14 +6,14 @@ export class PrismaClientDatabase extends ClientDatabase<PrismaClient> {
     super(client);
   }
 
-  public connect(): void {
-    this.client.$connect().then(() =>
+  public async connect(): Promise<void> {
+    await this.client.$connect().then(() =>
       console.log("Connection with database was estabilished")
     );
   }
 
-  public disconnect(): void {
-    this.client.$disconnect().then(() =>
+  public async disconnect(): Promise<void> {
+    await this.client.$disconnect().then(() =>
       console.log("Connection with database was closed")
     );
   }

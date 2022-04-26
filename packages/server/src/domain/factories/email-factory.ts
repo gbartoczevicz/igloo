@@ -1,9 +1,8 @@
-import { Factory } from "~/contracts/domain";
 import { EmailValidator } from "~/contracts/validators";
 import { Email } from "~/domain/entities/values";
 import { DomainError } from "~/errors";
 
-export class EmailFactory implements Factory<string, Email> {
+export class EmailFactory {
   private readonly emailValidator: EmailValidator;
 
   public constructor(emailValidator: EmailValidator) {

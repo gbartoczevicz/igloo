@@ -1,9 +1,8 @@
-import { Factory } from "~/contracts/domain";
 import { PhoneValidator } from "~/contracts/validators";
 import { Phone } from "~/domain/entities/values";
 import { DomainError } from "~/errors";
 
-export class PhoneFactory implements Factory<string, Phone> {
+export class PhoneFactory {
   private readonly phoneValidator: PhoneValidator;
 
   public constructor(phoneValidator: PhoneValidator) {

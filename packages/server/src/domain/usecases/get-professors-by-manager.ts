@@ -1,6 +1,10 @@
 import { ProfessorsRepo, UsersRepo } from "~/contracts/database/repositories";
 import { InstitutionManager, ProfessorUserComposition } from "../entities";
 
+type Params = {
+  manager: InstitutionManager;
+};
+
 export class GetProfessorsByManagerUseCase {
   private readonly professorsRepository: ProfessorsRepo;
 
@@ -14,11 +18,9 @@ export class GetProfessorsByManagerUseCase {
     this.usersRepository = usersRepository;
   }
 
-  public async execute(
-    manager: InstitutionManager,
-  ): Promise<ProfessorUserComposition[]> {
+  public async execute(incoming: Params): Promise<ProfessorUserComposition[]> {
     const professors = await this.professorsRepository.findAllByInstitution(
-      manager.institutionId,
+      incoming.manager.institutionId,
     );
 
     const users = await this.usersRepository.findAllById(

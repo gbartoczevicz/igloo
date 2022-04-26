@@ -1,6 +1,10 @@
 import { InstitutionManagersRepo } from "~/contracts/database/repositories";
 import { User } from "../entities";
 
+type Params = {
+  user: User;
+};
+
 export class IsUserAManagerUseCase {
   private readonly managersRepo: InstitutionManagersRepo;
 
@@ -8,8 +12,10 @@ export class IsUserAManagerUseCase {
     this.managersRepo = managersRepo;
   }
 
-  public async execute(user: User): Promise<boolean> {
-    const managersFound = await this.managersRepo.findAllByUserId(user.id);
+  public async execute(incoming: Params): Promise<boolean> {
+    const managersFound = await this.managersRepo.findAllByUserId(
+      incoming.user.id,
+    );
 
     return managersFound.length > 0;
   }

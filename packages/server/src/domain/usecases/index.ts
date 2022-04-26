@@ -13,3 +13,4 @@ export * from "./get-users";
 export * from "./is-user-a-manager";
 export * from "./update-user";
 export * from "./create-course";
+export * from "./get-institution-courses";

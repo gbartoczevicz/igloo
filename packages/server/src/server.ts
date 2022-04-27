@@ -67,6 +67,7 @@ export function createServer(systemSetup: SystemSetup) {
       userAuthenticated,
       managerAuthenticated,
     ),
+    SetupRoutes.setupGetManagedInstitutions(systemSetup, userAuthenticated),
   ]);
 
   express.use(cors());

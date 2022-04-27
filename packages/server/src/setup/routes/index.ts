@@ -10,3 +10,4 @@ export * from "./update-user";
 export * from "./get-self-profile";
 export * from "./create-course";
 export * from "./get-institution-courses";
+export * from "./get-managed-institutions";

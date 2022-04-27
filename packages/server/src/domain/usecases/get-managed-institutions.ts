@@ -27,7 +27,7 @@ export class GetManagedInstitutionsUseCase {
     );
 
     const institutionsFound = await this.institutionsRepo.findAllById(
-      managersFound.map((manager) => manager.id),
+      managersFound.map((manager) => manager.institutionId),
     );
 
     return institutionsFound;

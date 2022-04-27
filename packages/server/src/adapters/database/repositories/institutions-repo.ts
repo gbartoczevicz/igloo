@@ -54,6 +54,18 @@ export class PrismaInstitutionsRepo
     return this.toEntity(foundInstitution);
   }
 
+  public async findAllById(ids: Id[]): Promise<Institution[]> {
+    const foundInstitutions = await this.client.client.institution.findMany({
+      where: {
+        id: { in: ids.map((id) => id.value) },
+      },
+    });
+
+    return foundInstitutions.map((institution) =>
+      this.toEntity(institution)
+    ) as Institution[];
+  }
+
   protected toEntity(persisted: PrismaInstitution | null): Institution | null {
     if (!persisted) return null;
 

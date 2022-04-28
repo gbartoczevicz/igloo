@@ -6,4 +6,5 @@ export interface InstitutionsRepo {
   findById(id: Id): Promise<Institution | null>;
   findByPhone(phone: Phone): Promise<Institution | null>;
   findByCnpj(cnpj: Cnpj): Promise<Institution | null>;
+  findAllById(ids: Id[]): Promise<Institution[]>;
 }

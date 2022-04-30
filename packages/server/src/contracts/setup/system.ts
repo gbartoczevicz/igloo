@@ -11,6 +11,7 @@ export interface SystemSetup {
     professorsRepo: Repositories.ProfessorsRepo;
     studentsRepo: Repositories.StudentsRepo;
     coursesRepo: Repositories.CoursesRepo;
+    disciplinesRepo: Repositories.DisciplinesRepo;
   };
   factories: {
     cnpjFactory: Factories.CnpjFactory;
@@ -25,6 +26,7 @@ export interface SystemSetup {
     professorFactory: Factories.ProfessorFactory;
     studentFactory: Factories.StudentFactory;
     courseFactory: Factories.CourseFactory;
+    disciplineFactory: Factories.DisciplineFactory;
   };
   hash: {
     idProvider: Hash.IdProvider;

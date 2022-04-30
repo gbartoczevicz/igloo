@@ -17,3 +17,4 @@ export * from "./get-institution-courses";
 export * from "./get-managed-institutions";
 export * from "./get-managed-institution";
 export * from "./create-discipline";
+export * from "./get-course";

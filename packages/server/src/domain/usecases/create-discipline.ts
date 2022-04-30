@@ -2,13 +2,14 @@ import {
   CoursesRepo,
   DisciplinesRepo,
 } from "~/contracts/database/repositories";
-import { DomainError } from "~/errors";
-import { Discipline } from "../entities";
+import { DomainError, ForbiddenError } from "~/errors";
+import { Discipline, InstitutionManager } from "../entities";
 import { DisciplineFactory } from "../factories";
 
 type Params = {
   name: string;
   courseId: string;
+  manager: InstitutionManager;
 };
 
 export class CreateDisciplinesUseCase {
@@ -29,12 +30,21 @@ export class CreateDisciplinesUseCase {
   }
 
   public async execute(params: Params): Promise<Discipline> {
-    const discipline = this.disciplineFactory.create(params);
+    const { manager, ...delegate } = params;
+
+    const discipline = this.disciplineFactory.create(delegate);
 
     const courseExists = await this.coursesRepo.findById(discipline.courseId);
 
     if (!courseExists) {
       throw new DomainError("The course does not exists");
+    }
+
+    const isTheCourseFromTheSameInstitution = manager.institutionId
+      .isEqual(courseExists.institutionId);
+
+    if (!isTheCourseFromTheSameInstitution) {
+      throw new ForbiddenError("The course doesn't belong to the institution");
     }
 
     const registeredDisciplines = await this.disciplinesRepo.findAllByCourseId(

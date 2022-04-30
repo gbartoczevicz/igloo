@@ -21,7 +21,10 @@ export function setupCreateDiscipline(
     "/institutions/:institutionId/disciplines",
     Method.post,
     (req, res, _next) => {
-      const incoming = req.body || {};
+      const incoming = {
+        ...(req.body || {}),
+        manager: req.currentManager,
+      };
 
       controller.execute(incoming).then((result) =>
         res.status(result.status).json(result.content)

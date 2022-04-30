@@ -1,4 +1,5 @@
-import { Discipline } from "~/domain/entities";
+import { Discipline, InstitutionManager } from "~/domain/entities";
+import { UnauthorizedError } from "~/errors";
 import { Options, validator } from "~/lib/validators";
 
 export namespace CreateDisciplineDTO {
@@ -6,10 +7,11 @@ export namespace CreateDisciplineDTO {
     private constructor(
       public readonly name: string,
       public readonly courseId: string,
+      public readonly manager: InstitutionManager,
     ) {}
 
     public static create(incoming: unknown): In {
-      const { name, courseId } = incoming as any || {};
+      const { name, courseId, manager } = incoming as any || {};
 
       const result = validator({
         name: {
@@ -22,11 +24,15 @@ export namespace CreateDisciplineDTO {
         },
       });
 
+      if (!(manager instanceof InstitutionManager)) {
+        throw new UnauthorizedError("Manager is invalid");
+      }
+
       if (result.isRight()) {
         throw result.value;
       }
 
-      return new In(name, courseId);
+      return new In(name, courseId, manager);
     }
   }
 

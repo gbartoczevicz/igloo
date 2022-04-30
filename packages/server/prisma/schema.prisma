@@ -81,5 +81,17 @@ model Course {
 
   institution Institution @relation(fields: [institutionId], references: [id])
 
+  Discipline Discipline[]
+
   @@map("courses")
+}
+
+model Discipline {
+  id       String @id @default(uuid())
+  name     String
+  courseId String @map("course_id")
+
+  course Course @relation(fields: [courseId], references: [id])
+
+  @@map("disciplines")
 }

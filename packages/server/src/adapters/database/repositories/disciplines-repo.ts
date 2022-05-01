@@ -40,6 +40,20 @@ export class PrismaDisciplinesRepo
     ) as Discipline[];
   }
 
+  public async findAllByCoursesId(coursesId: Id[]): Promise<Discipline[]> {
+    const disciplinesFound = await this.client.client.discipline.findMany({
+      where: {
+        courseId: {
+          in: coursesId.map((courseId) => courseId.value),
+        },
+      },
+    });
+
+    return disciplinesFound.map((discipline) =>
+      this.toEntity(discipline)
+    ) as Discipline[];
+  }
+
   protected toEntity(persisted: PrismaDiscipline | null): Discipline | null {
     if (!persisted) return null;
 

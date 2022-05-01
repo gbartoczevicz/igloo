@@ -12,7 +12,6 @@ export function setupListInstitutionDisciplines(
   const usecase = new ListInstitutionDisciplinesUseCase(
     systemSetup.repositories.disciplinesRepo,
     systemSetup.repositories.coursesRepo,
-    systemSetup.factories.idFactory,
   );
 
   const controller = new ListInstitutionDisciplinesController(usecase);

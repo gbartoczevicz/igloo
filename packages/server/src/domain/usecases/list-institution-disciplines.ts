@@ -3,10 +3,10 @@ import {
   DisciplinesRepo,
 } from "~/contracts/database/repositories";
 import { Discipline } from "../entities";
-import { IdFactory } from "../factories";
+import { Id } from "../entities/values";
 
 type Params = {
-  institutionId: string;
+  institutionId: Id;
 };
 
 export class ListInstitutionDisciplinesUseCase {
@@ -14,23 +14,17 @@ export class ListInstitutionDisciplinesUseCase {
 
   private readonly coursesRepo: CoursesRepo;
 
-  private readonly idFactory: IdFactory;
-
   public constructor(
     disciplinesRepo: DisciplinesRepo,
     coursesRepo: CoursesRepo,
-    idFactory: IdFactory,
   ) {
     this.disciplinesRepo = disciplinesRepo;
     this.coursesRepo = coursesRepo;
-    this.idFactory = idFactory;
   }
 
   public async execute(params: Params): Promise<Discipline[]> {
-    const id = this.idFactory.create(params.institutionId);
-
     const coursesFound = await this.coursesRepo
-      .findAllByInstitutionId(id);
+      .findAllByInstitutionId(params.institutionId);
 
     const coursesId = coursesFound.map((course) => course.id);
 

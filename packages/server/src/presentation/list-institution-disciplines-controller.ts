@@ -16,7 +16,9 @@ export class ListInstitutionDisciplinesController extends Controller {
       incoming,
     );
 
-    const disciplinesFound = await this.usecase.execute(incomingInstitution);
+    const disciplinesFound = await this.usecase.execute(
+      incomingInstitution.manager,
+    );
 
     const outcoming = ListInstitutionDisciplinesDTO.Out.toRaw(disciplinesFound);
 

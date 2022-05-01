@@ -1,27 +1,21 @@
-import { Discipline } from "~/domain/entities";
+import { Discipline, InstitutionManager } from "~/domain/entities";
+import { UnauthorizedError } from "~/errors";
 import { Options, validator } from "~/lib/validators";
 
 export namespace ListInstitutionDisciplinesDTO {
   export class In {
     private constructor(
-      public readonly institutionId: string,
+      public readonly manager: InstitutionManager,
     ) {}
 
     public static create(incoming: unknown): In {
-      const { institutionId } = incoming as any || {};
+      const { manager } = incoming as any || {};
 
-      const result = validator({
-        institutionId: {
-          option: Options.requiredString,
-          value: institutionId,
-        },
-      });
-
-      if (result.isRight()) {
-        throw result.value;
+      if (!(manager instanceof InstitutionManager)) {
+        throw new UnauthorizedError("Manager is invalid");
       }
 
-      return new In(institutionId);
+      return new In(manager);
     }
   }
 

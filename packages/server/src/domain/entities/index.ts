@@ -6,3 +6,4 @@ export * from "./professor";
 export * from "./student";
 export * from "./course";
 export * from "./composites";
+export * from "./discipline";

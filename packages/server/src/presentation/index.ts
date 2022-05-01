@@ -14,3 +14,5 @@ export * from "./create-course-controller";
 export * from "./get-institution-courses-controller";
 export * from "./get-managed-institutions-controller";
 export * from "./get-managed-institution-controller";
+export * from "./create-discipline-controller";
+export * from "./list-institution-disciplines-controller";

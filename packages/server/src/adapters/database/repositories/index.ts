@@ -4,3 +4,4 @@ export * from "./institution-managers-repo";
 export * from "./professors-repo";
 export * from "./students-repo";
 export * from "./courses-repo";
+export * from "./disciplines-repo";

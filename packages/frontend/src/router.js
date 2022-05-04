@@ -5,6 +5,7 @@ import Courses from './pages/courses';
 import Projects from './pages/projects';
 import Institutions from './pages/institutions';
 import CreateInstitution from './pages/institutions/create-institution';
+import Home from './pages/home';
 
 import { useAuth } from './store/auth';
 import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom';
@@ -23,6 +24,7 @@ const Router = () => (
         <Route exact path="/signup" element={<Signup />} />
         <Route exact path="/forgot-password" element={<ForgotPassword />} />
         <Route element={<PrivateOutlet />}>
+          <Route path="/home" element={<Home />} />
           <Route path="/institutions" element={<Institutions />} />
           <Route path="/institutions/create" element={<CreateInstitution />} />
           <Route path="/projects" element={<Projects />} />

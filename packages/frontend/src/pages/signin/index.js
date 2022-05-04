@@ -10,12 +10,13 @@ import api from '../../services/api';
 import * as fireToast from '../../utils/fire-toast';
 import { useAuth } from "../../store/auth";
 import httpStatus from "../../misc/http-status";
+import { useNavigate } from 'react-router-dom';
 
 const Signin = () => {
   const signinFormRef = useRef(null);
   const [backEndError, setBackEndError] = useState(null);
-
   const { signIn } = useAuth();
+  const navigate = useNavigate();
 
   const handleSigninSubmit = (data) => {
     setBackEndError("");
@@ -29,6 +30,7 @@ const Signin = () => {
         .then(response => {
           fireToast.success('Bem vindo! ', response.data);
           signIn(response.data);
+          navigate('/home');
         })
         .catch(error => {
           if(error.response.status === httpStatus.UNAUTHORIZED) {

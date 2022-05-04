@@ -1,8 +1,9 @@
-import { Sidebar } from '../../components';
+import { Sidebar, Header } from '../../components';
 
 const Home = () => {
     return (
       <div>
+        <Header/>
         <Sidebar/>
       </div>
     );

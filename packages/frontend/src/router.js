@@ -5,10 +5,12 @@ import Courses from './pages/courses';
 import Projects from './pages/projects';
 import Institutions from './pages/institutions';
 import CreateInstitution from './pages/institutions/create-institution';
+import Disciplines from './pages/disciplines';
 import Home from './pages/home';
 
 import { useAuth } from './store/auth';
 import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom';
+
 
 const PrivateOutlet = () => {
   const { token } = useAuth();
@@ -29,6 +31,7 @@ const Router = () => (
           <Route path="/institutions/create" element={<CreateInstitution />} />
           <Route path="/projects" element={<Projects />} />
           <Route exact path="/courses" element={<Courses />} />
+          <Route exact path="/disciplines" element={<Disciplines />} />
         </Route>
     </Routes>
   </BrowserRouter>

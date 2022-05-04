@@ -13,7 +13,7 @@ const sidebarElementsList = [
       icon: < Courses/>
     },
     {
-      url: '/discipline',
+      url: '/disciplines',
       text: 'Matéria',
       icon: < Disciplines/>
     },

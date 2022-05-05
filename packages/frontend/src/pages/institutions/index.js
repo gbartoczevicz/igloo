@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Header, Sidebar } from '../../components';
 import api from '../../services/api';
 import * as fireToast from '../../utils/fire-toast';
+import { Link } from "react-router-dom";
 
 const Institutions = () => {
   const [institutions, setInstitutions] = useState(null);
@@ -14,7 +15,6 @@ const Institutions = () => {
   const getInstitutions = () => {
     api.get('/institutions')
       .then(response => {
-        console.log("RESPONSE: ", response)
         setInstitutions(response.data);
         setLoading(false);
       })
@@ -25,9 +25,9 @@ const Institutions = () => {
 
   const createInstitution = () => {
     return (
-      <div className='bg-gray-700 h-36' key={0}>
+      <div className='bg-gray-400 h-24 rounded-md' key={0}>
         <div id="institution-info" className="p-3">
-          <span>Criar instituição</span>
+          <Link to="/institutions/create">Criar instituição</Link>
         </div>
       </div>
       )
@@ -36,7 +36,7 @@ const Institutions = () => {
   const renderInstitutions = () => {
     let renderedInstitutions = institutions?.map((inst, index) => {
       return (       
-        <div className='bg-gray-700 h-36' key={inst.id}>
+        <div className='bg-gray-400 h-24 rounded-md' key={inst.id}>
           <div id="institution-info" className="p-3">
             <ul>
               <li>{inst.name}</li>
@@ -49,7 +49,7 @@ const Institutions = () => {
     });
 
     return (
-      <div className='bg-gray-500 p-5 grid grid-cols-4 gap-4'>
+      <div className='p-5 grid grid-cols-4 gap-4'>
         {createInstitution()}
         {renderedInstitutions}
       </div>
@@ -62,7 +62,7 @@ const Institutions = () => {
       <Sidebar/>
       {
         !loading && (
-          <div id="page" className='ml-52 mt-10 h-100'>
+          <div id="page" className='ml-52 mt-10 h-screen'>
             {renderInstitutions()}
           </div>
         )

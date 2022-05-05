@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { Sidebar } from '../../components';
+import { Header, Sidebar } from '../../components';
 import { Form } from "@unform/web";
 import { Input } from "../../components/form";
 import {
@@ -44,8 +44,9 @@ const CreateInstitution = () => {
 
     return (
       <>
-        < Sidebar/>
-        <div className="flex flex-wrap justify-center mt-20">
+        <Header/>
+        <Sidebar/>
+        <div id="page" className="ml-52 mt-10 h-screen flex justify-center items-center">
             <div className="w-full max-w-sm">
                 <Form className="shadow-md bg-white rounded px-8 pt-6 pb-8 mb-4"
                 onSubmit={handleInstitutionCreationSubmit} ref={institutionCreationFormRef}>

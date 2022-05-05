@@ -1,4 +1,4 @@
-import { Institutions, Courses, Logout, Projects, Disciplines, Home } from "../../icons/index";
+import { Institution, Course, Logout, Project, Discipline, Home } from "../../icons/index";
 
 const sidebarElementsList = [
     {
@@ -9,22 +9,22 @@ const sidebarElementsList = [
     {
       url: '/institutions',
       text: 'Instituições',
-      icon: <Institutions/>
+      icon: <Institution/>
     },
     {
       url: '/courses',
       text: 'Cursos',
-      icon: <Courses/>
+      icon: <Course/>
     },
     {
       url: '/disciplines',
       text: 'Matéria',
-      icon: <Disciplines/>
+      icon: <Discipline/>
     },
     {
       url: '/projects',
       text: 'Projects',
-      icon: <Projects/>
+      icon: <Project/>
     },
     {
       url: '/',

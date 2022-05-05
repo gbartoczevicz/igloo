@@ -5,6 +5,7 @@ import Courses from './pages/courses';
 import Projects from './pages/projects';
 import Institutions from './pages/institutions';
 import CreateInstitution from './pages/institutions/create-institution';
+import InstitutionDetails from './pages/institutions/institution-details';
 import Disciplines from './pages/disciplines';
 import Home from './pages/home';
 
@@ -28,6 +29,7 @@ const Router = () => (
         <Route element={<PrivateOutlet />}>
           <Route path="/home" element={<Home />} />
           <Route path="/institutions" element={<Institutions />} />
+          <Route path="/institutions/:id" element={<InstitutionDetails />} />
           <Route path="/institutions/create" element={<CreateInstitution />} />
           <Route path="/projects" element={<Projects />} />
           <Route exact path="/courses" element={<Courses />} />

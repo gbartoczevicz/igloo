@@ -26,9 +26,11 @@ const Institutions = () => {
   const createInstitution = () => {
     return (
       <div className='bg-gray-400 h-24 rounded-md' key={0}>
-        <div id="institution-info" className="p-3">
-          <Link to="/institutions/create">Criar instituição</Link>
-        </div>
+        <Link to="/institutions/create">
+          <div id="institution-info" className="p-3 h-full">
+            Criar instituição
+          </div>
+        </Link>
       </div>
       )
   }
@@ -37,12 +39,14 @@ const Institutions = () => {
     let renderedInstitutions = institutions?.map((inst, index) => {
       return (       
         <div className='bg-gray-400 h-24 rounded-md' key={inst.id}>
-          <div id="institution-info" className="p-3">
-            <ul>
-              <li>{inst.name}</li>
-              <li>CNPJ: {inst.cnpj}</li>
-              <li>Telefone: {inst.phone}</li>
-            </ul>
+          <div id="institution-info" className="p-3 h-full">
+            <Link to={`/institutions/${inst.id}`}>
+              <ul>
+                <li>{inst.name}</li>
+                <li>CNPJ: {inst.cnpj}</li>
+                <li>Telefone: {inst.phone}</li>
+              </ul>
+            </Link>
           </div>
         </div>
       )

@@ -23,8 +23,11 @@ const messages = {
         }
     },
     api: {
-        success: {
-            signup: "Conta criada com sucesso!"
+        account: {
+            signup: "Conta criada com sucesso!",
+        },
+        institutions: {
+            create: "Instituição criada com sucesso!"
         }
     }
 };

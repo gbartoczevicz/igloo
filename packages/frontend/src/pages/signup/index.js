@@ -27,7 +27,7 @@ const Signup = () => {
     .then(result => {
       api.post('/users', data)
         .then(response => {
-          fireToast.success(messages.api.success.signup);
+          fireToast.success(messages.api.account.signup);
           navigate('/');
         })
         .catch(error => {

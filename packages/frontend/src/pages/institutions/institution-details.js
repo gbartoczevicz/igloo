@@ -12,19 +12,23 @@ const InstitutionDetails = () => {
     
     useEffect(() => {
         getInstitutionDetails();
+        getAdminVerification();
     }, []);
 
     const getInstitutionDetails = () => {
         api.get(`/institutions/${params.id}`)
             .then(response => {
                 setInstitutionDetails(response.data);
-                console.log(response.data);
                 setLoading(false);
             })
             .catch(error => {
                 fireToast.success(error);
             })
-    }
+    };
+
+    const getAdminVerification = () => {
+        
+    };
 
     return (
       <div>

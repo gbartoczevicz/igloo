@@ -6,15 +6,16 @@ import Projects from './pages/projects';
 import Institutions from './pages/institutions';
 import CreateInstitution from './pages/institutions/create-institution';
 import InstitutionDetails from './pages/institutions/institution-details';
+import ListUsers from './pages/institutions/list-users';
 import Disciplines from './pages/disciplines';
 import Home from './pages/home';
-
-import { useAuth } from './store/auth';
+/* 
+import { useAuth } from './store/auth'; */
 import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom';
 
 
 const PrivateOutlet = () => {
-  const { token } = useAuth();
+  /* const { token } = useAuth(); */
   /* TODO: não está funcionando utilizando o token direto, pq? */
   /* return token ? <Outlet /> : <Navigate to="/" />; */  
   return localStorage.getItem('@userToken') ? <Outlet /> : <Navigate to="/" />;
@@ -29,8 +30,9 @@ const Router = () => (
         <Route element={<PrivateOutlet />}>
           <Route path="/home" element={<Home />} />
           <Route path="/institutions" element={<Institutions />} />
-          <Route path="/institutions/:id" element={<InstitutionDetails />} />
           <Route path="/institutions/create" element={<CreateInstitution />} />
+          <Route path="/institutions/:id" element={<InstitutionDetails />} />
+          <Route path="/institutions/:id/list-users" element={<ListUsers />} />
           <Route path="/projects" element={<Projects />} />
           <Route exact path="/courses" element={<Courses />} />
           <Route exact path="/disciplines" element={<Disciplines />} />

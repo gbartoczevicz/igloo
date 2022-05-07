@@ -19,7 +19,7 @@ const Institutions = () => {
         setLoading(false);
       })
       .catch(error => {
-        fireToast.success(error);
+        fireToast.error(error);
       })
   }
 
@@ -39,15 +39,13 @@ const Institutions = () => {
     let renderedInstitutions = institutions?.map((inst, index) => {
       return (       
         <div className='bg-gray-400 h-24 rounded-md' key={inst.id}>
-          <div id="institution-info" className="p-3 h-full">
-            <Link to={`/institutions/${inst.id}`}>
+          <Link to={`/institutions/${inst.id}`}>
+            <div id="institution-info" className="p-3 h-full">
               <ul>
                 <li>{inst.name}</li>
-                <li>CNPJ: {inst.cnpj}</li>
-                <li>Telefone: {inst.phone}</li>
               </ul>
-            </Link>
-          </div>
+            </div>
+          </Link>
         </div>
       )
     });

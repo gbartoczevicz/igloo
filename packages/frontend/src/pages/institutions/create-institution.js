@@ -12,6 +12,7 @@ import api from '../../services/api';
 import messages from "../../misc/messages";
 import { useNavigate } from "react-router-dom";
 import httpStatus from "../../misc/http-status";
+import { useParams } from "react-router-dom";
 
 const CreateInstitution = () => {
     const navigate = useNavigate();
@@ -28,8 +29,8 @@ const CreateInstitution = () => {
         .then(result => {
           api.post('/institutions', data)
             .then(response => {
-              fireToast.success("Instituição criada com sucesso!");
-              navigate('/institutions');
+              fireToast.success(messages.api.institutions.create_institution);
+              navigate(`/institutions/${response.data.id}/list-users`);
             })
             .catch(error => {
               if(error.response.status === httpStatus.BAD_REQUEST) {

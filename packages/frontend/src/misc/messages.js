@@ -27,7 +27,7 @@ const messages = {
             signup: "Conta criada com sucesso!",
         },
         institutions: {
-            create: "Instituição criada com sucesso!",
+            create_institution: "Instituição criada com sucesso!",
             add_professor: "Professor adicionado com sucesso!",
             add_student: "Estudante adicionado com sucesso!"
         }

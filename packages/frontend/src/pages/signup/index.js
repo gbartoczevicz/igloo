@@ -27,11 +27,11 @@ const Signup = () => {
     .then(result => {
       api.post('/users', data)
         .then(response => {
-          fireToast.success(messages.api.success.signup);
+          fireToast.success(messages.api.account.signup);
           navigate('/');
         })
         .catch(error => {
-          if(error.response.status === httpStatus.BAD_REQUEST) {
+          if(error.response.status === httpStatus.UNPROCESSABLE_ENTITY) {
             setBackEndError(error.response.data.message);
           }
         })

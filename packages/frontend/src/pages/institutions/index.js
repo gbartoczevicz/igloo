@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Header, Sidebar } from '../../components';
 import api from '../../services/api';
-import * as fireToast from '../../utils/fire-toast';
 import { Link } from "react-router-dom";
 
 const Institutions = () => {
@@ -19,7 +18,7 @@ const Institutions = () => {
         setLoading(false);
       })
       .catch(error => {
-        fireToast.success(error);
+        console.log(error);
       })
   }
 
@@ -39,15 +38,13 @@ const Institutions = () => {
     let renderedInstitutions = institutions?.map((inst, index) => {
       return (       
         <div className='bg-gray-400 h-24 rounded-md' key={inst.id}>
-          <div id="institution-info" className="p-3 h-full">
-            <Link to={`/institutions/${inst.id}`}>
+          <Link to={`/institutions/${inst.id}`}>
+            <div id="institution-info" className="p-3 h-full">
               <ul>
                 <li>{inst.name}</li>
-                <li>CNPJ: {inst.cnpj}</li>
-                <li>Telefone: {inst.phone}</li>
               </ul>
-            </Link>
-          </div>
+            </div>
+          </Link>
         </div>
       )
     });

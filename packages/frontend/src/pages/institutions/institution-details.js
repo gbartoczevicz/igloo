@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { Header, Sidebar } from '../../components';
 import { useParams } from "react-router-dom";
 import api from '../../services/api';
-import * as fireToast from '../../utils/fire-toast';
 
 const InstitutionDetails = () => {
     let params = useParams();
@@ -12,19 +11,23 @@ const InstitutionDetails = () => {
     
     useEffect(() => {
         getInstitutionDetails();
+        getAdminVerification();
     }, []);
 
     const getInstitutionDetails = () => {
         api.get(`/institutions/${params.id}`)
             .then(response => {
                 setInstitutionDetails(response.data);
-                console.log(response.data);
                 setLoading(false);
             })
             .catch(error => {
-                fireToast.success(error);
+                console.log(error);
             })
-    }
+    };
+
+    const getAdminVerification = () => {
+        
+    };
 
     return (
       <div>

@@ -18,6 +18,24 @@ const Signin = () => {
   const { signIn } = useAuth();
   const navigate = useNavigate();
 
+  const getUsers = (userId) => {
+    api.get('/users')
+      .then(response => {
+        getCurrentUserInfo(response.data, userId);
+        return response.data;
+      })
+      .catch(error => {
+        console.log(error);
+      })
+  }
+
+  const getCurrentUserInfo = (users, userId) => {
+    const filteredUser = users.filter(user => user.id === userId);
+    const username = `${filteredUser[0].name} ${filteredUser[0].surname}`;
+    fireToast.success(`Bem vindo ${username}!`);
+    return localStorage.setItem(username, "user_name");
+  }
+
   const handleSigninSubmit = (data) => {
     setBackEndError("");
     validateForm({ 
@@ -28,7 +46,7 @@ const Signin = () => {
     .then(result => {
       api.post('/sessions', data)
         .then(response => {
-          fireToast.success('Bem vindo! ', response.data);
+          /* getUsers(response.data.userId); */
           signIn(response.data);
           navigate('/home');
         })

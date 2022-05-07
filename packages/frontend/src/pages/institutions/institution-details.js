@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { Header, Sidebar } from '../../components';
 import { useParams } from "react-router-dom";
 import api from '../../services/api';
-import * as fireToast from '../../utils/fire-toast';
 
 const InstitutionDetails = () => {
     let params = useParams();
@@ -22,7 +21,7 @@ const InstitutionDetails = () => {
                 setLoading(false);
             })
             .catch(error => {
-                fireToast.success(error);
+                console.log(error);
             })
     };
 

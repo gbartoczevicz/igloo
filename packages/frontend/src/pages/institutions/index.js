@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Header, Sidebar } from '../../components';
 import api from '../../services/api';
-import * as fireToast from '../../utils/fire-toast';
 import { Link } from "react-router-dom";
 
 const Institutions = () => {
@@ -19,7 +18,7 @@ const Institutions = () => {
         setLoading(false);
       })
       .catch(error => {
-        fireToast.error(error);
+        console.log(error);
       })
   }
 

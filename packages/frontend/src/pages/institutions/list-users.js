@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Header, Sidebar } from '../../components';
 import api from '../../services/api';
-import * as fireToast from '../../utils/fire-toast';
 
 const ListUsers = () => {
   const [users, setUsers] = useState(null);
@@ -18,7 +17,7 @@ const ListUsers = () => {
         setLoading(false);
       })
       .catch(error => {
-        fireToast.error(error);
+        console.log(error);
       })
   }
 

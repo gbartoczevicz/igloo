@@ -13,7 +13,7 @@ const SidebarHeader = () => {
                 <img src="https://images.pexels.com/photos/20787/pexels-photo.jpg?auto=compress&cs=tinysrgb&h=350" className="rounded-full w-12"/>
               </div>
               <div className="grow ml-3">
-                <p className="text-sm font-semibold">{username}</p>
+                <p className="text-sm font-semibold">{username ? username : localStorage.getItem('username')}</p>
               </div>
             </div>
           </Link>

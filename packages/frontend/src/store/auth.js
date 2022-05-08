@@ -13,7 +13,8 @@ export const AuthProvider = ({ children }) => {
       api.get('/profile')
         .then(response => {
           const userName = `${response.data.name}${response.data.surname ? ` ${response.data.surname}` : ""}`; 
-          fireToast.success(`Bem vindo ${username}!`);
+          fireToast.success(`Bem vindo ${userName}!`);
+          localStorage.setItem('username', userName);
           return setUsername(userName);
         })
         .catch(error => {

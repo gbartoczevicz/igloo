@@ -1,6 +1,7 @@
 import Signin from './pages/signin';
 import Signup from './pages/signup';
 import ForgotPassword from './pages/forgot-password';
+import NotFound from './pages/not-found';
 import Courses from './pages/courses';
 import Projects from './pages/projects';
 import Institutions from './pages/institutions';
@@ -28,15 +29,16 @@ const Router = () => (
         <Route exact path="/signup" element={<Signup />} />
         <Route exact path="/forgot-password" element={<ForgotPassword />} />
         <Route element={<PrivateOutlet />}>
-          <Route path="/home" element={<Home />} />
-          <Route path="/institutions" element={<Institutions />} />
-          <Route path="/institutions/create" element={<CreateInstitution />} />
-          <Route path="/institutions/:id" element={<InstitutionDetails />} />
-          <Route path="/institutions/:id/list-users" element={<ListUsers />} />
-          <Route path="/projects" element={<Projects />} />
+          <Route exact path="/home" element={<Home />} />
+          <Route exact path="/institutions" element={<Institutions />} />
+          <Route exact path="/institutions/create" element={<CreateInstitution />} />
+          <Route exact path="/institutions/:id" element={<InstitutionDetails />} />
+          <Route exact path="/institutions/:id/list-users" element={<ListUsers />} />
+          <Route exact path="/projects" element={<Projects />} />
           <Route exact path="/courses" element={<Courses />} />
           <Route exact path="/disciplines" element={<Disciplines />} />
         </Route>
+        <Route path="*" element={<NotFound />} />
     </Routes>
   </BrowserRouter>
 );

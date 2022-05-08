@@ -10,11 +10,10 @@ import InstitutionDetails from './pages/institutions/institution-details';
 import ListUsers from './pages/institutions/list-users';
 import Disciplines from './pages/disciplines';
 import Home from './pages/home';
-/* 
-import { useAuth } from './store/auth'; */
+import Profile from './pages/profile';
 import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom';
 
-
+/* import { useAuth } from './store/auth'; */
 const PrivateOutlet = () => {
   /* const { token } = useAuth(); */
   /* TODO: não está funcionando utilizando o token direto, pq? */
@@ -37,6 +36,7 @@ const Router = () => (
           <Route exact path="/projects" element={<Projects />} />
           <Route exact path="/courses" element={<Courses />} />
           <Route exact path="/disciplines" element={<Disciplines />} />
+          <Route exact path="/profile" element={<Profile />} />
         </Route>
         <Route path="*" element={<NotFound />} />
     </Routes>

@@ -7,7 +7,6 @@ import {
   validateForm,
 } from "../../validations";
 import api from '../../services/api';
-import * as fireToast from '../../utils/fire-toast';
 import { useAuth } from "../../store/auth";
 import httpStatus from "../../misc/http-status";
 import { useNavigate } from 'react-router-dom';
@@ -17,18 +16,6 @@ const Signin = () => {
   const [backEndError, setBackEndError] = useState(null);
   const { signIn } = useAuth();
   const navigate = useNavigate();
-
-  const getUser = () => {
-    api.get('/profile')
-      .then(response => {
-        const username = `${response.data.name}${response.data.surname ? ` ${response.data.surname}` : ""}`; 
-        fireToast.success(`Bem vindo ${username}!`);
-        return localStorage.setItem('username', username);
-      })
-      .catch(error => {
-        console.log(error);
-      })
-  }
 
   const handleSigninSubmit = (data) => {
     setBackEndError("");
@@ -40,9 +27,9 @@ const Signin = () => {
     .then(result => {
       api.post('/sessions', data)
         .then(response => {
-          navigate('/home');
-          getUser(response.data.userId);
           signIn(response.data);
+          navigate('/home');
+          //getUser(response.data.userId);
         })
         .catch(error => {
           if(error.response.status === httpStatus.UNAUTHORIZED) {

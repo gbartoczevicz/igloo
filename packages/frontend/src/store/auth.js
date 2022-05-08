@@ -11,7 +11,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     const signOut = async () => {
-      localStorage.removeItem('@userToken');
+      localStorage.clear();
     };
 
     useEffect(() => {

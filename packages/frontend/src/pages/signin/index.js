@@ -18,22 +18,16 @@ const Signin = () => {
   const { signIn } = useAuth();
   const navigate = useNavigate();
 
-  const getUsers = (userId) => {
-    api.get('/users')
+  const getUser = () => {
+    api.get('/profile')
       .then(response => {
-        getCurrentUserInfo(response.data, userId);
-        return response.data;
+        const username = `${response.data.name}${response.data.surname ? ` ${response.data.surname}` : ""}`; 
+        fireToast.success(`Bem vindo ${username}!`);
+        return localStorage.setItem('username', username);
       })
       .catch(error => {
         console.log(error);
       })
-  }
-
-  const getCurrentUserInfo = (users, userId) => {
-    const filteredUser = users.filter(user => user.id === userId);
-    const username = `${filteredUser[0].name} ${filteredUser[0].surname}`;
-    fireToast.success(`Bem vindo ${username}!`);
-    return localStorage.setItem(username, "user_name");
   }
 
   const handleSigninSubmit = (data) => {
@@ -46,9 +40,9 @@ const Signin = () => {
     .then(result => {
       api.post('/sessions', data)
         .then(response => {
-          /* getUsers(response.data.userId); */
-          signIn(response.data);
           navigate('/home');
+          getUser(response.data.userId);
+          signIn(response.data);
         })
         .catch(error => {
           if(error.response.status === httpStatus.UNAUTHORIZED) {

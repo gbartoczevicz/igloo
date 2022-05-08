@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 const SidebarHeader = () => {
     return (
       <>
@@ -10,7 +12,7 @@ const SidebarHeader = () => {
             />
               </div>
               <div className="grow ml-3">
-                <p className="text-sm font-semibold">Matheus Diori</p>
+                <p className="text-sm font-semibold">{localStorage.getItem('username')}</p>
               </div>
             </div>
           </a>

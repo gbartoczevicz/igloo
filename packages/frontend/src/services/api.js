@@ -27,7 +27,7 @@ api.interceptors.response.use(
     },
     error => {
         if (error.response.status === 401) {
-            localStorage.removeItem('@userToken');
+            localStorage.clear();
             if(window.location.pathname !== '/') {
                 window.location.reload();
             }

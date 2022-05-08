@@ -1,11 +1,10 @@
-import { Sidebar } from '../../components';
+import PageLayout from '../../components/page-layout';
 
 const Courses = () => {
     return (
-      <div>
-        Courses
-        <Sidebar/>
-      </div>
+      <PageLayout>
+        COURSES
+      </PageLayout>
     );
 }
   

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Header, Sidebar } from '../../components';
 import { useParams } from "react-router-dom";
 import api from '../../services/api';
+import { Link } from "react-router-dom";
 
 const InstitutionDetails = () => {
     let params = useParams();
@@ -37,6 +38,7 @@ const InstitutionDetails = () => {
             !loading && (
                 <div id="page" className="ml-52 mt-10 h-screen">
                     <h1>{institutionDetails.name}</h1>
+                    <Link to={`/institutions/${institutionDetails.id}/list-users`}>LISTAR USERS</Link>
                 </div>
             )
         }

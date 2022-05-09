@@ -11,6 +11,7 @@ import ListUsers from './pages/institutions/list-users';
 import Disciplines from './pages/disciplines';
 import Home from './pages/home';
 import Profile from './pages/profile';
+import EditProfile from './pages/profile/edit-profile';
 import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom';
 
 /* import { useAuth } from './store/auth'; */
@@ -37,6 +38,7 @@ const Router = () => (
           <Route exact path="/courses" element={<Courses />} />
           <Route exact path="/disciplines" element={<Disciplines />} />
           <Route exact path="/profile" element={<Profile />} />
+          <Route exact path="/profile/edit" element={<EditProfile />} />
         </Route>
         <Route path="*" element={<NotFound />} />
     </Routes>

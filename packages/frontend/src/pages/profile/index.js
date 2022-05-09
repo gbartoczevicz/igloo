@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import  PageLayout  from '../../components/page-layout';
 import api from '../../services/api';
 
@@ -29,6 +30,7 @@ const Profile = () => {
             <ul>
               <li>{user ? user.name : ""}</li>
               <li>{user ? user.email : ""}</li>
+              <li><Link to="/profile/edit">EDIT PROFILE</Link></li>
             </ul>
           </div>
         }

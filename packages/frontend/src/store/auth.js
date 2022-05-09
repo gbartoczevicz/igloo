@@ -9,36 +9,40 @@ export const AuthProvider = ({ children }) => {
     const [userId, setUserId] = useState(null);
     const [username, setUsername] = useState(null);
 
+    useEffect(() => {
+      setToken(localStorage.getItem('@userToken'));
+    }, []);
+
     const getUser = () => {
       api.get('/profile')
         .then(response => {
-          const userName = `${response.data.name}${response.data.surname ? ` ${response.data.surname}` : ""}`; 
-          fireToast.success(`Bem vindo ${userName}!`);
-          localStorage.setItem('username', userName);
-          return setUsername(userName);
+          const name = `${response.data.name}${response.data.surname ? ` ${response.data.surname}` : ""}`; 
+          fireToast.success(`Bem vindo ${name}!`);
+          return setName(name);
         })
         .catch(error => {
           console.log(error);
         })
-    }
+    };
+
+    const setName = (name) => {
+      localStorage.setItem('username', name);
+      setUsername(name);
+    };
 
     const signIn = async (data) => {
       getUser();
       setUserId(data.userId);
-      localStorage.setItem('@userToken', data.token);
       setToken(data.token);
+      localStorage.setItem('@userToken', data.token);
     };
 
     const signOut = async () => {
       localStorage.clear();
     };
 
-    useEffect(() => {
-      setToken(localStorage.getItem('@userToken'));
-    }, []);
-
     return (
-        <AuthContext.Provider value={{ signIn, signOut, token, username, userId }}>
+        <AuthContext.Provider value={{ signIn, signOut, token, username, userId, setName }}>
             {children}
         </AuthContext.Provider>
     );

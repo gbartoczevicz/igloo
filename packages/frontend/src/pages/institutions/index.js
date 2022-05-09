@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Header, Sidebar } from '../../components';
 import api from '../../services/api';
 import { Link } from "react-router-dom";
+import PageLayout from '../../components/page-layout';
 
 const Institutions = () => {
   const [institutions, setInstitutions] = useState(null);
@@ -58,17 +59,9 @@ const Institutions = () => {
   }
 
   return (
-    <div>
-      <Header/>
-      <Sidebar/>
-      {
-        !loading && (
-          <div id="page" className='ml-52 mt-10 h-screen'>
-            {renderInstitutions()}
-          </div>
-        )
-      }
-    </div>
+    <PageLayout>
+      {!loading && renderInstitutions()}
+    </PageLayout>
     );
   }
   

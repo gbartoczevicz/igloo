@@ -1,11 +1,8 @@
-import { Sidebar, Header } from '../../components';
+import PageLayout from '../../components/page-layout';
 
 const Home = () => {
     return (
-      <div>
-        <Header/>
-        <Sidebar/>
-      </div>
+      <PageLayout>HOME</PageLayout>
     );
   }
   

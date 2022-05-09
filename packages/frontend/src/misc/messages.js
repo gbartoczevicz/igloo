@@ -25,6 +25,7 @@ const messages = {
     api: {
         account: {
             signup: "Conta criada com sucesso!",
+            edit_account: "Conta editada com sucesso!"
         },
         institutions: {
             create_institution: "Instituição criada com sucesso!",

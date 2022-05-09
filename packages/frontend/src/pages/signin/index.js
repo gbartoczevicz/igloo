@@ -7,7 +7,6 @@ import {
   validateForm,
 } from "../../validations";
 import api from '../../services/api';
-import * as fireToast from '../../utils/fire-toast';
 import { useAuth } from "../../store/auth";
 import httpStatus from "../../misc/http-status";
 import { useNavigate } from 'react-router-dom';
@@ -17,24 +16,6 @@ const Signin = () => {
   const [backEndError, setBackEndError] = useState(null);
   const { signIn } = useAuth();
   const navigate = useNavigate();
-
-  const getUsers = (userId) => {
-    api.get('/users')
-      .then(response => {
-        getCurrentUserInfo(response.data, userId);
-        return response.data;
-      })
-      .catch(error => {
-        console.log(error);
-      })
-  }
-
-  const getCurrentUserInfo = (users, userId) => {
-    const filteredUser = users.filter(user => user.id === userId);
-    const username = `${filteredUser[0].name} ${filteredUser[0].surname}`;
-    fireToast.success(`Bem vindo ${username}!`);
-    return localStorage.setItem(username, "user_name");
-  }
 
   const handleSigninSubmit = (data) => {
     setBackEndError("");
@@ -46,9 +27,9 @@ const Signin = () => {
     .then(result => {
       api.post('/sessions', data)
         .then(response => {
-          /* getUsers(response.data.userId); */
           signIn(response.data);
           navigate('/home');
+          //getUser(response.data.userId);
         })
         .catch(error => {
           if(error.response.status === httpStatus.UNAUTHORIZED) {

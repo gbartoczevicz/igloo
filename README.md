@@ -1,6 +1,6 @@
 ## Igloo
 
-## Artifacts
+## Packages
 
 - [Server Package](packages/server/README.md)
 - [Frontent Package](packages/frontend/README.md)

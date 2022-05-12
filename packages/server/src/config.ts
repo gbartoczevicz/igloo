@@ -1,3 +1,5 @@
+import "dotenv/config";
+
 export class ApplicationConfig {
   private constructor(
     public readonly databaseUrl: string,

@@ -18,7 +18,7 @@ export function setupListRelatedUserInstitutions(
   const controller = new ListRelatedUserInstitutionsController(usecase);
 
   return new HttpRoute(
-    "/institutions/related",
+    "/institutions",
     Method.get,
     (req, res, _next) => {
       const incoming = {

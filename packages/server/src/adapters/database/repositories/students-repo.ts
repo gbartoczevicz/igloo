@@ -26,6 +26,14 @@ export class PrismaStudentsRepo
     });
   }
 
+  public async findAllByUserId(userId: Id): Promise<Student[]> {
+    const studentsFound = await this.client.client.student.findMany({
+      where: { userId: userId.value },
+    });
+
+    return studentsFound.map((student) => this.toEntity(student)) as Student[];
+  }
+
   public async findByInstitutionAndUser(
     institutionId: Id,
     userId: Id,

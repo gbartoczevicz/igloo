@@ -3,6 +3,7 @@ import { Id } from "~/domain/entities/values";
 
 export interface ProfessorsRepo {
   save(professor: Professor): Promise<void>;
+  findAllByUserId(userId: Id): Promise<Professor[]>;
   findByInstitutionAndUser(
     institutionId: Id,
     userId: Id,

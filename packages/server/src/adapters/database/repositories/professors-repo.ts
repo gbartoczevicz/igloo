@@ -26,6 +26,16 @@ export class PrismaProfessorsRepo
     });
   }
 
+  public async findAllByUserId(userId: Id): Promise<Professor[]> {
+    const professorsFound = await this.client.client.professor.findMany({
+      where: { userId: userId.value },
+    });
+
+    return professorsFound.map((professor) =>
+      this.toEntity(professor)
+    ) as Professor[];
+  }
+
   public async findByInstitutionAndUser(
     institutionId: Id,
     userId: Id,

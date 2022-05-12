@@ -20,24 +20,11 @@ export namespace ListRelatedUserInstitutionsDTO {
 
   export class Out {
     public static toRaw(userRelatedInstitutions: UserRelatedInstitutions) {
-      return {
-        students: userRelatedInstitutions.students.map((s) =>
-          this.institutionRaw(s)
-        ),
-        professors: userRelatedInstitutions.professors.map((p) =>
-          this.institutionRaw(p)
-        ),
-        managers: userRelatedInstitutions.managers.map((m) =>
-          this.institutionRaw(m)
-        ),
-      };
-    }
-
-    private static institutionRaw(institution: Institution) {
-      return {
-        id: institution.id.value,
-        name: institution.name,
-      };
+      return userRelatedInstitutions.institutions.map((i) => ({
+        id: i.institution.id.value,
+        name: i.institution.name,
+        userRole: i.userRole,
+      }));
     }
   }
 }

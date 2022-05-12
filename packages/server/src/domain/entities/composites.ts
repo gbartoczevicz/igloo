@@ -2,6 +2,7 @@ import { Institution } from "./institution";
 import { Professor } from "./professor";
 import { Student } from "./student";
 import { User } from "./user";
+import { UserRole } from "./values";
 
 export class ProfessorUserComposition {
   public readonly professor: Professor;
@@ -25,20 +26,15 @@ export class StudentUserComposition {
   }
 }
 
+export type UserRoleInInstitution = {
+  institution: Institution;
+  userRole: UserRole;
+};
+
 export class UserRelatedInstitutions {
-  public readonly students: Institution[];
+  public readonly institutions: UserRoleInInstitution[];
 
-  public readonly professors: Institution[];
-
-  public readonly managers: Institution[];
-
-  public constructor(
-    students: Institution[],
-    professors: Institution[],
-    managers: Institution[],
-  ) {
-    this.managers = managers;
-    this.professors = professors;
-    this.students = students;
+  public constructor(institutions: UserRoleInInstitution[]) {
+    this.institutions = institutions;
   }
 }

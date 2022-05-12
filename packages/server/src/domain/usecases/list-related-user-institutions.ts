@@ -4,7 +4,12 @@ import {
   ProfessorsRepo,
   StudentsRepo,
 } from "~/contracts/database/repositories";
-import { User, UserRelatedInstitutions } from "../entities";
+import {
+  User,
+  UserRelatedInstitutions,
+  UserRoleInInstitution,
+} from "../entities";
+import { UserRole } from "../entities/values";
 
 type Params = {
   user: User;
@@ -39,22 +44,45 @@ export class ListRelatedUserInstitutionsUseCase {
       institutionIds,
     );
 
-    return new UserRelatedInstitutions(
-      institutions.filter((institution) =>
-        students.find((student) =>
+    const institutionRoles: UserRoleInInstitution[] = institutions.map(
+      (institution) => {
+        const student = students.find((student) =>
           student.institutionId.isEqual(institution.id)
-        )
-      ),
-      institutions.filter((institution) =>
-        professors.find((professor) =>
+        );
+
+        if (student) {
+          return {
+            institution,
+            userRole: UserRole.student,
+          };
+        }
+
+        const professor = professors.find((professor) =>
           professor.institutionId.isEqual(institution.id)
-        )
-      ),
-      institutions.filter((institution) =>
-        managers.find((manager) =>
+        );
+
+        if (professor) {
+          return {
+            institution,
+            userRole: UserRole.professor,
+          };
+        }
+
+        const manager = managers.find((manager) =>
           manager.institutionId.isEqual(institution.id)
-        )
-      ),
+        );
+
+        if (manager) {
+          return {
+            institution,
+            userRole: UserRole.manager,
+          };
+        }
+
+        throw new Error("The user is not related with any institution");
+      },
     );
+
+    return new UserRelatedInstitutions(institutionRoles);
   }
 }

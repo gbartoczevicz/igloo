@@ -6,13 +6,10 @@
     },
     "target": "es5",
     "loose": false,
-    "baseUrl": ".",
+    "baseUrl": "./src/",
     "paths": {
       "~/*": [
-        "src/*"
-      ],
-      "!/*": [
-        "tests/*"
+        "*"
       ]
     }
   },

@@ -10,7 +10,9 @@
     "build": "swc src -d dist",
     "start": "node dist/main.js",
     "migrate": "prisma migrate dev",
-    "generate": "prisma generate"
+    "generate": "prisma generate",
+    "fmt": "deno fmt --config deno.json",
+    "database": "docker-compose --env-file .env up database"
   },
   "devDependencies": {
     "@swc/cli": "^0.1.55",

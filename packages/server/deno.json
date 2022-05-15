@@ -5,7 +5,8 @@
         "node_modules",
         "dist",
         ".github",
-        "coverage"
+        "coverage",
+        ".vscode"
       ]
     }
   }

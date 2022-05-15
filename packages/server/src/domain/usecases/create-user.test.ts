@@ -1,4 +1,4 @@
-import { DomainError } from "~/errors";
+import * as Erros from "~/domain/errors";
 import { systemTestSetup } from "~/setup/system-test";
 import { User } from "../entities";
 import { Email, Id, Password, Phone } from "../entities/values";
@@ -60,9 +60,7 @@ describe("Create User Use Case Tests", () => {
       phone: anUser.phone.toString(),
     });
 
-    expect(promise).rejects.toEqual(
-      new DomainError("E-mail is already in use"),
-    );
+    expect(promise).rejects.toBeInstanceOf(Erros.EmailAlreadyInUse);
   });
 
   it("should validate if the phone is already in use", () => {
@@ -81,6 +79,6 @@ describe("Create User Use Case Tests", () => {
       phone: anUser.phone.toString(),
     });
 
-    expect(promise).rejects.toEqual(new DomainError("Phone is already in use"));
+    expect(promise).rejects.toBeInstanceOf(Erros.PhoneAlreadyInUse);
   });
 });

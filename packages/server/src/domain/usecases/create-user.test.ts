@@ -1,13 +1,12 @@
+import { DomainError } from "~/errors";
 import { systemTestSetup } from "~/setup/system-test";
 import { User } from "../entities";
 import { Email, Id, Password, Phone } from "../entities/values";
 import { CreateUserUseCase } from "./create-user";
 
 function makeSut() {
-  const systemSetup = systemTestSetup();
-
-  const userFactory = systemSetup.factories.userFactory;
-  const usersRepo = systemSetup.repositories.usersRepo;
+  const { factories: { userFactory }, repositories: { usersRepo } } =
+    systemTestSetup();
 
   return {
     sut: new CreateUserUseCase(
@@ -16,21 +15,20 @@ function makeSut() {
     ),
     userFactory,
     usersRepo,
-  };
-}
-
-describe("Create User Use Case Tests", () => {
-  it("should create the expected user", async () => {
-    const { sut, userFactory } = makeSut();
-
-    const expectedUser = new User(
+    anUser: new User(
       new Id("any"),
       "any",
       null,
       new Email("any"),
       new Password("any"),
       new Phone("any"),
-    );
+    ),
+  };
+}
+
+describe("Create User Use Case Tests", () => {
+  it("should create the expected user", async () => {
+    const { sut, userFactory, anUser: expectedUser } = makeSut();
 
     jest.spyOn(userFactory, "create").mockImplementationOnce(() =>
       expectedUser
@@ -44,5 +42,45 @@ describe("Create User Use Case Tests", () => {
     });
 
     expect(result).toEqual(expectedUser);
+  });
+
+  it("should validate if the e-mail is already in use", () => {
+    const { sut, userFactory, usersRepo, anUser } = makeSut();
+
+    jest.spyOn(userFactory, "create").mockImplementationOnce(() => anUser);
+
+    jest.spyOn(usersRepo, "findByEmail").mockImplementationOnce(() =>
+      Promise.resolve(anUser)
+    );
+
+    const promise = sut.create({
+      ...anUser,
+      email: anUser.email.toString(),
+      password: anUser.password.toString(),
+      phone: anUser.phone.toString(),
+    });
+
+    expect(promise).rejects.toEqual(
+      new DomainError("E-mail is already in use"),
+    );
+  });
+
+  it("should validate if the phone is already in use", () => {
+    const { sut, userFactory, usersRepo, anUser } = makeSut();
+
+    jest.spyOn(userFactory, "create").mockImplementationOnce(() => anUser);
+
+    jest.spyOn(usersRepo, "findByPhone").mockImplementationOnce(() =>
+      Promise.resolve(anUser)
+    );
+
+    const promise = sut.create({
+      ...anUser,
+      email: anUser.email.toString(),
+      password: anUser.password.toString(),
+      phone: anUser.phone.toString(),
+    });
+
+    expect(promise).rejects.toEqual(new DomainError("Phone is already in use"));
   });
 });

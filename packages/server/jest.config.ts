@@ -2,6 +2,9 @@
  * For a detailed explanation regarding each configuration property and type check, visit:
  * https://jestjs.io/docs/configuration
  */
+import { resolve } from "path";
+
+const rootDir = resolve(__dirname);
 
 export default {
   // All imported modules in your tests should be mocked automatically
@@ -20,7 +23,9 @@ export default {
   collectCoverage: true,
 
   // An array of glob patterns indicating a set of files for which coverage information should be collected
-  // collectCoverageFrom: undefined,
+  collectCoverageFrom: [
+    "**/usecases/*.ts",
+  ],
 
   // The directory where Jest should output its coverage files
   coverageDirectory: "coverage",
@@ -88,7 +93,9 @@ export default {
   // ],
 
   // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
-  // moduleNameMapper: {},
+  moduleNameMapper: {
+    "~/(.*)$": "<rootDir>/src/$1",
+  },
 
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
   // modulePathIgnorePatterns: [],
@@ -121,7 +128,7 @@ export default {
   // restoreMocks: false,
 
   // The root directory that Jest should scan for tests and modules within
-  // rootDir: undefined,
+  rootDir,
 
   // A list of paths to directories that Jest should use to search for files in
   // roots: [

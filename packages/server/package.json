@@ -6,6 +6,7 @@
   "main": "src/main.ts",
   "scripts": {
     "test": "jest",
+    "test:watch": "jest --watch",
     "dev": "tsnd --respawn --transpile-only -r tsconfig-paths/register ./src/main.ts",
     "build": "swc src -d dist",
     "start": "node dist/main.js",

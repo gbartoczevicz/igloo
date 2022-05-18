@@ -1,5 +1,5 @@
 import { ProfessorsRepo, UsersRepo } from "~/contracts/database/repositories";
-import { DomainError } from "~/errors";
+import * as Errors from "~/domain/errors";
 import { InstitutionManager, Professor } from "../entities";
 import { IdFactory, ProfessorFactory } from "../factories";
 
@@ -38,15 +38,13 @@ export class CreateProfessorUseCase {
       .findByInstitutionAndUser(manager.institutionId, professorUserId);
 
     if (alreadyRegistered) {
-      throw new DomainError(
-        "The professor is already created in this institution",
-      );
+      throw new Errors.ProfessorAlreadyCreated();
     }
 
     const userExists = await this.usersRepo.findById(professorUserId);
 
     if (!userExists) {
-      throw new DomainError("User to be professor does not exists");
+      throw new Errors.UserToBeProfessorDoesNotExists();
     }
 
     const professor = this.professorFactory.create({

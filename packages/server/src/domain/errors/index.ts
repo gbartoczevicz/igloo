@@ -7,3 +7,4 @@ export * from "./course-not-exists";
 export * from "./professor-already-created";
 export * from "./user-to-be-professor-not-exists";
 export * from "./course-name-already-in-use";
+export * from "./discipline-name-already-in-use";

@@ -52,7 +52,7 @@ export class CreateDisciplinesUseCase {
     );
 
     if (withSameName) {
-      throw new Errors.CourseNameAlreadyInUse();
+      throw new Errors.DisciplineNameAlreadyInUse();
     }
 
     await this.disciplinesRepo.save(discipline);

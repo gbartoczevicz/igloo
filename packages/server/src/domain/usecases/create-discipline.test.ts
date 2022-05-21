@@ -99,6 +99,6 @@ describe("Create Discipline Use Case Tests", () => {
       name: "any",
     });
 
-    expect(promise).rejects.toBeInstanceOf(Errors.CourseNameAlreadyInUse);
+    expect(promise).rejects.toBeInstanceOf(Errors.DisciplineNameAlreadyInUse);
   });
 });

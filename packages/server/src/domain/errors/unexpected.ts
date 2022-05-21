@@ -11,3 +11,9 @@ export class UserNotFoundWithStudent extends Error {
     super(`User not found with student ${id.value}`);
   }
 }
+
+export class UserNotRelatedWithAnyInstitution extends Error {
+  public constructor() {
+    super("The user is not related with any institution");
+  }
+}

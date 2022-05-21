@@ -19,6 +19,6 @@ export class GetCourseUseCase {
   public async execute(params: Params): Promise<Course | null> {
     const id = this.idFactory.create(params.courseId);
 
-    return await this.coursesRepo.findById(id);
+    return await this.coursesRepo.findByIdAndInstitutionId(id);
   }
 }

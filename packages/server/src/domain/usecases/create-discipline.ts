@@ -34,17 +34,13 @@ export class CreateDisciplinesUseCase {
 
     const discipline = this.disciplineFactory.create(delegate);
 
-    const courseExists = await this.coursesRepo.findById(discipline.courseId);
+    const courseExists = await this.coursesRepo.findByIdAndInstitutionId(
+      discipline.courseId,
+      manager.institutionId,
+    );
 
     if (!courseExists) {
       throw new Errors.CourseNotExists();
-    }
-
-    const isTheCourseFromTheSameInstitution = manager.institutionId
-      .isEqual(courseExists.institutionId);
-
-    if (!isTheCourseFromTheSameInstitution) {
-      throw new Errors.CourseNotBelongToInstitution();
     }
 
     const registeredDisciplines = await this.disciplinesRepo.findAllByCourseId(

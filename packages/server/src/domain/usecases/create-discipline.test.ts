@@ -41,8 +41,8 @@ describe("Create Discipline Use Case Tests", () => {
       discipline
     );
 
-    jest.spyOn(coursesRepo, "findById").mockImplementationOnce(() =>
-      Promise.resolve(course)
+    jest.spyOn(coursesRepo, "findByIdAndInstitutionId").mockImplementationOnce(
+      () => Promise.resolve(course),
     );
 
     const result = await sut.execute({
@@ -70,33 +70,6 @@ describe("Create Discipline Use Case Tests", () => {
     expect(promise).rejects.toBeInstanceOf(Errors.CourseNotExists);
   });
 
-  it("should validate if the course institution is the same as the manager", () => {
-    const {
-      discipline,
-      managerFromAnotherInstitution,
-      course,
-      coursesRepo,
-      disciplineFactory,
-      sut,
-    } = makeSut();
-
-    jest.spyOn(disciplineFactory, "create").mockImplementationOnce(() =>
-      discipline
-    );
-
-    jest.spyOn(coursesRepo, "findById").mockImplementationOnce(() =>
-      Promise.resolve(course)
-    );
-
-    const promise = sut.execute({
-      courseId: "any",
-      manager: managerFromAnotherInstitution,
-      name: "any",
-    });
-
-    expect(promise).rejects.toBeInstanceOf(Errors.CourseNotBelongToInstitution);
-  });
-
   it("should validate if the discipline name is already in use", () => {
     const {
       discipline,
@@ -116,8 +89,8 @@ describe("Create Discipline Use Case Tests", () => {
       () => Promise.resolve([discipline]),
     );
 
-    jest.spyOn(coursesRepo, "findById").mockImplementationOnce(() =>
-      Promise.resolve(course)
+    jest.spyOn(coursesRepo, "findByIdAndInstitutionId").mockImplementationOnce(
+      () => Promise.resolve(course),
     );
 
     const promise = sut.execute({

@@ -6,6 +6,7 @@
   "main": "src/main.ts",
   "scripts": {
     "test": "jest",
+    "test:cache": "jest --clearCache",
     "test:watch": "jest --watch",
     "test:files": "file_server coverage/lcov-report",
     "dev": "tsnd --respawn --transpile-only -r tsconfig-paths/register ./src/main.ts",

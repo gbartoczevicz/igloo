@@ -28,6 +28,6 @@ describe("Get Managed Institution Use Case test", () => {
 
     const result = await sut.execute({ manager });
 
-    expect(result).toEqual(result);
+    expect(result).toEqual(institution);
   });
 });

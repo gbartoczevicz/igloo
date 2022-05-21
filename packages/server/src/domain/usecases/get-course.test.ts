@@ -24,14 +24,14 @@ describe("Get Course Use Case Tests", () => {
   it("should get the expected course", async () => {
     const { sut, course, coursesRepo, id, idFactory } = makeSut();
 
-    jest.spyOn(idFactory, "create").mockImplementationOnce(() =>
-      id
+    jest.spyOn(idFactory, "create").mockImplementationOnce(() => id);
+
+    jest.spyOn(coursesRepo, "findById").mockImplementationOnce(() =>
+      Promise.resolve(course)
     );
 
-    jest.spyOn(coursesRepo, "findById").mockImplementationOnce(() => Promise.resolve(course))
-
     const result = await sut.execute({
-      courseId: "any"
+      courseId: "any",
     });
 
     expect(result).toEqual(course);

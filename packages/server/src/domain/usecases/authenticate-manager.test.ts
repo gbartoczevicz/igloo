@@ -72,7 +72,7 @@ describe("Authenticate Manager Use Case Tests", () => {
     expect(result).rejects.toBeInstanceOf(Errors.ManagerNotFound);
   });
 
-  it("should validate if the manager exists", () => {
+  it("should validate if the user is a manager", () => {
     const { sut, idFactory, id, anotherUser, manager, managersRepo } =
       makeSut();
 

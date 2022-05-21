@@ -36,7 +36,7 @@ function makeSut() {
 }
 
 describe("Create Institution Manager Use Case Tests", () => {
-  it("should create a institution", async () => {
+  it("should create an institution", async () => {
     const {
       sut,
       institutionsRepo,

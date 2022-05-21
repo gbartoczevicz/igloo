@@ -24,7 +24,7 @@ function makeSut() {
 }
 
 describe("Create Institution Use Case Tests", () => {
-  it("should create a institution", async () => {
+  it("should create an institution", async () => {
     const { anInstitution, institutionFactory, sut } = makeSut();
 
     jest.spyOn(institutionFactory, "create").mockImplementationOnce(() =>

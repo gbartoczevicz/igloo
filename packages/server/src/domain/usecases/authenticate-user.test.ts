@@ -42,7 +42,7 @@ describe("Authenticate User Use Case Tests", () => {
     expect(result).toEqual(user);
   });
 
-  it("should check if the code is falsy", () => {
+  it("should check if the token is falsy", () => {
     const { sut } = makeSut();
 
     const result = sut.execute({

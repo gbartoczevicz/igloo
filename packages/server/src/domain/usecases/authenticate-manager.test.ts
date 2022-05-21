@@ -41,8 +41,8 @@ function makeSut() {
   };
 }
 
-describe("Create Discipline Use Case Tests", () => {
-  it("should auhenticate the user as a manager", async () => {
+describe("Authenticate Manager Use Case Tests", () => {
+  it("should authenticate the user as a manager", async () => {
     const { sut, idFactory, manager, managersRepo, id, user } = makeSut();
 
     jest.spyOn(idFactory, "create").mockImplementationOnce(() => id);

@@ -1,8 +1,8 @@
 import { UsersRepo } from "~/contracts/database/repositories";
 import { TokenProvider } from "~/contracts/hash";
-import { UnauthorizedError } from "~/errors";
 import { User } from "../entities";
 import { IdFactory } from "../factories";
+import { AuthUser } from "~/domain/errors";
 
 type Params = {
   token: string;
@@ -27,7 +27,7 @@ export class AuthenticateUserUseCase {
 
   public async execute(incoming: Params): Promise<User> {
     if (!incoming.token) {
-      throw new UnauthorizedError("Invalid bearer token");
+      throw new AuthUser.InvalidToken();
     }
 
     const [, bearerToken] = incoming.token.split(" ");
@@ -37,7 +37,7 @@ export class AuthenticateUserUseCase {
     try {
       decoded = this.tokenProvider.decode(bearerToken) as any;
     } catch (err) {
-      const error = new UnauthorizedError("Error when decoding token");
+      const error = new AuthUser.ErrorWhenDecoding();
 
       console.info(error.message, err);
 
@@ -49,7 +49,7 @@ export class AuthenticateUserUseCase {
     const userFound = await this.usersRepo.findById(userId);
 
     if (!userFound) {
-      throw new UnauthorizedError("User not found");
+      throw new AuthUser.UserNotFound();
     }
 
     return userFound;

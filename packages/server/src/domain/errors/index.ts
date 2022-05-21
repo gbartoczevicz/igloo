@@ -12,3 +12,4 @@ export * from "./institution-already-have-manager";
 export * from "./institution-not-exists";
 export * from "./session";
 export * from "./auth-manager";
+export * as AuthUser from "./auth-user";

@@ -1,7 +1,7 @@
 import { CoursesRepo } from "~/contracts/database/repositories";
-import { DomainError } from "~/errors";
 import { Course, InstitutionManager } from "../entities";
 import { CourseFactory } from "../factories";
+import * as Errors from "~/domain/errors";
 
 type Params = {
   name: string;
@@ -33,7 +33,7 @@ export class CreateCourseUseCase {
     );
 
     if (withSameName) {
-      throw new DomainError("The course name is already in use");
+      throw new Errors.CourseNameAlreadyInUse();
     }
 
     await this.coursesRepo.save(course);

@@ -15,10 +15,8 @@ export class GetManagedInstitutionUseCase {
   }
 
   public async execute(incoming: Params): Promise<Institution | null> {
-    const institutionsFound = await this.institutionsRepo.findById(
+    return await this.institutionsRepo.findById(
       incoming.manager.institutionId,
     );
-
-    return institutionsFound;
   }
 }

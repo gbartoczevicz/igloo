@@ -2,7 +2,7 @@ import {
   CoursesRepo,
   DisciplinesRepo,
 } from "~/contracts/database/repositories";
-import { DomainError, ForbiddenError } from "~/errors";
+import * as Errors from "~/domain/errors";
 import { Discipline, InstitutionManager } from "../entities";
 import { DisciplineFactory } from "../factories";
 
@@ -37,14 +37,14 @@ export class CreateDisciplinesUseCase {
     const courseExists = await this.coursesRepo.findById(discipline.courseId);
 
     if (!courseExists) {
-      throw new DomainError("The course does not exists");
+      throw new Errors.CourseNotExists();
     }
 
     const isTheCourseFromTheSameInstitution = manager.institutionId
       .isEqual(courseExists.institutionId);
 
     if (!isTheCourseFromTheSameInstitution) {
-      throw new ForbiddenError("The course doesn't belong to the institution");
+      throw new Errors.CourseNotBelongToInstitution();
     }
 
     const registeredDisciplines = await this.disciplinesRepo.findAllByCourseId(
@@ -56,7 +56,7 @@ export class CreateDisciplinesUseCase {
     );
 
     if (withSameName) {
-      throw new DomainError("The discipline name is already in use");
+      throw new Errors.CourseNameAlreadyInUse();
     }
 
     await this.disciplinesRepo.save(discipline);

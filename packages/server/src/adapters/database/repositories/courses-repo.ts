@@ -29,6 +29,16 @@ export class PrismaCoursesRepo
     });
   }
 
+  public async findById(id: Id): Promise<Course | null> {
+    const foundCourse = await this.client.client.course.findUnique({
+      where: {
+        id: id.value,
+      },
+    });
+
+    return this.toEntity(foundCourse);
+  }
+
   public async findByIdAndInstitutionId(
     id: Id,
     institutionId: Id,

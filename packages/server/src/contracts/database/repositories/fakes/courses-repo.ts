@@ -6,6 +6,10 @@ export class FakeCoursesRepo implements CoursesRepo {
   public async save(_course: Course): Promise<void> {
   }
 
+  public async findById(_id: Id): Promise<Course | null> {
+    return null;
+  }
+
   public async findByIdAndInstitutionId(
     _id: Id,
     _institutionId: Id,

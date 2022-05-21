@@ -11,3 +11,4 @@ export * from "./discipline-name-already-in-use";
 export * from "./institution-already-have-manager";
 export * from "./institution-not-exists";
 export * from "./session";
+export * from "./auth-manager";

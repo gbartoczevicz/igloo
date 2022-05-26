@@ -3,6 +3,9 @@
  * https://jestjs.io/docs/configuration
  */
 import { resolve } from "path";
+import { config } from "dotenv";
+
+config({ path: ".env.test" });
 
 const rootDir = resolve(__dirname);
 

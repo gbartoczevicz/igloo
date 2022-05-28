@@ -1,3 +1,7 @@
+/**
+ * @jest-environment ./prisma-test-environment.ts
+ */
+
 import { system } from "~/system";
 
 function makeSut() {

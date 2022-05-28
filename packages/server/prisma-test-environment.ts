@@ -4,7 +4,7 @@ import { promisify } from "util";
 import { exec } from "child_process";
 import { Client } from "pg";
 
-export class PrismaTestEnvironment extends NodeEnvironment {
+export default class PrismaTestEnvironment extends NodeEnvironment {
   private readonly schema: string;
 
   private readonly connectionString: string;
@@ -27,9 +27,13 @@ export class PrismaTestEnvironment extends NodeEnvironment {
     process.env.DATABASE_URL = this.connectionString;
     this.global.process.env.DATABASE_URL = this.connectionString;
 
+    console.log("aeou")
+
     await promisify(exec)(
-      `prisma migrate deploy --preview-feature`,
+      `./node_modules/.bin/prisma prisma migrate deploy --preview-feature`,
     );
+
+    console.log("e")
 
     return super.setup();
   }

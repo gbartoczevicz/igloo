@@ -4,8 +4,8 @@
 
 import { system } from "~/system";
 import { randomUUID } from "crypto";
-import fetch from "node-fetch";
-import { HttpStatus } from "~/contracts/http";
+import { HttpStatus, Method } from "~/contracts/http";
+import { makeHttpClient } from "./http-client";
 
 const uuid = randomUUID();
 
@@ -18,22 +18,12 @@ function makeSut() {
     password: uuid,
   };
 
-  const sut = async (body: unknown) => {
-    const response = await fetch("http://localhost:3333/users", {
-      headers: { "Content-Type": "application/json" },
-      method: "POST",
-      body: JSON.stringify(body),
-    });
-
-    return {
-      json: await response.json(),
-      status: response.status,
-    };
-  };
-
   return {
     user,
-    sut,
+    sut: makeHttpClient({
+      method: Method.post,
+      route: "/users",
+    }),
   };
 }
 

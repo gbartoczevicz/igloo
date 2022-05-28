@@ -12,28 +12,30 @@ export default class PrismaTestEnvironment extends NodeEnvironment {
   public constructor(config: any, _context: any) {
     super(config, _context);
 
-    const dbUser = process.env.DATABASE_USER;
-    const dbPass = process.env.DATABASE_PASS;
-    const dbHost = process.env.DATABASE_HOST;
-    const dbPort = process.env.DATABASE_PORT;
-    const dbName = process.env.DATABASE_NAME;
+    const {
+      DATABASE_USERNAME,
+      DATABASE_PASSWORD,
+      DATABASE_HOSTNAME,
+      DATABASE_PORT,
+      DATABASE_NAME,
+    } = process.env;
 
     this.schema = `test_${randomUUID()}`;
+
     this.connectionString =
-      `postgresql://${dbUser}:${dbPass}@${dbHost}:${dbPort}/${dbName}?schema=${this.schema}`;
+      `postgresql://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${DATABASE_HOSTNAME}:${DATABASE_PORT}/${DATABASE_NAME}?schema=${this.schema}`;
   }
 
   public override async setup(): Promise<void> {
     process.env.DATABASE_URL = this.connectionString;
+
     this.global.process.env.DATABASE_URL = this.connectionString;
 
-    console.log("aeou")
-
-    await promisify(exec)(
-      `./node_modules/.bin/prisma prisma migrate deploy --preview-feature`,
+    const result = await promisify(exec)(
+      `./node_modules/.bin/prisma migrate deploy --preview-featur`,
     );
 
-    console.log("e")
+    console.log("PrismaTestEnvironment.setup", result);
 
     return super.setup();
   }

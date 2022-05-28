@@ -32,7 +32,7 @@ export default class PrismaTestEnvironment extends NodeEnvironment {
     this.global.process.env.DATABASE_URL = this.connectionString;
 
     const result = await promisify(exec)(
-      `./node_modules/.bin/prisma migrate deploy --preview-featur`,
+      "./node_modules/.bin/prisma migrate deploy --preview-feature",
     );
 
     console.log("PrismaTestEnvironment.setup", result);

@@ -18,13 +18,15 @@ export function makeHttpClient(params: Params) {
       body: body ? JSON.stringify(body) : undefined,
       method,
       headers: {
-        "Content-Type": "application/json",
+        "content-type": "application/json",
         "Authorization": token ? `Bearer ${token}` : "",
       },
     });
 
+    const text = await response.text();
+
     return {
-      json: await response.json(),
+      body: text.length > 0 ? JSON.parse(text) : null,
       status: response.status,
     };
   };

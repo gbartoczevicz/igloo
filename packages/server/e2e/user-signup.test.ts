@@ -41,7 +41,7 @@ describe("User sign-up tests", () => {
 
     const result = await sut(user);
 
-    const { id, ...delegate } = result.json;
+    const { id, ...delegate } = result.body;
     const { password, ...userExpected } = user;
 
     expect(result.status).toEqual(HttpStatus.created);
@@ -55,7 +55,7 @@ describe("User sign-up tests", () => {
     const result = await sut(user);
 
     expect(result.status).toEqual(HttpStatus.unprocessableEntity);
-    expect(result.json.message).toEqual("E-mail is already in use");
+    expect(result.body.message).toEqual("E-mail is already in use");
   });
 
   it("should validate if the phone number is already in use", async () => {
@@ -71,7 +71,7 @@ describe("User sign-up tests", () => {
     const result = await sut(userToBeSent);
 
     expect(result.status).toEqual(HttpStatus.unprocessableEntity);
-    expect(result.json.message).toEqual("Phone is already in use");
+    expect(result.body.message).toEqual("Phone is already in use");
   });
 
   it("should validate the request body", async () => {
@@ -80,7 +80,7 @@ describe("User sign-up tests", () => {
     const result = await sut({});
 
     expect(result.status).toEqual(HttpStatus.unprocessableEntity);
-    expect(JSON.stringify(result.json)).toContain(
+    expect(JSON.stringify(result.body)).toContain(
       "Some of the sent fields are invalid",
     );
   });

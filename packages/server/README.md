@@ -2,7 +2,7 @@
 
 ## Requirements
 
-- nodejs: see [.nvmrc](./.nvmrc)
+- nodejs: see [.tool-versions](./.tool-versions)
 - npm: >= 8.3.1
 - deno: >= 1.19.2 (optional for formatting)
 - docker: >= 20.10.12 (optional for database and system containers)

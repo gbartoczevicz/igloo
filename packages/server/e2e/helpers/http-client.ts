@@ -31,3 +31,17 @@ export function makeHttpClient(params: Params) {
     };
   };
 }
+
+export function createUserClient() {
+  return makeHttpClient({
+    method: Method.post,
+    route: "/users",
+  });
+}
+
+export function createUserSessionClient() {
+  return makeHttpClient({
+    method: Method.post,
+    route: "/sessions",
+  });
+}

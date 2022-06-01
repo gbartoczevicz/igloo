@@ -3,33 +3,24 @@
  */
 import { system } from "~/system";
 import { randomUUID } from "crypto";
-import { HttpStatus, Method } from "~/contracts/http";
-import { makeHttpClient } from "./http-client";
+import { HttpStatus } from "~/contracts/http";
+import {
+  createUserClient,
+  createUserSessionClient,
+} from "./helpers/http-client";
 
 const credentials = {
   email: `user+${randomUUID()}@email.com`,
   password: randomUUID(),
 };
 
-function makeSut() {
-  return {
-    sut: makeHttpClient({
-      method: Method.post,
-      route: "/sessions",
-    }),
-  };
-}
-
 describe("User session tests", () => {
   beforeAll(async () => {
     await system.start();
 
-    const createUserClient = makeHttpClient({
-      method: Method.post,
-      route: "/users",
-    });
+    const createUser = createUserClient();
 
-    await createUserClient({
+    await createUser({
       ...credentials,
       name: `A user ${randomUUID()}`,
       surname: "The user's surname",
@@ -42,7 +33,7 @@ describe("User session tests", () => {
   });
 
   it("should create an user session successfully", async () => {
-    const { sut } = makeSut();
+    const sut = createUserSessionClient();
 
     const sessionCreatedResult = await sut(credentials);
 
@@ -53,7 +44,7 @@ describe("User session tests", () => {
 
   describe("user credentials validation", () => {
     it("should check if the user exists", async () => {
-      const { sut } = makeSut();
+      const sut = createUserSessionClient();
 
       const sessionCreatedResult = await sut({
         ...credentials,
@@ -64,7 +55,7 @@ describe("User session tests", () => {
     });
 
     it("should check if the user's password match", async () => {
-      const { sut } = makeSut();
+      const sut = createUserSessionClient();
 
       const sessionCreatedResult = await sut({
         ...credentials,

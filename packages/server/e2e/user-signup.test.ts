@@ -5,27 +5,17 @@
 import { system } from "~/system";
 import { randomUUID } from "crypto";
 import { HttpStatus, Method } from "~/contracts/http";
-import { makeHttpClient } from "./http-client";
+import { createUserClient } from "./helpers/http-client";
 
 const uuid = randomUUID();
 
-function makeSut() {
-  const user = {
-    name: `A user ${uuid}`,
-    surname: "The user's surname",
-    email: `user+${uuid}@email.com`,
-    phone: "(99) 9000-0000",
-    password: uuid,
-  };
-
-  return {
-    user,
-    sut: makeHttpClient({
-      method: Method.post,
-      route: "/users",
-    }),
-  };
-}
+const user = {
+  name: `A user ${uuid}`,
+  surname: "The user's surname",
+  email: `user+${uuid}@email.com`,
+  phone: "(99) 9000-0000",
+  password: uuid,
+};
 
 describe("User sign-up tests", () => {
   beforeAll(async () => {
@@ -37,7 +27,7 @@ describe("User sign-up tests", () => {
   });
 
   it("should create an user successfully", async () => {
-    const { sut, user } = makeSut();
+    const sut = createUserClient();
 
     const result = await sut(user);
 
@@ -50,7 +40,7 @@ describe("User sign-up tests", () => {
   });
 
   it("should validate if the e-mail is already in use", async () => {
-    const { sut, user } = makeSut();
+    const sut = createUserClient();
 
     const result = await sut(user);
 
@@ -59,7 +49,7 @@ describe("User sign-up tests", () => {
   });
 
   it("should validate if the phone number is already in use", async () => {
-    const { sut, user } = makeSut();
+    const sut = createUserClient();
 
     const { email, ...userDelegate } = user;
 
@@ -75,7 +65,7 @@ describe("User sign-up tests", () => {
   });
 
   it("should validate the request body", async () => {
-    const { sut } = makeSut();
+    const sut = createUserClient();
 
     const result = await sut({});
 

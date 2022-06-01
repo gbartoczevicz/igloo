@@ -45,3 +45,11 @@ export function createUserSessionClient() {
     route: "/sessions",
   });
 }
+
+export function createUpdateUserClient(token: string) {
+  return makeHttpClient({
+    method: Method.put,
+    route: "/profile",
+    token,
+  });
+}

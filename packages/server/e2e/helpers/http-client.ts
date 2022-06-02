@@ -53,3 +53,11 @@ export function createUpdateUserClient(token: string) {
     token,
   });
 }
+
+export function createCreateInstitutionClient(token: string) {
+  return makeHttpClient({
+    method: Method.post,
+    route: "/institutions",
+    token,
+  });
+}

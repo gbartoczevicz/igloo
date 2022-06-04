@@ -1,5 +1,5 @@
 import { InstitutionsRepo } from "~/contracts/database/repositories";
-import { DomainError } from "~/errors";
+import * as Errors from "~/domain/errors";
 import { Institution } from "../entities";
 import { InstitutionFactory } from "../factories";
 
@@ -30,7 +30,7 @@ export class CreateInstitutionUseCase {
     );
 
     if (phoneAlreadyInUse) {
-      throw new DomainError("Phone is already in use");
+      throw new Errors.PhoneAlreadyInUse();
     }
 
     const cnpjAlreadyInUse = await this.institutionsRepo.findByCnpj(
@@ -38,7 +38,7 @@ export class CreateInstitutionUseCase {
     );
 
     if (cnpjAlreadyInUse) {
-      throw new DomainError("Cnpj is already in use");
+      throw new Errors.CnpjAlreadyInUse();
     }
 
     await this.institutionsRepo.save(institution);

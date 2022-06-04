@@ -1,7 +1,7 @@
 import { UsersRepo } from "~/contracts/database/repositories";
 import { UserFactory } from "~/domain/factories/user-factory";
 import { User } from "~/domain/entities";
-import { DomainError } from "~/errors";
+import * as Errors from "~/domain/errors";
 
 type Params = {
   name: string;
@@ -23,13 +23,13 @@ export class CreateUserUseCase {
     const emailAlreadyInUse = await this.usersRepo.findByEmail(user.email);
 
     if (emailAlreadyInUse) {
-      throw new DomainError("E-mail is already in use");
+      throw new Errors.EmailAlreadyInUse();
     }
 
     const phoneAlreadyInUse = await this.usersRepo.findByPhone(user.phone);
 
     if (phoneAlreadyInUse) {
-      throw new DomainError("Phone is already in use");
+      throw new Errors.PhoneAlreadyInUse();
     }
 
     await this.usersRepo.save(user);

@@ -10,6 +10,7 @@ import {
   UserRoleInInstitution,
 } from "../entities";
 import { UserRole } from "../entities/values";
+import * as Errors from "~/domain/errors";
 
 type Params = {
   user: User;
@@ -79,7 +80,7 @@ export class ListRelatedUserInstitutionsUseCase {
           };
         }
 
-        throw new Error("The user is not related with any institution");
+        throw new Errors.UserNotRelatedWithAnyInstitution();
       },
     );
 

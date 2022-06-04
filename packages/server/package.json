@@ -5,21 +5,33 @@
   "license": "MIT",
   "main": "src/main.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
+    "test:cache": "jest --clearCache",
+    "test:watch": "jest --watch",
+    "test:files": "file_server coverage/lcov-report",
+    "test:database": "docker-compose --env-file .env.test up database-test",
     "dev": "tsnd --respawn --transpile-only -r tsconfig-paths/register ./src/main.ts",
     "build": "swc src -d dist",
-    "start": "node dist/main.js",
+    "start": "node -r dotenv/config dist/main.js dotenv_config_path=.env",
     "migrate": "prisma migrate dev",
-    "generate": "prisma generate"
+    "generate": "prisma generate",
+    "fmt": "deno fmt --config deno.json",
+    "database": "docker-compose --env-file .env up database"
   },
   "devDependencies": {
     "@swc/cli": "^0.1.55",
-    "@swc/core": "^1.2.158",
+    "@swc/core": "^1.2.183",
+    "@swc/jest": "^0.2.21",
     "@types/bcrypt": "^5.0.0",
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
+    "@types/jest": "^27.5.1",
     "@types/jsonwebtoken": "^8.5.8",
     "@types/node": "^17.0.21",
+    "@types/node-fetch": "^2.6.1",
+    "@types/pg": "^8.6.5",
+    "jest": "^28.1.0",
+    "jest-environment-node": "^28.1.0",
     "prisma": "^3.11.0",
     "regenerator-runtime": "^0.13.9",
     "ts-node-dev": "^1.1.8",
@@ -35,6 +47,8 @@
     "email-validator": "^2.0.4",
     "express": "^4.17.3",
     "jsonwebtoken": "^8.5.1",
-    "libphonenumber-js": "^1.9.50"
+    "libphonenumber-js": "^1.9.50",
+    "node-fetch": "^2.6.7",
+    "pg": "^8.7.3"
   }
 }

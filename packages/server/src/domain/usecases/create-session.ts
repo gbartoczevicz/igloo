@@ -1,6 +1,6 @@
 import { UsersRepo } from "~/contracts/database/repositories";
 import { PasswordHandler } from "~/contracts/hash";
-import { UnauthorizedError } from "~/errors";
+import * as Errors from "~/domain/errors";
 import { SessionToken } from "../entities";
 import { EmailFactory, SessionTokenFacotry } from "../factories";
 
@@ -36,7 +36,7 @@ export class CreateSessionUseCase {
     const userFound = await this.usersRepo.findByEmail(email);
 
     if (!userFound) {
-      throw new UnauthorizedError("User not found");
+      throw new Errors.UserNotFound();
     }
 
     const isTheSame = this.passwordHandler.compare(
@@ -45,7 +45,7 @@ export class CreateSessionUseCase {
     );
 
     if (!isTheSame) {
-      throw new UnauthorizedError("Password does not match");
+      throw new Errors.PasswordNotMatch();
     }
 
     return this.tokenFactory.create(userFound);

@@ -2,7 +2,7 @@ import {
   InstitutionManagersRepo,
   InstitutionsRepo,
 } from "~/contracts/database/repositories";
-import { DomainError } from "~/errors";
+import * as Errors from "~/domain/errors";
 import { Institution, InstitutionManager, User } from "../entities";
 import { InstitutionManagerFactory } from "../factories";
 
@@ -36,14 +36,14 @@ export class CreateInstitutionManagerUseCase {
     );
 
     if (!doesInstitutionExists) {
-      throw new DomainError("The institution does not exists");
+      throw new Errors.InstitutionNotExists();
     }
 
     const alreadyHaveAManager = await this.institutionManagersRepo
       .findByInstitutionId(institution.id);
 
     if (alreadyHaveAManager) {
-      throw new DomainError("The institution already have a manager");
+      throw new Errors.InstitutionAlreadyHaveManager();
     }
 
     const manager = this.managerFactory.create({

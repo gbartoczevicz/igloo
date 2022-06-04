@@ -1,5 +1,5 @@
 import { StudentsRepo, UsersRepo } from "~/contracts/database/repositories";
-import { DomainError } from "~/errors";
+import * as Errors from "~/domain/errors";
 import { InstitutionManager, Student } from "../entities";
 import { IdFactory, StudentFactory } from "../factories";
 
@@ -38,15 +38,13 @@ export class CreateStudentUseCase {
       .findByInstitutionAndUser(manager.institutionId, studentUserId);
 
     if (alreadyRegistered) {
-      throw new DomainError(
-        "The student is already created in this institution",
-      );
+      throw new Errors.StudentAlreadyCreated();
     }
 
     const userExists = await this.usersRepo.findById(studentUserId);
 
     if (!userExists) {
-      throw new DomainError("User to be student does not exists");
+      throw new Errors.UserToBeStudentDoesNotExists();
     }
 
     const student = this.studentFactory.create({

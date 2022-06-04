@@ -1,5 +1,6 @@
 import { ProfessorsRepo, UsersRepo } from "~/contracts/database/repositories";
 import { InstitutionManager, ProfessorUserComposition } from "../entities";
+import * as Errors from "~/domain/errors";
 
 type Params = {
   manager: InstitutionManager;
@@ -33,7 +34,7 @@ export class GetProfessorsByManagerUseCase {
       const userFound = users.find((user) => user.id.isEqual(professor.userId));
 
       if (!userFound) {
-        throw new Error(`User not found with professor ${professor.id.value}`);
+        throw new Errors.UserNotFoundWithProfessor(professor.id);
       }
 
       result.push(

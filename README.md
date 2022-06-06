@@ -1,5 +1,10 @@
 ## Igloo
 
+## Requirements
+
+- nodejs: see [.tool-versions](./.tool-versions) entry
+- npm: >= 8.3.1
+
 ## Packages
 
 - [Server Package](packages/server/README.md)

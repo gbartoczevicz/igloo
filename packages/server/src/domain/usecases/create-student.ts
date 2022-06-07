@@ -34,6 +34,12 @@ export class CreateStudentUseCase {
 
     const studentUserId = this.idFactory.create(incoming.studentUserId);
 
+    const isAlreadyAManager = manager.userId.isEqual(studentUserId);
+
+    if (isAlreadyAManager) {
+      throw new Errors.UserToBeStudentIsAlreadyAManager();
+    }
+
     const alreadyRegistered = await this.studentsRepo
       .findByInstitutionAndUser(manager.institutionId, studentUserId);
 

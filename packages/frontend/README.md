@@ -1,10 +1,5 @@
 # Igloo's frontend
 
-## Requirements
-
-- nodejs: see [.nvmrc](./.nvmrc)
-- npm: >= 8.3.1
-
 ## Getting started
 
 - Run `npm i` to install all the project dependencies

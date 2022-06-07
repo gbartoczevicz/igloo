@@ -140,7 +140,7 @@ describe("List related user institutions Use Case Tests", () => {
     expect(result).toEqual(userRelatedInstitutions);
   });
 
-  it("should get the expected institutions", () => {
+  it("should throw en error when the user somehow is not related to any institution", () => {
     const {
       anyInstitution,
       institutionsRepo,

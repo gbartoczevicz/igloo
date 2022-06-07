@@ -47,15 +47,14 @@ export class ListRelatedUserInstitutionsUseCase {
 
     const institutionRoles: UserRoleInInstitution[] = institutions.map(
       (institution) => {
+        const relations: UserRoleInInstitution[] = [];
+
         const student = students.find((student) =>
           student.institutionId.isEqual(institution.id)
         );
 
         if (student) {
-          return {
-            institution,
-            userRole: UserRole.student,
-          };
+          relations.push({ institution, userRole: UserRole.student });
         }
 
         const professor = professors.find((professor) =>
@@ -63,10 +62,10 @@ export class ListRelatedUserInstitutionsUseCase {
         );
 
         if (professor) {
-          return {
+          relations.push({
             institution,
             userRole: UserRole.professor,
-          };
+          });
         }
 
         const manager = managers.find((manager) =>
@@ -74,15 +73,19 @@ export class ListRelatedUserInstitutionsUseCase {
         );
 
         if (manager) {
-          return {
+          relations.push({
             institution,
             userRole: UserRole.manager,
-          };
+          });
         }
 
-        throw new Errors.UserNotRelatedWithAnyInstitution();
+        if (relations.length === 0) {
+          throw new Errors.UserNotRelatedWithAnyInstitution();
+        }
+
+        return relations;
       },
-    );
+    ).flat();
 
     return new UserRelatedInstitutions(institutionRoles);
   }

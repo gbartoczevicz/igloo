@@ -62,8 +62,6 @@ describe("Institution Tests", () => {
       institution = body;
     });
 
-    it.todo("ye", () => {
-      console.log(institution);
-    });
+    it("should log the institution", () => console.log(institution));
   });
 });

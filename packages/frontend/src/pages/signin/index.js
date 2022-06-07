@@ -10,6 +10,9 @@ import api from '../../services/api';
 import { useAuth } from "../../store/auth";
 import httpStatus from "../../misc/http-status";
 import { useNavigate } from 'react-router-dom';
+import loginImage from '../../images/young-man-taking-notes.png';
+import igloo from '../../images/iglooText.png';
+
 
 const Signin = () => {
   const signinFormRef = useRef(null);
@@ -44,8 +47,12 @@ const Signin = () => {
 
   return (
     <>
-      <div className="flex flex-wrap justify-center mt-20">
-        <div className="w-full max-w-sm">
+      <div className="flex flex-wrap justify-center my-auto h-screen">
+        <div className="flex-none scale-75 my-auto">
+          <img src={loginImage} />
+        </div>
+        <div className="w-full max-w-sm my-auto">
+          <img className="mx-auto" src={igloo} />
           <Form className="shadow-md bg-white rounded px-8 pt-6 pb-8 mb-4" onSubmit={handleSigninSubmit} ref={signinFormRef} >
             <div className="mb-4">
               <Input name="email" /*type="email"*/ label="Email" placeholder="Email"/>
@@ -58,15 +65,15 @@ const Signin = () => {
               <small className="error text-red-400">{`*${backEndError}`}</small>
             }
             <div className="flex items-center justify-between">
-              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" >
+              <button className="bg-teal-600 hover:bg-teal-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" >
                 Sign In
               </button>
-              <a className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-700" href="/forgot-password">
+              <a className="inline-block align-baseline font-bold text-sm text-teal-600 hover:text-teal-800" href="/forgot-password">
                 Esqueceu a senha?
               </a>
             </div>
           </Form>
-          <a className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-700" href="/signup">
+          <a className="inline-block align-baseline font-bold text-sm text-teal-600 hover:text-teal-800" href="/signup">
             Crie uma nova conta
           </a>
         </div>

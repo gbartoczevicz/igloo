@@ -34,6 +34,12 @@ export class CreateProfessorUseCase {
 
     const professorUserId = this.idFactory.create(incoming.professorUserId);
 
+    const isAlreadyAManager = manager.userId.isEqual(professorUserId);
+
+    if (isAlreadyAManager) {
+      throw new Errors.UserToBeProfessorIsAlreadyAManager();
+    }
+
     const alreadyRegistered = await this.professorsRepo
       .findByInstitutionAndUser(manager.institutionId, professorUserId);
 

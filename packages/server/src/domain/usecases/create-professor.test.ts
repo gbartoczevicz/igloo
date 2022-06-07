@@ -10,7 +10,7 @@ function makeSut() {
     repositories: { professorsRepo, usersRepo },
   } = systemTestSetup();
 
-  const anyId = new Id("any");
+  const id = new Id("id");
 
   return {
     sut: new CreateProfessorUseCase(
@@ -23,18 +23,18 @@ function makeSut() {
     idFactory,
     professorsRepo,
     usersRepo,
-    aProfessor: new Professor(
-      anyId,
-      anyId,
-      anyId,
+    professor: new Professor(
+      id,
+      id,
+      id,
     ),
-    aManager: new InstitutionManager(
-      anyId,
-      anyId,
-      anyId,
+    manager: new InstitutionManager(
+      id,
+      id,
+      id,
     ),
-    anUser: new User(
-      anyId,
+    user: new User(
+      id,
       "any",
       null,
       new Email("any"),
@@ -46,71 +46,92 @@ function makeSut() {
 
 describe("Create Professor Use Case Tests", () => {
   it("should create a new professor", async () => {
-    const { professorFactory, aProfessor, usersRepo, anUser, aManager, sut } =
+    const { professorFactory, professor, usersRepo, user, manager, sut } =
       makeSut();
 
     jest.spyOn(professorFactory, "create").mockImplementationOnce(() =>
-      aProfessor
+      professor
     );
 
     jest.spyOn(usersRepo, "findById").mockImplementationOnce(() =>
-      Promise.resolve(anUser)
+      Promise.resolve(user)
     );
 
     const result = await sut.execute({
-      manager: aManager,
+      manager,
       professorUserId: "any",
     });
 
-    expect(result).toEqual(aProfessor);
+    expect(result).toEqual(professor);
   });
 
   it("should not create when the professor is already relationated with the institution", () => {
     const {
       professorFactory,
-      aProfessor,
+      professor,
       professorsRepo,
-      aManager,
-      anUser,
+      manager,
+      user,
       usersRepo,
       sut,
     } = makeSut();
 
     jest.spyOn(professorFactory, "create").mockImplementationOnce(() =>
-      aProfessor
+      professor
     );
 
     jest.spyOn(professorsRepo, "findByInstitutionAndUser")
       .mockImplementationOnce(
-        () => Promise.resolve(aProfessor),
+        () => Promise.resolve(professor),
       );
 
     jest.spyOn(usersRepo, "findById").mockImplementationOnce(() =>
-      Promise.resolve(anUser)
+      Promise.resolve(user)
     );
 
     const promise = sut.execute({
-      manager: aManager,
+      manager,
       professorUserId: "any",
     });
 
     expect(promise).rejects.toBeInstanceOf(Errors.ProfessorAlreadyCreated);
   });
 
+  it("should not create when the user to be student is the manager of the instituion", () => {
+    const {
+      idFactory,
+      manager,
+      sut,
+    } = makeSut();
+
+    jest.spyOn(idFactory, "create").mockImplementationOnce(() =>
+      manager.userId
+    );
+
+    const promise = sut.execute({
+      manager,
+      professorUserId: "any",
+    });
+
+    expect(promise).rejects.toBeInstanceOf(
+      Errors.UserToBeProfessorIsAlreadyAManager,
+    );
+  });
+
   it("should not create when the user to be professor does not exists", () => {
     const {
       professorFactory,
-      aProfessor,
-      aManager,
+      professor,
+      manager,
       sut,
     } = makeSut();
 
     jest.spyOn(professorFactory, "create").mockImplementationOnce(() =>
-      aProfessor
+      professor
     );
 
     const promise = sut.execute({
-      manager: aManager,
+      manager,
       professorUserId: "any",
     });
 

@@ -36,10 +36,19 @@ const Institutions = () => {
       )
   }
 
+  const AuthenticatedLink = ({children, isAdmin, id}) => {
+    if(isAdmin) {
+      return <Link to={`/institutions/${id}`} >{children}</Link>;
+    }
+
+    return <>{children}</>;
+  }
+
   const renderInstitutions = () => {
     let renderedInstitutions = institutions?.map((inst) => {
       const { userRole, name, id } = inst;
       let roleTitle =  "";
+      let isAdmin = false;
       switch (userRole) {
         case 'professor':
           roleTitle = "Professor";
@@ -49,19 +58,20 @@ const Institutions = () => {
           break;
         default:
           roleTitle = "Administrador";
+          isAdmin = true;
           break;
       }
-      
+
       return (       
         <div className='bg-gray-400 h-24 rounded-md' key={id}>
-          <Link to={`/institutions/${id}`}>
+          <AuthenticatedLink isAdmin={isAdmin} id={id}>
             <div id="institution-info" className="p-3 h-full">
               <ul>
                 <li>{name}</li>
                 <li>{roleTitle}</li>
               </ul>
             </div>
-          </Link>
+          </AuthenticatedLink>
         </div>
       )
     });

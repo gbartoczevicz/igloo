@@ -14,3 +14,5 @@ export * from "./session";
 export * from "./auth-manager";
 export * as AuthUser from "./auth-user";
 export * from "./unexpected";
+export * from "./user-to-be-student-is-manager";
+export * from "./user-to-be-professor-is-manager";

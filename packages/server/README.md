@@ -2,7 +2,8 @@
 
 ## Requirements
 
-- deno: see [.tool-versions](../../.tool-versions) entry (optional for formatting)
+- deno: see [.tool-versions](../../.tool-versions) entry (optional for
+  formatting)
 - docker: >= 20.10.12 (optional for database and system containers)
 - docker-compose: >= 2.3.3 (optional for database and system containers)
 

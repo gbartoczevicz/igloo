@@ -16,7 +16,6 @@ const Institutions = () => {
     api.get('/institutions')
       .then(response => {
         setInstitutions(response.data);
-        console.log("INSTITUIÇõES: ", response.data)
         setLoading(false);
       })
       .catch(error => {

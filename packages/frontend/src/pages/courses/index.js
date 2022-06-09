@@ -6,26 +6,19 @@ import { Select, Input } from "../../components/form";
 import * as fireToast from '../../utils/fire-toast';
 
 const Courses = () => {
-  /* TODO
-    - entender porque o valor do reactselect nao vai junto com o 
-    form no submit */
-
   const [courses, setCourses] = useState(null);
   const [loading, setLoading] = useState(true);
   const [adminInstitutions, setAdminInstitutions] = useState([]);
   const [institutions, setInstitutions] = useState([]);
   const [selectedInstitution, setSelectedInstitution] = useState(null);
   const [selectedListingInstitution, setSelectedListingInstitution] = useState(null);
-  const [listingSelectValue, setListingSelectValue] = useState(null);
-  const [val, setVal] = useState(null);
 
-  const selectInstitution = useRef(null);
+  const selectInstitutionForm = useRef(null);
+  const createCourseForm= useRef(null);
 
   useEffect(() => {
     getInstitutions();
   }, []);
-
-  useEffect(() => console.log("Ronaldo", selectedListingInstitution), [selectedListingInstitution])
 
   const getCourses = (institutionId) => {
     api.get(`/institutions/${institutionId}/courses`)
@@ -64,13 +57,12 @@ const Courses = () => {
   }
 
   const handleInstitutionCreationForm = (data) => {
-    console.log(data, selectedInstitution)
     api.post(`/institutions/${selectedInstitution.value}/courses`, data)
       .then(response => {
         getCourses(response.data.institutionId);
-        let egg = institutions.find(ist => ist.value === response.data.institutionId);
-        console.log("EGG: ", egg, response.data.institutionId)
-        setSelectedListingInstitution(egg);
+        let institutionThatCourseWasCreated = institutions.find(ist => ist.value === response.data.institutionId);
+        setSelectedListingInstitution(institutionThatCourseWasCreated);
+        createCourseForm.current.clearField('name');
         fireToast.success("Curso criado com sucesso!");
       })
       .catch(error => {
@@ -81,7 +73,6 @@ const Courses = () => {
   const handleListingSelectOnChange = (data) => {
     setSelectedListingInstitution(data);
     getCourses(data.value);
-    setVal(data);
   }
 
   const renderCourses = (coursesList) => {
@@ -116,7 +107,7 @@ const Courses = () => {
             <div className="flex space-x-3 mx-3">
               <div className="w-80 mx-auto flex-1">
                 <Form className="shadow-md bg-white rounded px-8 pt-6 pb-3 mb-4"
-                  onSubmit={handleInstitutionCreationForm} ref={selectInstitution}>
+                  onSubmit={handleInstitutionCreationForm} ref={createCourseForm}>
                   <div className='mb-4'>
                     <Input
                       name="name"
@@ -142,7 +133,7 @@ const Courses = () => {
                 </Form>
               </div>
               <div className="w-80 mx-auto flex-1">
-                <Form className="shadow-md bg-white rounded px-8 py-6" ref={selectInstitution}>
+                <Form className="shadow-md bg-white rounded px-8 py-6" ref={selectInstitutionForm}>
                   <Select
                     label="Listar cursos da instituição"
                     name="institutionSelection"

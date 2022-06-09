@@ -31,7 +31,19 @@ const ListUsers = () => {
   const getUsers = () => {
     api.get('/users')
       .then(response => {
+        getProfile(response.data);
         return setUsers(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      })
+  }
+
+  const getProfile = (users) => {
+    api.get('/profile')
+      .then(response => {
+        let filteredUsers = users.filter(user => user.id !== response.data.id);
+        return setUsers(filteredUsers);
       })
       .catch(error => {
         console.log(error);

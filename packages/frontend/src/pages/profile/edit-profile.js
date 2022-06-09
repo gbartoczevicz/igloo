@@ -23,6 +23,8 @@ const Projects = () => {
     const getProfileInfo = () => {
         api.get('/profile')
           .then(response => {
+            response.data.password = null;
+            response.data.confirmPassword = null;
             profileEditionRef.current.setData(response.data);
             return setUser(response.data);
           })
@@ -32,6 +34,9 @@ const Projects = () => {
     }
 
     const handleProfileEditionSubmit = (data) => {
+        if(!profileEditionRef.current.getFieldValue('password')) {
+            return;
+        }
         api.put('/profile', data)
             .then(response => {
               setName(`${data.name}${data.surname ? ` ${data.surname}` : ''}`);
@@ -62,10 +67,10 @@ const Projects = () => {
                             <Input name="email" label="Email" placeholder="Email" />
                         </div>
                         <div className="mb-4">
-                            <Input type="password" name="password" label="Senha" placeholder="Senha" />
+                            <Input type="password" name="password" label="Nova senha" placeholder="Nova senha" />
                         </div>
                         <div className="mb-4">
-                            <Input type="password" name="confirmPassword" label="Confirmar senha" placeholder="Senha" />
+                            <Input type="password" name="confirmPassword" label="Confirmar nova senha" placeholder="Nova senha" />
                         </div>
                         {
                             backEndError &&

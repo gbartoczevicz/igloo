@@ -35,17 +35,42 @@ const Institutions = () => {
       )
   }
 
+  const AuthenticatedLink = ({children, isAdmin, id}) => {
+    if(isAdmin) {
+      return <Link to={`/institutions/${id}`} >{children}</Link>;
+    }
+
+    return <>{children}</>;
+  }
+
   const renderInstitutions = () => {
-    let renderedInstitutions = institutions?.map((inst, index) => {
+    let renderedInstitutions = institutions?.map((inst) => {
+      const { userRole, name, id } = inst;
+      let roleTitle =  "";
+      let isAdmin = false;
+      switch (userRole) {
+        case 'professor':
+          roleTitle = "Professor";
+          break;
+        case 'student':
+          roleTitle = "Estudante";
+          break;
+        default:
+          roleTitle = "Administrador";
+          isAdmin = true;
+          break;
+      }
+
       return (       
-        <div className='bg-gray-400 h-24 rounded-md' key={inst.id}>
-          <Link to={`/institutions/${inst.id}`}>
+        <div className='bg-gray-400 h-24 rounded-md' key={id}>
+          <AuthenticatedLink isAdmin={isAdmin} id={id}>
             <div id="institution-info" className="p-3 h-full">
               <ul>
-                <li>{inst.name}</li>
+                <li>{name}</li>
+                <li>{roleTitle}</li>
               </ul>
             </div>
-          </Link>
+          </AuthenticatedLink>
         </div>
       )
     });

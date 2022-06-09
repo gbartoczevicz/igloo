@@ -16,8 +16,9 @@ export const AuthProvider = ({ children }) => {
     const getUser = () => {
       api.get('/profile')
         .then(response => {
-          const name = `${response.data.name}${response.data.surname ? ` ${response.data.surname}` : ""}`; 
-          fireToast.success(`Bem vindo ${name}!`);
+          const name = response.data.name;
+          const completeName = `${response.data.name}${response.data.surname ? ` ${response.data.surname}` : ""}`;
+          fireToast.success(`Bem vindo ${completeName}!`);
           return setName(name);
         })
         .catch(error => {

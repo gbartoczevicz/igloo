@@ -6,7 +6,7 @@ const SidebarHeader = () => {
 
     return (
       <>
-        <div className="pt-4 pb-2 px-6">
+        <div className="pt-4 pb-2 px-1">
           <Link to="/profile">
             <div className="flex items-center">
               <div className="shrink-0">

@@ -12,7 +12,6 @@ const InstitutionDetails = () => {
     
     useEffect(() => {
         getInstitutionDetails();
-        getAdminVerification();
     }, []);
 
     const getInstitutionDetails = () => {
@@ -24,10 +23,6 @@ const InstitutionDetails = () => {
             .catch(error => {
                 console.log(error);
             })
-    };
-
-    const getAdminVerification = () => {
-        
     };
 
     return (

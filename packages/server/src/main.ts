@@ -7,4 +7,7 @@ async function main() {
   process.addListener("SIGTERM", () => startedSystem.stop());
 }
 
-main();
+main().catch((err) => {
+  console.error(err);
+  process.exit(1);
+});

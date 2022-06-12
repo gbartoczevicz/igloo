@@ -81,7 +81,8 @@ model Course {
 
   institution Institution @relation(fields: [institutionId], references: [id])
 
-  Discipline Discipline[]
+  Discipline  Discipline[]
+  ClassCourse ClassCourse[]
 
   @@map("courses")
 }
@@ -94,4 +95,16 @@ model Discipline {
   course Course @relation(fields: [courseId], references: [id])
 
   @@map("disciplines")
+}
+
+model ClassCourse {
+  id       String   @id @default(uuid())
+  name     String
+  start    DateTime
+  courseId String   @map("course_id")
+
+  course Course @relation(fields: [courseId], references: [id])
+
+  @@unique([start, courseId])
+  @@map("class_courses")
 }

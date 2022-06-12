@@ -1,11 +1,17 @@
 import { ClassCourse } from "../entities";
+import { ClassStartDate } from "../entities/values";
 import { IdFactory } from "./id-factory";
+
+type Start = Date | {
+  year: number;
+  month: number;
+};
 
 type Params = {
   id?: string;
   name: string;
   courseId: string;
-  start: Date;
+  start: Start;
 };
 
 export class ClassCourseFactory {
@@ -16,10 +22,11 @@ export class ClassCourseFactory {
   }
 
   public create(incoming: Params): ClassCourse {
-    const { name, start, ...delegate } = incoming;
+    const { name, ...delegate } = incoming;
 
     const id = this.idFactory.create(delegate.id);
     const courseId = this.idFactory.create(delegate.courseId);
+    const start = new ClassStartDate(delegate.start);
 
     return new ClassCourse(id, courseId, name, start);
   }

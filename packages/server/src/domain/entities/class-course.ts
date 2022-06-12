@@ -1,4 +1,4 @@
-import { Id } from "./values";
+import { ClassStartDate, Id } from "./values";
 
 export class ClassCourse {
   public readonly id: Id;
@@ -7,9 +7,14 @@ export class ClassCourse {
 
   public readonly name: string;
 
-  public readonly start: Date;
+  public readonly start: ClassStartDate;
 
-  public constructor(id: Id, courseId: Id, name: string, start: Date) {
+  public constructor(
+    id: Id,
+    courseId: Id,
+    name: string,
+    start: ClassStartDate,
+  ) {
     this.id = id;
     this.courseId = courseId;
     this.name = name;

@@ -86,6 +86,11 @@ export function createServer(systemSetup: SystemSetup) {
       systemSetup,
       userAuthenticated,
     ),
+    SetupRoutes.setupCreateClassCourse(
+      systemSetup,
+      userAuthenticated,
+      managerAuthenticated,
+    ),
   ]);
 
   express.use(cors());

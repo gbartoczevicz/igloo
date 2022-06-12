@@ -14,3 +14,4 @@ export * from "./get-managed-institution";
 export * from "./create-discipline";
 export * from "./list-institution-disciplines";
 export * from "./list-related-user-institutions";
+export * from "./create-class-course";

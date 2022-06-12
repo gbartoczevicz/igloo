@@ -12,7 +12,7 @@ export interface SystemSetup {
     studentsRepo: Repositories.StudentsRepo;
     coursesRepo: Repositories.CoursesRepo;
     disciplinesRepo: Repositories.DisciplinesRepo;
-    classCoursesRepo: Repositories.ClassCourseRepo;
+    classCoursesRepo: Repositories.ClassCoursesRepo;
   };
   factories: {
     cnpjFactory: Factories.CnpjFactory;

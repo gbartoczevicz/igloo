@@ -38,6 +38,8 @@ export namespace CreateClassCourseDTO {
         },
       });
 
+      console.log(start);
+
       if (result.isRight()) {
         throw result.value;
       }

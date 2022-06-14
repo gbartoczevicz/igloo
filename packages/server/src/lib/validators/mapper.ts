@@ -13,7 +13,7 @@ export const validatorMapping: ValidatorFunMapping = {
   [Options.optionalNumber]: (v) => {
     if (isNil(v)) return true;
 
-    return !Number.isNaN(v);
+    return typeof v === "number";
   },
   [Options.optionalString]: (v) => {
     if (isNil(v)) return true;
@@ -21,6 +21,6 @@ export const validatorMapping: ValidatorFunMapping = {
     return typeof v === "string";
   },
   [Options.requiredList]: (v) => Array.isArray(v),
-  [Options.requiredNumber]: (v) => !Number.isNaN(v),
+  [Options.requiredNumber]: (v) => typeof v === "number",
   [Options.requiredString]: (v) => typeof v === "string",
 };

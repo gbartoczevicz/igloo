@@ -3,8 +3,7 @@ import { ClassStartDate, Id } from "~/domain/entities/values";
 import { ClassCoursesRepo } from "../class-courses-repo";
 
 export class FakeClassCoursesRepo implements ClassCoursesRepo {
-  public async save(classCourse: ClassCourse): Promise<ClassCourse> {
-    return classCourse;
+  public async save(_classCourse: ClassCourse): Promise<void> {
   }
 
   public async findByCourseIdAndStart(
@@ -12,5 +11,9 @@ export class FakeClassCoursesRepo implements ClassCoursesRepo {
     _start: ClassStartDate,
   ): Promise<ClassCourse | null> {
     return null;
+  }
+
+  public async listByInstitutionId(_institutionId: Id): Promise<ClassCourse[]> {
+    return Promise.resolve([]);
   }
 }

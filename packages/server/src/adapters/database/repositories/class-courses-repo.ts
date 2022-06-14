@@ -47,6 +47,18 @@ export class PrismaClassCoursesRepo
     return this.toEntity(persisted);
   }
 
+  public async listByInstitutionId(institutionId: Id): Promise<ClassCourse[]> {
+    const persisted = await this.client.client.classCourse.findMany({
+      where: {
+        course: {
+          institutionId: institutionId.value,
+        },
+      },
+    });
+
+    return persisted.map(this.toEntity) as ClassCourse[];
+  }
+
   protected override toEntity(
     persisted: PrismaClassCourse | null,
   ): ClassCourse | null {

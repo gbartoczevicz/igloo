@@ -7,4 +7,5 @@ export interface ClassCoursesRepo {
     courseId: Id,
     start: ClassStartDate,
   ): Promise<ClassCourse | null>;
+  listByInstitutionId(institutionId: Id): Promise<ClassCourse[]>;
 }

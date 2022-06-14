@@ -26,7 +26,7 @@ export namespace CreateClassCourseDTO {
         },
         courseId: {
           option: Options.requiredString,
-          value: name,
+          value: courseId,
         },
         start__year: {
           option: Options.requiredNumber,
@@ -37,8 +37,6 @@ export namespace CreateClassCourseDTO {
           value: start?.month,
         },
       });
-
-      console.log(start);
 
       if (result.isRight()) {
         throw result.value;

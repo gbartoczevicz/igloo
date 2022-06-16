@@ -20,17 +20,6 @@ const Courses = () => {
     getInstitutions();
   }, []);
 
-  const getCourses = (institutionId) => {
-    api.get(`/institutions/${institutionId}/courses`)
-      .then(response => {
-        renderCourses(response.data);
-        setCourses(response.data);
-      })
-      .catch(error => {
-        console.log(error);
-      })
-  }
-
   const getInstitutions = () => {
     api.get('/institutions')
       .then(response => {
@@ -56,7 +45,18 @@ const Courses = () => {
       })
   }
 
-  const handleInstitutionCreationForm = (data) => {
+  const getCourses = (institutionId) => {
+    api.get(`/institutions/${institutionId}/courses`)
+      .then(response => {
+        renderCourses(response.data);
+        setCourses(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      })
+  }
+
+  const handleCourseCreationForm = (data) => {
     api.post(`/institutions/${selectedInstitution.value}/courses`, data)
       .then(response => {
         getCourses(response.data.institutionId);
@@ -70,7 +70,7 @@ const Courses = () => {
       })
   }
 
-  const handleListingSelectOnChange = (data) => {
+  const handleListingSelectedInstitutionCourses = (data) => {
     setSelectedListingInstitution(data);
     getCourses(data.value);
   }
@@ -107,7 +107,7 @@ const Courses = () => {
             <div className="flex space-x-3 mx-3">
               <div className="w-80 mx-auto flex-1">
                 <Form className="shadow-md bg-white rounded px-8 pt-6 pb-3 mb-4"
-                  onSubmit={handleInstitutionCreationForm} ref={createCourseForm}>
+                  onSubmit={handleCourseCreationForm} ref={createCourseForm}>
                   <div className='mb-4'>
                     <Input
                       name="name"
@@ -118,7 +118,7 @@ const Courses = () => {
                   <div className='mb-4'>
                     <Select
                       label="Instituição"
-                      name="institutionSelection"
+                      name="institutionCreationSelection"
                       onChange={(data) => { setSelectedInstitution(data) }}
                       options={adminInstitutions}
                       placeholder="Selecionar instituição"
@@ -136,8 +136,8 @@ const Courses = () => {
                 <Form className="shadow-md bg-white rounded px-8 py-6" ref={selectInstitutionForm}>
                   <Select
                     label="Listar cursos da instituição"
-                    name="institutionSelection"
-                    onChange={(data) => { handleListingSelectOnChange(data) }}
+                    name="institutionListingSelection"
+                    onChange={(data) => { handleListingSelectedInstitutionCourses(data) }}
                     options={institutions}
                     value={selectedListingInstitution}
                     placeholder="Selecionar instituição"

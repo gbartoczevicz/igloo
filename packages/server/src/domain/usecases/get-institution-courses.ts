@@ -4,7 +4,7 @@ import { IdFactory } from "../factories";
 
 type Params = {
   institutionId: string;
-}
+};
 
 export class GetInstitutionCoursesUseCase {
   private readonly idFactory: IdFactory;

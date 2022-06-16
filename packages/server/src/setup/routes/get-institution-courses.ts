@@ -23,9 +23,9 @@ export function setupGetInstitutionCourses(
     "/institutions/:institutionId/courses",
     Method.get,
     (req, res, _next) => {
-      controller.execute({ institutionId: req.params.institutionId }).then((result) =>
-        res.status(result.status).json(result.content)
-      );
+      controller.execute({ institutionId: req.params.institutionId }).then((
+        result,
+      ) => res.status(result.status).json(result.content));
     },
     [userAuthenticated, userRelatedToInstitution],
   );

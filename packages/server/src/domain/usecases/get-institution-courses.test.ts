@@ -6,7 +6,7 @@ import { GetInstitutionCoursesUseCase } from "./get-institution-courses";
 function makeSut() {
   const {
     repositories: { coursesRepo },
-    factories: { idFactory }
+    factories: { idFactory },
   } = systemTestSetup();
 
   const id = new Id("any");

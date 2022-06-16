@@ -15,3 +15,4 @@ export * from "./create-discipline";
 export * from "./list-institution-disciplines";
 export * from "./list-related-user-institutions";
 export * from "./create-class-course";
+export * from "./list-institution-class-courses";

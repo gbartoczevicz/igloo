@@ -2,7 +2,7 @@ import { Controller, HttpResult } from "~/contracts/presentation";
 import { ListInstitutionClassCoursesUseCase } from "~/domain/usecases";
 import { ListInstitutionClassCoursesDTO } from "./list-institution-class-courses-dto";
 
-export class ListInstitutionClassCourses extends Controller {
+export class ListInstitutionClassCoursesController extends Controller {
   private readonly usecase: ListInstitutionClassCoursesUseCase;
 
   public constructor(usecase: ListInstitutionClassCoursesUseCase) {

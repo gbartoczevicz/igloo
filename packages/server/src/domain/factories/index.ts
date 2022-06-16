@@ -12,3 +12,4 @@ export * from "./student-factory";
 export * from "./course-factory";
 export * from "./discipline-factory";
 export * from "./class-course-factory";
+export * from "./student-class-registration-factory";

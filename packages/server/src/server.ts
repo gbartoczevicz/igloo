@@ -17,6 +17,9 @@ export function createServer(systemSetup: SystemSetup) {
     systemSetup,
   );
   const isUserAManager = SetupMiddlewares.isUserAManager(systemSetup);
+  const userRelatedToInstitution = SetupMiddlewares.userRelatedToInstitution(
+    systemSetup,
+  );
 
   const router: HttpContracts.Router<
     E.Router,
@@ -65,7 +68,7 @@ export function createServer(systemSetup: SystemSetup) {
     SetupRoutes.setupGetInstitutionCourses(
       systemSetup,
       userAuthenticated,
-      managerAuthenticated,
+      userRelatedToInstitution,
     ),
     SetupRoutes.setupGetManagedInstitution(
       systemSetup,

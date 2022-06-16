@@ -6,27 +6,27 @@ import { GetInstitutionCoursesUseCase } from "./get-institution-courses";
 function makeSut() {
   const {
     repositories: { coursesRepo },
+    factories: { idFactory }
   } = systemTestSetup();
 
   const id = new Id("any");
 
   return {
-    sut: new GetInstitutionCoursesUseCase(coursesRepo),
+    sut: new GetInstitutionCoursesUseCase(idFactory, coursesRepo),
     coursesRepo,
     course: new Course(id, "any", id),
-    manager: new InstitutionManager(id, id, id),
   };
 }
 
 describe("Get Institution Courses Use Case Tests", () => {
   it("should get the expected course list", async () => {
-    const { sut, course, coursesRepo, manager } = makeSut();
+    const { sut, course, coursesRepo } = makeSut();
 
     jest.spyOn(coursesRepo, "findAllByInstitutionId").mockImplementationOnce(
       () => Promise.resolve([course]),
     );
 
-    const result = await sut.execute(manager);
+    const result = await sut.execute({ institutionId: "any" });
 
     expect(result).toContainEqual(course);
   });

@@ -1,20 +1,27 @@
-import { Course, InstitutionManager } from "~/domain/entities";
-import { UnauthorizedError } from "~/errors";
+import { Course } from "~/domain/entities";
+import { Options, validator } from "~/lib/validators";
 
 export namespace GetInstitutionCoursesDTO {
   export class In {
     private constructor(
-      public readonly manager: InstitutionManager,
+      public readonly institutionId: string,
     ) {}
 
     public static create(income: unknown): In {
-      const { manager } = income as any || {};
+      const { institutionId } = income as any || {};
 
-      if (!(manager instanceof InstitutionManager)) {
-        throw new UnauthorizedError("Manager is invalid");
+      const result = validator({
+        institutionId: {
+          option: Options.requiredString,
+          value: institutionId,
+        },
+      });
+
+      if (result.isRight()) {
+        throw result.value;
       }
 
-      return new In(manager);
+      return new In(institutionId);
     }
   }
 

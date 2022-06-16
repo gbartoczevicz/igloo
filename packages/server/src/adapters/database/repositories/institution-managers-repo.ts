@@ -54,6 +54,19 @@ export class PrismaInstitutionManagersRepo
     return this.toEntity(foundManager);
   }
 
+  public async findByInstitutionAndUser(
+    institutionId: Id,
+    userId: Id,
+  ): Promise<InstitutionManager | null> {
+    const foundManager = await this.client.client.institutionManager.findFirst(
+      {
+        where: { institutionId: institutionId.value, userId: userId.value },
+      },
+    );
+
+    return this.toEntity(foundManager);
+  }
+
   protected toEntity(
     persisted: PrismaInstitutionManager | null,
   ): InstitutionManager | null {

@@ -41,6 +41,8 @@ export function systemSetup(
   const classCoursesRepo = new RepositoryAdapters.PrismaClassCoursesRepo(
     database.client,
   );
+  const studentClassRegistrationsRepo = new RepositoryAdapters
+    .PrismaStudentClassRegistrationsRepo(database.client);
 
   const cnpjFactory = new DomainFactories.CnpjFactory(cnpjValidator);
   const emailFactory = new DomainFactories.EmailFactory(emailValidator);
@@ -104,7 +106,7 @@ export function systemSetup(
       coursesRepo,
       disciplinesRepo,
       classCoursesRepo,
-      studentClassRegistrationsRepo: null,
+      studentClassRegistrationsRepo,
     },
     validators: {
       cnpjValidator,

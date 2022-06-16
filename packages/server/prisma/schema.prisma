@@ -70,6 +70,8 @@ model Student {
   user        User        @relation(fields: [userId], references: [id])
   institution Institution @relation(fields: [institutionId], references: [id])
 
+  StudentClassCourseRegistration StudentClassCourseRegistration[]
+
   @@unique([userId, institutionId])
   @@map("students")
 }
@@ -105,6 +107,19 @@ model ClassCourse {
 
   course Course @relation(fields: [courseId], references: [id])
 
+  StudentClassCourseRegistration StudentClassCourseRegistration[]
+
   @@unique([start, courseId])
   @@map("class_courses")
+}
+
+model StudentClassCourseRegistration {
+  id            String @id @default(uuid())
+  studentId     String @map("student_id")
+  classCourseId String @map("class_course_id")
+
+  classCourse ClassCourse @relation(fields: [classCourseId], references: [id])
+  student     Student     @relation(fields: [studentId], references: [id])
+
+  @@map("student_class_course_registrations")
 }

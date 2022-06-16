@@ -69,6 +69,8 @@ export function systemSetup(
   const courseFactory = new DomainFactories.CourseFactory(idFactory);
   const disciplineFactory = new DomainFactories.DisciplineFactory(idFactory);
   const classCourseFactory = new DomainFactories.ClassCourseFactory(idFactory);
+  const studentClassRegistrationFactory = new DomainFactories
+    .StudentClassRegistrationFactory(idFactory);
 
   return {
     factories: {
@@ -86,6 +88,7 @@ export function systemSetup(
       courseFactory,
       disciplineFactory,
       classCourseFactory,
+      studentClassRegistrationFactory,
     },
     hash: {
       idProvider,
@@ -101,6 +104,7 @@ export function systemSetup(
       coursesRepo,
       disciplinesRepo,
       classCoursesRepo,
+      studentClassRegistrationsRepo: null,
     },
     validators: {
       cnpjValidator,

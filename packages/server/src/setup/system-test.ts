@@ -30,6 +30,8 @@ export function systemTestSetup(): SystemSetup {
   const sessionTokenFactory = new Factories.SessionTokenFacotry(tokenProvider);
   const studentFactory = new Factories.StudentFactory(idFactory);
   const classCourseFactory = new Factories.ClassCourseFactory(idFactory);
+  const studentClassRegistrationFactory = new Factories
+    .StudentClassRegistrationFactory(idFactory);
 
   const userFactory = new Factories.UserFactory(
     idFactory,
@@ -59,6 +61,7 @@ export function systemTestSetup(): SystemSetup {
       sessionTokenFactory,
       studentFactory,
       classCourseFactory,
+      studentClassRegistrationFactory,
     },
     repositories: {
       usersRepo: new FakeRepo.FakeUsersRepo(),
@@ -69,6 +72,8 @@ export function systemTestSetup(): SystemSetup {
       professorsRepo: new FakeRepo.FakeProfessorsRepo(),
       studentsRepo: new FakeRepo.FakeStudentsRepo(),
       classCoursesRepo: new FakeRepo.FakeClassCoursesRepo(),
+      studentClassRegistrationsRepo: new FakeRepo
+        .FakeStudentClassRegistrationsRepo(),
     },
     validators: {
       cnpjValidator,

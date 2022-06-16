@@ -18,3 +18,4 @@ export * from "./list-institution-disciplines-controller";
 export * from "./list-related-user-institutions-controller";
 export * from "./create-class-course-controller";
 export * from "./list-institution-class-courses-controller";
+export * from "./user-related-to-institution-controller";

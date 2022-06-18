@@ -17,3 +17,6 @@ export * from "./unexpected";
 export * from "./user-to-be-student-is-manager";
 export * from "./user-to-be-professor-is-manager";
 export * from "./class-with-same-course-and-start";
+export * from "./student-not-found";
+export * from "./class-course-not-found";
+export * from "./registration-already-created";

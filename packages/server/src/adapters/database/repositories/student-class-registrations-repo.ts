@@ -37,6 +37,21 @@ export class PrismaStudentClassRegistrationsRepo extends BaseRepo<
     });
   }
 
+  public async findByStudentAndClassCourse(
+    studentId: Id,
+    classCourseId: Id,
+  ): Promise<StudentClassRegistration | null> {
+    const persisted = await this.client.client.studentClassCourseRegistration
+      .findFirst({
+        where: {
+          studentId: studentId.value,
+          classCourseId: classCourseId.value,
+        },
+      });
+
+    return this.toEntity(persisted);
+  }
+
   protected override toEntity(
     persisted: PrismaStudentClassCourseRegistration | null,
   ): StudentClassRegistration | null {

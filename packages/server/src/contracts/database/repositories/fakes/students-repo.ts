@@ -20,4 +20,8 @@ export class FakeStudentsRepo implements StudentsRepo {
   public async findAllByInstitution(_institutionId: Id): Promise<Student[]> {
     return [];
   }
+
+  public async findById(_id: Id): Promise<Student | null> {
+    return Promise.resolve(null);
+  }
 }

@@ -1,41 +1,57 @@
-import { Link } from "react-router-dom";
-import sidebarElementsList from "./sidebar-elements-list";
+import { Institution, Course, Project, Discipline, Home } from "../../icons/index";
+import { IconContext } from "react-icons";
 
-const SidebarElements = () => {
-    const clearLocalStorage = () => {
-      localStorage.clear();
-    }
-
-    let sidebarElementsLinks = sidebarElementsList.map((el, index) => {
-      let clear = false;
-
-      if(el.url === "/") {
-        clear = true;
-      }
-      
-      return (
-        <li className="relative" key={`${index}-${el.url}`}>
-           <Link to={el.url} onClick={() => clear ? clearLocalStorage() : null}>
-            <span className="flex items-center text-sm py-5 px-5 h-9 m-0 overflow-hidden text-ellipsis whitespace-nowrap rounded hover:text-black hover:bg-blue-50 transition duration-300 ease-in-out">
-                {el.icon}
-                <span className="px-2">
-                {el.text}
-                </span>
-            </span>
-          </Link>
-        </li>
-      )
-    })
-
-    return (
+const sidebarElementsList = [
+    {
+      url: '/home',
+      text: 'Home Page',
+      icon:  
       <>
-        {
-          <ul className="relative px-1">
-            {sidebarElementsLinks}
-          </ul>
-        }
+        <IconContext.Provider value={{ size: "17" }}>
+          <Home/>
+        </IconContext.Provider>
       </>
-    )
-  };
+    },
+    {
+      url: '/institutions',
+      text: 'Instituições',
+      icon: 
+      <>
+        <IconContext.Provider value={{ size: "17" }}>
+          <Institution/>
+        </IconContext.Provider>
+      </>
+    },
+    {
+      url: '/courses',
+      text: 'Cursos',
+      icon:  
+      <>
+        <IconContext.Provider value={{ size: "17" }}>
+          <Course/>
+        </IconContext.Provider>
+      </>
+    },
+    {
+      url: '/disciplines',
+      text: 'Matéria',
+      icon: 
+      <>
+        <IconContext.Provider value={{ size: "17" }}>
+          <Discipline/>
+        </IconContext.Provider>
+      </>
+    },
+    {
+      url: '/projects',
+      text: 'Projects',
+      icon: 
+      <>
+        <IconContext.Provider value={{ size: "17" }}>
+          <Project/>
+        </IconContext.Provider>
+      </>
+    }
+  ];
 
-  export default SidebarElements;
+export default sidebarElementsList;

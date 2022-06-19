@@ -5,9 +5,9 @@ const PageLayout = ({ children }) => {
     <div>
       <Header/>
       <Sidebar/>
-        <div id="page" className='ml-52 mt-10 h-screen'>
-            {children}
-        </div>
+      <div id="page" className='ml-64 mt-10 h-screen'>
+          {children}
+      </div>
     </div>
   );
   }

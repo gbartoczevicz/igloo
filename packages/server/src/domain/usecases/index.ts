@@ -23,4 +23,5 @@ export * from "./create-class-course";
 export * from "./list-institution-class-courses";
 export * from "./get-user-institution-roles";
 export * from "./register-student-into-class";
+export * from "./register-professor-into-class";
 export * from "./list-student-class-registration-in-institution";

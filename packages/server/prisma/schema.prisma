@@ -58,6 +58,8 @@ model Professor {
   user        User        @relation(fields: [userId], references: [id])
   institution Institution @relation(fields: [institutionId], references: [id])
 
+  ProfessorClassCourseRegistration ProfessorClassCourseRegistration[]
+
   @@unique([userId, institutionId])
   @@map("professors")
 }
@@ -107,7 +109,8 @@ model ClassCourse {
 
   course Course @relation(fields: [courseId], references: [id])
 
-  StudentClassCourseRegistration StudentClassCourseRegistration[]
+  StudentClassCourseRegistration   StudentClassCourseRegistration[]
+  ProfessorClassCourseRegistration ProfessorClassCourseRegistration[]
 
   @@unique([start, courseId])
   @@map("class_courses")
@@ -122,4 +125,15 @@ model StudentClassCourseRegistration {
   student     Student     @relation(fields: [studentId], references: [id])
 
   @@map("student_class_course_registrations")
+}
+
+model ProfessorClassCourseRegistration {
+  id            String @id @default(uuid())
+  professorId   String @map("professor_id")
+  classCourseId String @map("class_course_id")
+
+  classCourse ClassCourse @relation(fields: [classCourseId], references: [id])
+  professor   Professor   @relation(fields: [professorId], references: [id])
+
+  @@map("professor_class_course_registrations")
 }

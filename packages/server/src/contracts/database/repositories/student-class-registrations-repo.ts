@@ -7,4 +7,7 @@ export interface StudentClassRegistrationsRepo {
     studentId: Id,
     classCourseId: Id,
   ): Promise<StudentClassRegistration | null>;
+  findAllByInstitutionId(
+    institutionId: Id,
+  ): Promise<StudentClassRegistration[]>;
 }

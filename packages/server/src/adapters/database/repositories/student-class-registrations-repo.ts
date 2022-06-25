@@ -52,6 +52,21 @@ export class PrismaStudentClassRegistrationsRepo extends BaseRepo<
     return this.toEntity(persisted);
   }
 
+  public async findAllByInstitutionId(
+    institutionId: Id,
+  ): Promise<StudentClassRegistration[]> {
+    const persisted = await this.client.client.studentClassCourseRegistration
+      .findMany({
+        where: {
+          student: {
+            institutionId: institutionId.value,
+          },
+        },
+      });
+
+    return persisted.map(this.toEntity) as StudentClassRegistration[];
+  }
+
   protected override toEntity(
     persisted: PrismaStudentClassCourseRegistration | null,
   ): StudentClassRegistration | null {

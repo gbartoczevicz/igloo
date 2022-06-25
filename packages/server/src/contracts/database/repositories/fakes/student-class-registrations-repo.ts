@@ -14,4 +14,10 @@ export class FakeStudentClassRegistrationsRepo
   ): Promise<StudentClassRegistration | null> {
     return Promise.resolve(null);
   }
+
+  public async findAllByInstitutionId(
+    _institutionId: Id,
+  ): Promise<StudentClassRegistration[]> {
+    return Promise.resolve([]);
+  }
 }

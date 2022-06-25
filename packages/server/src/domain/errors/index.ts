@@ -20,3 +20,4 @@ export * from "./class-with-same-course-and-start";
 export * from "./student-not-found";
 export * from "./class-course-not-found";
 export * from "./registration-already-created";
+export * from "./professor-not-found";

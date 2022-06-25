@@ -5,3 +5,10 @@ export class StudentClassCourseRegistrationAlreadyCreated extends DomainError {
     super("Student class course registration is already created");
   }
 }
+
+export class ProfessorClassCourseRegistrationAlreadyCreated
+  extends DomainError {
+  public constructor() {
+    super("Professor class course registration is already created");
+  }
+}

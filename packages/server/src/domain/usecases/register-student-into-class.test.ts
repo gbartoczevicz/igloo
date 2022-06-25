@@ -1,5 +1,10 @@
 import { systemTestSetup } from "~/setup/system-test";
-import { ClassCourse, Student, StudentClassRegistration } from "../entities";
+import {
+  ClassCourse,
+  InstitutionManager,
+  Student,
+  StudentClassRegistration,
+} from "../entities";
 import { ClassStartDate, Id } from "../entities/values";
 import * as Errors from "../errors";
 import { RegisterStudentIntoClassUseCase } from "./register-student-into-class";
@@ -36,6 +41,7 @@ function makeSut() {
         "any",
         new ClassStartDate(new Date()),
       ),
+      manager: new InstitutionManager(id, id, id),
     },
   };
 }
@@ -44,15 +50,15 @@ describe("Register student into class course use case tests suit", () => {
   it("should create a registration", async () => {
     const { sut, studentsRepo, classCoursesRepo, fixture } = makeSut();
 
-    jest.spyOn(studentsRepo, "findById").mockImplementationOnce(() =>
-      Promise.resolve(fixture.student)
+    jest.spyOn(studentsRepo, "findByIdAndInstitutionId").mockImplementationOnce(
+      () => Promise.resolve(fixture.student),
     );
 
-    jest.spyOn(classCoursesRepo, "findById").mockImplementationOnce(() =>
-      Promise.resolve(fixture.classCourse)
-    );
+    jest.spyOn(classCoursesRepo, "findByIdAndInstitutionId")
+      .mockImplementationOnce(() => Promise.resolve(fixture.classCourse));
 
     const result = await sut.execute({
+      ...fixture,
       classCourseId: "any",
       studentId: "any",
     });
@@ -61,9 +67,10 @@ describe("Register student into class course use case tests suit", () => {
   });
 
   it("should check if the student exists", () => {
-    const { sut } = makeSut();
+    const { sut, fixture } = makeSut();
 
     const result = sut.execute({
+      ...fixture,
       classCourseId: "any",
       studentId: "any",
     });
@@ -74,11 +81,12 @@ describe("Register student into class course use case tests suit", () => {
   it("should check if the class course exists", () => {
     const { sut, studentsRepo, fixture } = makeSut();
 
-    jest.spyOn(studentsRepo, "findById").mockImplementationOnce(() =>
-      Promise.resolve(fixture.student)
+    jest.spyOn(studentsRepo, "findByIdAndInstitutionId").mockImplementationOnce(
+      () => Promise.resolve(fixture.student),
     );
 
     const result = sut.execute({
+      ...fixture,
       classCourseId: "any",
       studentId: "any",
     });
@@ -90,18 +98,18 @@ describe("Register student into class course use case tests suit", () => {
     const { sut, studentsRepo, classCoursesRepo, registrationsRepo, fixture } =
       makeSut();
 
-    jest.spyOn(studentsRepo, "findById").mockImplementationOnce(() =>
-      Promise.resolve(fixture.student)
+    jest.spyOn(studentsRepo, "findByIdAndInstitutionId").mockImplementationOnce(
+      () => Promise.resolve(fixture.student),
     );
 
-    jest.spyOn(classCoursesRepo, "findById").mockImplementationOnce(() =>
-      Promise.resolve(fixture.classCourse)
-    );
+    jest.spyOn(classCoursesRepo, "findByIdAndInstitutionId")
+      .mockImplementationOnce(() => Promise.resolve(fixture.classCourse));
 
     jest.spyOn(registrationsRepo, "findByStudentAndClassCourse")
       .mockImplementationOnce(() => Promise.resolve(fixture.registration));
 
     const result = sut.execute({
+      ...fixture,
       classCourseId: "any",
       studentId: "any",
     });

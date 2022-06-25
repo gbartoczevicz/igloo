@@ -17,7 +17,14 @@ export class FakeClassCoursesRepo implements ClassCoursesRepo {
     return Promise.resolve([]);
   }
 
-  public async findById(_id: Id): Promise<ClassCourse | null> {
+  public async findByIdAndInstitution(_id: Id): Promise<ClassCourse | null> {
+    return Promise.resolve(null);
+  }
+
+  public async findByIdAndInstitutionId(
+    _id: Id,
+    _institutionId: Id,
+  ): Promise<ClassCourse | null> {
     return Promise.resolve(null);
   }
 }

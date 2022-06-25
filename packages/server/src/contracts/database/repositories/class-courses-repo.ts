@@ -8,5 +8,8 @@ export interface ClassCoursesRepo {
     start: ClassStartDate,
   ): Promise<ClassCourse | null>;
   listByInstitutionId(institutionId: Id): Promise<ClassCourse[]>;
-  findById(id: Id): Promise<ClassCourse | null>;
+  findByIdAndInstitutionId(
+    id: Id,
+    institutionId: Id,
+  ): Promise<ClassCourse | null>;
 }

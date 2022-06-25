@@ -3,13 +3,14 @@ import {
   StudentClassRegistrationsRepo,
   StudentsRepo,
 } from "~/contracts/database/repositories";
-import { StudentClassRegistration } from "../entities";
+import { InstitutionManager, StudentClassRegistration } from "../entities";
 import { StudentClassRegistrationFactory } from "../factories";
 import * as Errors from "~/domain/errors";
 
 type Params = {
   studentId: string;
   classCourseId: string;
+  manager: InstitutionManager;
 };
 
 export class RegisterStudentIntoClassUseCase {
@@ -34,19 +35,24 @@ export class RegisterStudentIntoClassUseCase {
   }
 
   public async execute(params: Params): Promise<StudentClassRegistration> {
-    const registration = this.registrationFactory.create(params);
+    const { manager, ...delegate } = params;
 
-    const studentFound = await this.studentsRepo.findById(
+    const registration = this.registrationFactory.create(delegate);
+
+    const studentFound = await this.studentsRepo.findByIdAndInstitutionId(
       registration.studentId,
+      manager.institutionId,
     );
 
     if (!studentFound) {
       throw new Errors.StudentNotFound();
     }
 
-    const classCourseFound = await this.classCoursesRepo.findById(
-      registration.classCourseId,
-    );
+    const classCourseFound = await this.classCoursesRepo
+      .findByIdAndInstitutionId(
+        registration.classCourseId,
+        manager.institutionId,
+      );
 
     if (!classCourseFound) {
       throw new Errors.ClassCourseNotFound();

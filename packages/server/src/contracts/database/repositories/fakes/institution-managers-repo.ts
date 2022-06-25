@@ -15,4 +15,11 @@ export class FakeInstitutionManagersRepo implements InstitutionManagersRepo {
   ): Promise<InstitutionManager | null> {
     return null;
   }
+
+  public async findByInstitutionAndUser(
+    _institutionId: Id,
+    _suserId: Id,
+  ): Promise<InstitutionManager | null> {
+    return Promise.resolve(null);
+  }
 }

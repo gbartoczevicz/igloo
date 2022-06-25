@@ -6,3 +6,6 @@ export * from "./professors-repo";
 export * from "./students-repo";
 export * from "./courses-repo";
 export * from "./disciplines-repo";
+export * from "./class-courses-repo";
+export * from "./student-class-registrations-repo";
+export * from "./professor-class-registrations-repo";

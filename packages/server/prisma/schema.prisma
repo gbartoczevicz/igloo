@@ -58,6 +58,8 @@ model Professor {
   user        User        @relation(fields: [userId], references: [id])
   institution Institution @relation(fields: [institutionId], references: [id])
 
+  ProfessorClassCourseRegistration ProfessorClassCourseRegistration[]
+
   @@unique([userId, institutionId])
   @@map("professors")
 }
@@ -70,6 +72,8 @@ model Student {
   user        User        @relation(fields: [userId], references: [id])
   institution Institution @relation(fields: [institutionId], references: [id])
 
+  StudentClassCourseRegistration StudentClassCourseRegistration[]
+
   @@unique([userId, institutionId])
   @@map("students")
 }
@@ -81,7 +85,8 @@ model Course {
 
   institution Institution @relation(fields: [institutionId], references: [id])
 
-  Discipline Discipline[]
+  Discipline  Discipline[]
+  ClassCourse ClassCourse[]
 
   @@map("courses")
 }
@@ -94,4 +99,41 @@ model Discipline {
   course Course @relation(fields: [courseId], references: [id])
 
   @@map("disciplines")
+}
+
+model ClassCourse {
+  id       String   @id @default(uuid())
+  name     String
+  start    DateTime
+  courseId String   @map("course_id")
+
+  course Course @relation(fields: [courseId], references: [id])
+
+  StudentClassCourseRegistration   StudentClassCourseRegistration[]
+  ProfessorClassCourseRegistration ProfessorClassCourseRegistration[]
+
+  @@unique([start, courseId])
+  @@map("class_courses")
+}
+
+model StudentClassCourseRegistration {
+  id            String @id @default(uuid())
+  studentId     String @map("student_id")
+  classCourseId String @map("class_course_id")
+
+  classCourse ClassCourse @relation(fields: [classCourseId], references: [id])
+  student     Student     @relation(fields: [studentId], references: [id])
+
+  @@map("student_class_course_registrations")
+}
+
+model ProfessorClassCourseRegistration {
+  id            String @id @default(uuid())
+  professorId   String @map("professor_id")
+  classCourseId String @map("class_course_id")
+
+  classCourse ClassCourse @relation(fields: [classCourseId], references: [id])
+  professor   Professor   @relation(fields: [professorId], references: [id])
+
+  @@map("professor_class_course_registrations")
 }

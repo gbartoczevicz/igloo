@@ -8,9 +8,10 @@ import { GetInstitutionCoursesUseCase } from "~/domain/usecases";
 export function setupGetInstitutionCourses(
   systemSetup: SystemSetup,
   userAuthenticated: HttpMiddleware,
-  managerAuthenticated: HttpMiddleware,
+  userRelatedToInstitution: HttpMiddleware,
 ) {
   const usecase = new GetInstitutionCoursesUseCase(
+    systemSetup.factories.idFactory,
     systemSetup.repositories.coursesRepo,
   );
 
@@ -22,10 +23,10 @@ export function setupGetInstitutionCourses(
     "/institutions/:institutionId/courses",
     Method.get,
     (req, res, _next) => {
-      controller.execute({ manager: req.currentManager }).then((result) =>
-        res.status(result.status).json(result.content)
-      );
+      controller.execute({ institutionId: req.params.institutionId }).then((
+        result,
+      ) => res.status(result.status).json(result.content));
     },
-    [userAuthenticated, managerAuthenticated],
+    [userAuthenticated, userRelatedToInstitution],
   );
 }

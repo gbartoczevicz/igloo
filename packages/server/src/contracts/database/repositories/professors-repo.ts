@@ -9,4 +9,8 @@ export interface ProfessorsRepo {
     userId: Id,
   ): Promise<Professor | null>;
   findAllByInstitution(institutionId: Id): Promise<Professor[]>;
+  findByIdAndInstitutionId(
+    id: Id,
+    institutionId: Id,
+  ): Promise<Professor | null>;
 }

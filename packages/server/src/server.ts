@@ -17,6 +17,9 @@ export function createServer(systemSetup: SystemSetup) {
     systemSetup,
   );
   const isUserAManager = SetupMiddlewares.isUserAManager(systemSetup);
+  const userRelatedToInstitution = SetupMiddlewares.userRelatedToInstitution(
+    systemSetup,
+  );
 
   const router: HttpContracts.Router<
     E.Router,
@@ -65,7 +68,7 @@ export function createServer(systemSetup: SystemSetup) {
     SetupRoutes.setupGetInstitutionCourses(
       systemSetup,
       userAuthenticated,
-      managerAuthenticated,
+      userRelatedToInstitution,
     ),
     SetupRoutes.setupGetManagedInstitution(
       systemSetup,
@@ -85,6 +88,36 @@ export function createServer(systemSetup: SystemSetup) {
     SetupRoutes.setupListRelatedUserInstitutions(
       systemSetup,
       userAuthenticated,
+    ),
+    SetupRoutes.setupCreateClassCourse(
+      systemSetup,
+      userAuthenticated,
+      managerAuthenticated,
+    ),
+    SetupRoutes.setupListInstitutionClassCourses(
+      systemSetup,
+      userAuthenticated,
+      userRelatedToInstitution,
+    ),
+    SetupRoutes.setupRegisterStudentIntoClass(
+      systemSetup,
+      userAuthenticated,
+      managerAuthenticated,
+    ),
+    SetupRoutes.setupListStudentClassRegistrationInInstitution(
+      systemSetup,
+      userAuthenticated,
+      userRelatedToInstitution,
+    ),
+    SetupRoutes.setupRegisterProfessorIntoClass(
+      systemSetup,
+      userAuthenticated,
+      managerAuthenticated,
+    ),
+    SetupRoutes.setupListProfessorClassRegistrationInInstitution(
+      systemSetup,
+      userAuthenticated,
+      userRelatedToInstitution,
     ),
   ]);
 

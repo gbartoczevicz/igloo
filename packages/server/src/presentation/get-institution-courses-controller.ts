@@ -12,11 +12,11 @@ export class GetInsittutionCoursesController extends Controller {
   }
 
   protected override async handle(incoming: unknown): Promise<HttpResult> {
-    const incomingManager = GetInstitutionCoursesDTO.In.create(incoming);
+    const incomingInstitution = GetInstitutionCoursesDTO.In.create(incoming);
 
-    const sessionCreated = await this.usecase.execute(incomingManager.manager);
+    const coursesFound = await this.usecase.execute(incomingInstitution);
 
-    const outcoming = GetInstitutionCoursesDTO.Out.toRaw(sessionCreated);
+    const outcoming = GetInstitutionCoursesDTO.Out.toRaw(coursesFound);
 
     return this.onCreated(outcoming);
   }

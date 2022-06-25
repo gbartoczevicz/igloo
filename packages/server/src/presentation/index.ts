@@ -21,3 +21,4 @@ export * from "./list-institution-class-courses-controller";
 export * from "./user-related-to-institution-controller";
 export * from "./register-student-into-class-controller";
 export * from "./list-student-class-registration-in-institution-controller";
+export * from "./register-professor-into-class-controller";

@@ -17,3 +17,4 @@ export * from "./list-related-user-institutions";
 export * from "./create-class-course";
 export * from "./list-institution-class-courses";
 export * from "./register-student-into-class";
+export * from "./list-student-class-registration-in-institution";

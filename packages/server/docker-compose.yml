@@ -2,7 +2,7 @@ version: "3"
 services:
 
   database:
-    image: postgres:14.2
+    image: postgres:14.4-alpine
     restart: always
     environment:
       POSTGRES_DB: ${DATABASE_NAME}
@@ -12,7 +12,7 @@ services:
       - "${DATABASE_PORT}:5432"
 
   database-test:
-    image: postgres:14.2
+    image: postgres:14.4-alpine
     restart: always
     environment:
       POSTGRES_DB: ${DATABASE_NAME}

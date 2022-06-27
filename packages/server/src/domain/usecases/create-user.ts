@@ -18,7 +18,7 @@ export class CreateUserUseCase {
   ) {}
 
   public async create(incoming: Params): Promise<User> {
-    const user = this.userFactory.create(incoming);
+    const user = this.userFactory.toEntity(incoming);
 
     const emailAlreadyInUse = await this.usersRepo.findByEmail(user.email);
 

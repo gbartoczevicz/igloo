@@ -23,7 +23,7 @@ export class UpdateUserUseCase {
   }
 
   public async execute(incoming: Params): Promise<User> {
-    const user = this.usersFactory.create(incoming);
+    const user = this.usersFactory.toEntity(incoming);
 
     if (await this.isEmailAlreadyInUse(user)) {
       throw new Errors.EmailAlreadyInUse();

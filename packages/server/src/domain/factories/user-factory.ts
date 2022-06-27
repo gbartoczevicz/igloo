@@ -31,7 +31,7 @@ export class UserFactory {
     this.phoneFactory = phoneFactory;
   }
 
-  public create(incoming: Params): User {
+  public toEntity(incoming: Params): User {
     const id = this.idFactory.create(incoming.id);
     const email = this.emailFactory.create(incoming.email);
     const password = this.passwordFactory.create(incoming.password);
@@ -45,5 +45,15 @@ export class UserFactory {
       password,
       phone,
     );
+  }
+
+  public toPresentation(user: User) {
+    return {
+      id: user.id.value,
+      name: user.name,
+      surname: user.surname,
+      email: user.email.toString(),
+      phone: user.phone.toString(),
+    };
   }
 }

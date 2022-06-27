@@ -30,7 +30,7 @@ describe("Create User Use Case Tests", () => {
   it("should create the expected user", async () => {
     const { sut, userFactory, anUser: expectedUser } = makeSut();
 
-    jest.spyOn(userFactory, "create").mockImplementationOnce(() =>
+    jest.spyOn(userFactory, "toEntity").mockImplementationOnce(() =>
       expectedUser
     );
 
@@ -47,7 +47,7 @@ describe("Create User Use Case Tests", () => {
   it("should validate if the e-mail is already in use", () => {
     const { sut, userFactory, usersRepo, anUser } = makeSut();
 
-    jest.spyOn(userFactory, "create").mockImplementationOnce(() => anUser);
+    jest.spyOn(userFactory, "toEntity").mockImplementationOnce(() => anUser);
 
     jest.spyOn(usersRepo, "findByEmail").mockImplementationOnce(() =>
       Promise.resolve(anUser)
@@ -66,7 +66,7 @@ describe("Create User Use Case Tests", () => {
   it("should validate if the phone is already in use", () => {
     const { sut, userFactory, usersRepo, anUser } = makeSut();
 
-    jest.spyOn(userFactory, "create").mockImplementationOnce(() => anUser);
+    jest.spyOn(userFactory, "toEntity").mockImplementationOnce(() => anUser);
 
     jest.spyOn(usersRepo, "findByPhone").mockImplementationOnce(() =>
       Promise.resolve(anUser)

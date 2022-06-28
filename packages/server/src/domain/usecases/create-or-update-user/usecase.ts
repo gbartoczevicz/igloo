@@ -23,22 +23,16 @@ export class CreateOrUpdateUserUseCase {
   private async isEmailAlreadyInUse(user: User): Promise<boolean> {
     const userFound = await this.usersRepo.findByEmail(user.email);
 
-    if (!userFound) {
-      return false;
-    }
+    if (!userFound) return false;
 
-    return !userFound.id.isEqual(user.id) &&
-      userFound.email.toString() === user.email.toString();
+    return !userFound.id.isEqual(user.id);
   }
 
   private async isPhoneAlreadyInUse(user: User): Promise<boolean> {
     const userFound = await this.usersRepo.findByPhone(user.phone);
 
-    if (!userFound) {
-      return false;
-    }
+    if (!userFound) return false;
 
-    return !userFound.id.isEqual(user.id) &&
-      userFound.phone.toString() === user.phone.toString();
+    return !userFound.id.isEqual(user.id);
   }
 }

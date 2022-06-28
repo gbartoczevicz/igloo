@@ -1,5 +1,6 @@
 import { Controller, HttpResult } from "~/contracts/presentation";
 import { UserFactory } from "~/domain/factories";
+
 import { CreateOrUpdateUserUseCase } from "./usecase";
 
 export class CreateOrUpdateUserController extends Controller {

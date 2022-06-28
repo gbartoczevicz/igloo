@@ -10,3 +10,4 @@ export * from "./discipline";
 export * from "./class-course";
 export * from "./student-class-registration";
 export * from "./professor-class-registration";
+export * from "./learning-trail";

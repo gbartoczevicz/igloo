@@ -96,7 +96,8 @@ model Discipline {
   name     String
   courseId String @map("course_id")
 
-  course Course @relation(fields: [courseId], references: [id])
+  course        Course          @relation(fields: [courseId], references: [id])
+  LearningTrail LearningTrail[]
 
   @@map("disciplines")
 }
@@ -136,4 +137,14 @@ model ProfessorClassCourseRegistration {
   professor   Professor   @relation(fields: [professorId], references: [id])
 
   @@map("professor_class_course_registrations")
+}
+
+model LearningTrail {
+  id           String @id @default(uuid())
+  name         String
+  disciplineId String @map("discipline_id")
+
+  discipline Discipline @relation(fields: [disciplineId], references: [id])
+
+  @@map("learning_trails")
 }

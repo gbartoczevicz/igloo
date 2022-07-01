@@ -22,11 +22,11 @@ export class PrismaLearningTrailsRepo
       create: {
         id: learningTrail.id.value,
         name: learningTrail.name,
-        disciplineId: learningTrail.id.value,
+        disciplineId: learningTrail.disciplineId.value,
       },
       update: {
         name: learningTrail.name,
-        disciplineId: learningTrail.id.value,
+        disciplineId: learningTrail.disciplineId.value,
       },
       where: {
         id: learningTrail.id.value,

@@ -24,6 +24,6 @@ export class AuthenticateManagerOrProfessorController extends Controller {
       user,
     });
 
-    return this.onOk(professorOrManager.institutionId.value);
+    return this.onOk(professorOrManager.institutionId);
   }
 }

@@ -25,7 +25,7 @@ export function setupCreateLearningTrail(
     "/institutions/:institutionId/learning-trails",
     Method.post,
     (req, res, _next) => {
-      controller.execute(...(req.body) || {}).then((result) =>
+      controller.execute(req.body || {}).then((result) =>
         res.status(result.status).json(result.content)
       );
     },

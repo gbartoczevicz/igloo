@@ -25,6 +25,7 @@ function createSut() {
     fixture: {
       discipline: new Discipline(id, "any", id),
       learningTrail: new LearningTrail(id, "any", id),
+      institutionId: id,
     },
   };
 }
@@ -33,26 +34,38 @@ describe("Create or Update Learning Trail Use Case", () => {
   it("should persist a learning trail", async () => {
     const { sut, disciplinesRepo, learningTrailsRepo, fixture } = createSut();
 
-    const findById = jest.spyOn(disciplinesRepo, "findById")
+    const findByIdAndInstitutionId = jest.spyOn(
+      disciplinesRepo,
+      "findByIdAndInstitutionId",
+    )
       .mockImplementationOnce(() => Promise.resolve(fixture.discipline));
     const save = jest.spyOn(learningTrailsRepo, "save");
 
-    await sut.execute(fixture.learningTrail);
+    await sut.execute(fixture.learningTrail, fixture.institutionId);
 
-    expect(findById).toBeCalledWith(fixture.learningTrail.disciplineId);
+    expect(findByIdAndInstitutionId).toBeCalledWith(
+      fixture.learningTrail.disciplineId,
+      fixture.institutionId,
+    );
     expect(save).toBeCalledWith(fixture.learningTrail);
   });
 
   it("should check if the discipline exists before persisting a learning trail", async () => {
     const { sut, disciplinesRepo, learningTrailsRepo, fixture } = createSut();
 
-    const findById = jest.spyOn(disciplinesRepo, "findById");
+    const findByIdAndInstitutionId = jest.spyOn(
+      disciplinesRepo,
+      "findByIdAndInstitutionId",
+    );
     const save = jest.spyOn(learningTrailsRepo, "save");
 
-    const rejection = sut.execute(fixture.learningTrail);
+    const rejection = sut.execute(fixture.learningTrail, fixture.institutionId);
 
     expect(rejection).rejects.toBeInstanceOf(Errors.DisciplineNotFound);
-    expect(findById).toBeCalledWith(fixture.learningTrail.disciplineId);
+    expect(findByIdAndInstitutionId).toBeCalledWith(
+      fixture.learningTrail.disciplineId,
+      fixture.institutionId,
+    );
     expect(save).toBeCalledTimes(0);
   });
 });

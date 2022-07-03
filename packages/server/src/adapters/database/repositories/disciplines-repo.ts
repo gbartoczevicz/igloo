@@ -28,10 +28,16 @@ export class PrismaDisciplinesRepo
     });
   }
 
-  public async findById(id: Id): Promise<Discipline | null> {
-    const persisted = await this.client.client.discipline.findUnique({
+  public async findByIdAndInstitutionId(
+    id: Id,
+    institutionId: Id,
+  ): Promise<Discipline | null> {
+    const persisted = await this.client.client.discipline.findFirst({
       where: {
         id: id.value,
+        course: {
+          institutionId: institutionId.value,
+        },
       },
     });
 

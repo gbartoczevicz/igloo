@@ -34,6 +34,22 @@ export class PrismaLearningTrailsRepo
     });
   }
 
+  public async findAllByInstitutionId(
+    institutionId: Id,
+  ): Promise<LearningTrail[]> {
+    const persisted = await this.client.client.learningTrail.findMany({
+      where: {
+        discipline: {
+          course: {
+            institutionId: institutionId.value,
+          },
+        },
+      },
+    });
+
+    return persisted.map(this.toEntity) as LearningTrail[];
+  }
+
   protected toEntity(
     persisted: PrismaLearningTrail | null,
   ): LearningTrail | null {

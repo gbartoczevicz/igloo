@@ -126,6 +126,11 @@ export function createServer(systemSetup: SystemSetup) {
       userAuthenticated,
       managerOrProfessorAuthenticated,
     ),
+    SetupRoutes.setupListInstitutionLearningTrails(
+      systemSetup,
+      userAuthenticated,
+      userRelatedToInstitution,
+    ),
   ]);
 
   express.use(cors());

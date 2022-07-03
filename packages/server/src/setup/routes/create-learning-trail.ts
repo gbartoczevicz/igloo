@@ -9,7 +9,7 @@ import {
 export function setupCreateLearningTrail(
   systemSetup: SystemSetup,
   userAuthenticated: HttpMiddleware,
-  managerAuthenticated: HttpMiddleware,
+  managerOrProfessorAuthenticated: HttpMiddleware,
 ) {
   const usecase = new CreateOrUpdateLearningTrailUseCase(
     systemSetup.repositories.disciplinesRepo,
@@ -25,10 +25,15 @@ export function setupCreateLearningTrail(
     "/institutions/:institutionId/learning-trails",
     Method.post,
     (req, res, _next) => {
-      controller.execute(req.body || {}).then((result) =>
+      const content = {
+        ...req.body,
+        institutionId: req.institutionId,
+      };
+
+      controller.execute(content).then((result) =>
         res.status(result.status).json(result.content)
       );
     },
-    [userAuthenticated, managerAuthenticated],
+    [userAuthenticated, managerOrProfessorAuthenticated],
   );
 }

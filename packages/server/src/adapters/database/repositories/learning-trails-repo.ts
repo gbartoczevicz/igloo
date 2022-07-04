@@ -50,6 +50,24 @@ export class PrismaLearningTrailsRepo
     return persisted.map(this.toEntity) as LearningTrail[];
   }
 
+  public async findByIdAndInstitutionId(
+    id: Id,
+    institutionId: Id,
+  ): Promise<LearningTrail | null> {
+    const persisted = await this.client.client.learningTrail.findFirst({
+      where: {
+        discipline: {
+          course: {
+            id: id.value,
+            institutionId: institutionId.value,
+          },
+        },
+      },
+    });
+
+    return this.toEntity(persisted);
+  }
+
   protected toEntity(
     persisted: PrismaLearningTrail | null,
   ): LearningTrail | null {

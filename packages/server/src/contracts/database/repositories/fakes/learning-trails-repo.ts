@@ -12,4 +12,11 @@ export class FakeLearningTrailsRepo implements LearningTrailsRepo {
   ): Promise<LearningTrail[]> {
     return Promise.resolve([]);
   }
+
+  public async findByIdAndInstitutionId(
+    _id: Id,
+    _institutionId: Id,
+  ): Promise<LearningTrail | null> {
+    return Promise.resolve(null);
+  }
 }

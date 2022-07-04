@@ -1,5 +1,5 @@
 import { Controller, HttpResult } from "~/contracts/presentation";
-import { IdFactory, LearningTrailFactory } from "~/domain/factories";
+import { LearningTrailFactory } from "~/domain/factories";
 import { CreateOrUpdateLearningTrailUseCase } from "./usecase";
 
 export class CreateOrUpdateLearningTrailController extends Controller {

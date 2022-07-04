@@ -144,7 +144,22 @@ model LearningTrail {
   name         String
   disciplineId String @map("discipline_id")
 
-  discipline Discipline @relation(fields: [disciplineId], references: [id])
+  discipline        Discipline          @relation(fields: [disciplineId], references: [id])
+  LearningTrailStep LearningTrailStep[]
 
   @@map("learning_trails")
+}
+
+model LearningTrailStep {
+  id              String   @id @default(uuid())
+  position        Int
+  learningTrailId String   @map("learning_trail_id")
+  dueDate         DateTime @map("due_date")
+  availableAt     DateTime @map("available_at")
+  createdAt       DateTime @map("created_at")
+  updatedAt       DateTime @map("updated_at")
+
+  learningTrail LearningTrail @relation(fields: [learningTrailId], references: [id])
+
+  @@map("learning_trail_steps")
 }

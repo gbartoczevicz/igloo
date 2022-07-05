@@ -131,11 +131,15 @@ export function createServer(systemSetup: SystemSetup) {
       userAuthenticated,
       userRelatedToInstitution,
     ),
-
     SetupRoutes.setupCreateLearningTrailStep(
       systemSetup,
       userAuthenticated,
       managerOrProfessorAuthenticated,
+    ),
+    SetupRoutes.setupListLearningTrailSteps(
+      systemSetup,
+      userAuthenticated,
+      userRelatedToInstitution,
     ),
   ]);
 

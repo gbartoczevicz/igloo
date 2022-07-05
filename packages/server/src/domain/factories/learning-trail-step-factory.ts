@@ -58,4 +58,12 @@ export class LearningTrailStepFactory {
       new Date(),
     );
   }
+
+  public toPresentation(step: LearningTrailStep) {
+    return {
+      ...step,
+      id: step.id.value,
+      learningTrailId: step.learningTrailId.value,
+    };
+  }
 }

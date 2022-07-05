@@ -56,9 +56,9 @@ export class PrismaLearningTrailsRepo
   ): Promise<LearningTrail | null> {
     const persisted = await this.client.client.learningTrail.findFirst({
       where: {
+        id: id.value,
         discipline: {
           course: {
-            id: id.value,
             institutionId: institutionId.value,
           },
         },

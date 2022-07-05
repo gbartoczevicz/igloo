@@ -13,7 +13,10 @@ export function userRelatedToInstitution(
     systemSetup.repositories.professorsRepo,
     systemSetup.repositories.studentsRepo,
   );
-  const controller = new UserRelatedToInstitutionController(usecase);
+  const controller = new UserRelatedToInstitutionController(
+    usecase,
+    systemSetup.factories.idFactory,
+  );
 
   return (req, res, next) => {
     const params = {
@@ -25,6 +28,8 @@ export function userRelatedToInstitution(
       if (outcoming.status !== HttpStatus.ok) {
         return res.status(outcoming.status).json(outcoming.content);
       }
+
+      req.institutionId = outcoming.content as any;
 
       return next();
     });

@@ -23,4 +23,22 @@ export const validatorMapping: ValidatorFunMapping = {
   [Options.requiredList]: (v) => Array.isArray(v),
   [Options.requiredNumber]: (v) => typeof v === "number",
   [Options.requiredString]: (v) => typeof v === "string",
+  [Options.requiredDate]: (v) => {
+    if (isNil(v)) {
+      return false;
+    }
+
+    const date = new Date(v as any);
+
+    return !isNaN(date.valueOf());
+  },
+  [Options.optionalDate]: (v) => {
+    if (isNil(v)) {
+      return true;
+    }
+
+    const date = new Date(v as any);
+
+    return !isNaN(date.valueOf());
+  },
 };

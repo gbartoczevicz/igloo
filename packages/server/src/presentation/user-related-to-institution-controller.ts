@@ -1,13 +1,15 @@
 import { Controller, HttpResult } from "~/contracts/presentation";
+import { Id } from "~/domain/entities/values";
+import { IdFactory } from "~/domain/factories";
 import { GetUserInstitutionRolesUseCase } from "~/domain/usecases";
 import { UserRelatedToInstitutionDTO } from "./user-related-to-institution-dto";
 
 export class UserRelatedToInstitutionController extends Controller {
-  private readonly usecase: GetUserInstitutionRolesUseCase;
-
-  public constructor(usecase: GetUserInstitutionRolesUseCase) {
+  public constructor(
+    private readonly usecase: GetUserInstitutionRolesUseCase,
+    private readonly idFactory: IdFactory,
+  ) {
     super();
-    this.usecase = usecase;
   }
 
   protected override async handle(incoming?: unknown): Promise<HttpResult> {
@@ -25,6 +27,8 @@ export class UserRelatedToInstitutionController extends Controller {
       return this.onForbidden();
     }
 
-    return this.onOk(undefined);
+    const id = this.idFactory.create(incomingUserAndInstitution.institutionId);
+
+    return this.onOk(id);
   }
 }

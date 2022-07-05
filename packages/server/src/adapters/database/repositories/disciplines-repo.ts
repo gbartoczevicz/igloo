@@ -28,6 +28,22 @@ export class PrismaDisciplinesRepo
     });
   }
 
+  public async findByIdAndInstitutionId(
+    id: Id,
+    institutionId: Id,
+  ): Promise<Discipline | null> {
+    const persisted = await this.client.client.discipline.findFirst({
+      where: {
+        id: id.value,
+        course: {
+          institutionId: institutionId.value,
+        },
+      },
+    });
+
+    return this.toEntity(persisted);
+  }
+
   public async findAllByCourseId(courseId: Id): Promise<Discipline[]> {
     const disciplinesFound = await this.client.client.discipline.findMany({
       where: {

@@ -6,6 +6,13 @@ export class FakeDisciplinesRepo implements DisciplinesRepo {
   public async save(_discipline: Discipline): Promise<void> {
   }
 
+  public async findByIdAndInstitutionId(
+    _id: Id,
+    _institutionId: Id,
+  ): Promise<Discipline | null> {
+    return Promise.resolve(null);
+  }
+
   public async findAllByCourseId(_courseId: Id): Promise<Discipline[]> {
     return [];
   }

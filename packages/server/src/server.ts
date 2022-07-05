@@ -20,6 +20,8 @@ export function createServer(systemSetup: SystemSetup) {
   const userRelatedToInstitution = SetupMiddlewares.userRelatedToInstitution(
     systemSetup,
   );
+  const managerOrProfessorAuthenticated = SetupMiddlewares
+    .professorOrManagerAuthenticated(systemSetup);
 
   const router: HttpContracts.Router<
     E.Router,
@@ -115,6 +117,26 @@ export function createServer(systemSetup: SystemSetup) {
       managerAuthenticated,
     ),
     SetupRoutes.setupListProfessorClassRegistrationInInstitution(
+      systemSetup,
+      userAuthenticated,
+      userRelatedToInstitution,
+    ),
+    SetupRoutes.setupCreateLearningTrail(
+      systemSetup,
+      userAuthenticated,
+      managerOrProfessorAuthenticated,
+    ),
+    SetupRoutes.setupListInstitutionLearningTrails(
+      systemSetup,
+      userAuthenticated,
+      userRelatedToInstitution,
+    ),
+    SetupRoutes.setupCreateLearningTrailStep(
+      systemSetup,
+      userAuthenticated,
+      managerOrProfessorAuthenticated,
+    ),
+    SetupRoutes.setupListLearningTrailSteps(
       systemSetup,
       userAuthenticated,
       userRelatedToInstitution,

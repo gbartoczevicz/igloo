@@ -22,3 +22,4 @@ export * from "./register-professor-into-class";
 export * from "./list-professor-class-registration-in-institution";
 export * from "./create-learning-trail";
 export * from "./list-institution-learning-trails";
+export * from "./create-learning-trail-step";

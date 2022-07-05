@@ -13,4 +13,10 @@ export class FakeLearningTrailStepsRepo implements LearningTrailStepsRepo {
   ): Promise<LearningTrailStep | null> {
     return Promise.resolve(null);
   }
+
+  public async findAllByLearningTrailId(
+    _learningTrailId: Id,
+  ): Promise<LearningTrailStep[]> {
+    return Promise.resolve([]);
+  }
 }

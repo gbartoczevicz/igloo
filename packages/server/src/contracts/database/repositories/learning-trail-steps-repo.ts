@@ -7,4 +7,5 @@ export interface LearningTrailStepsRepo {
     learningTrailId: Id,
     position: number,
   ): Promise<LearningTrailStep | null>;
+  findAllByLearningTrailId(learningTrailId: Id): Promise<LearningTrailStep[]>;
 }

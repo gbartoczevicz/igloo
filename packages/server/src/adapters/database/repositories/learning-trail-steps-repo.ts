@@ -50,6 +50,18 @@ export class PrismaLearningTrailStepsRepo
     return this.toEntity(persisted);
   }
 
+  public async findAllByLearningTrailId(
+    learningTrailId: Id,
+  ): Promise<LearningTrailStep[]> {
+    const persisted = await this.client.client.learningTrailStep.findMany({
+      where: {
+        learningTrailId: learningTrailId.value,
+      },
+    });
+
+    return persisted.map(this.toEntity) as LearningTrailStep[];
+  }
+
   protected toEntity(
     persisted: PrismaLearningTrailStep | null,
   ): LearningTrailStep | null {

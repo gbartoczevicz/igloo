@@ -10,3 +10,4 @@ export * from "./student-class-registrations-repo";
 export * from "./professor-class-registrations-repo";
 export * from "./learning-trails-repo";
 export * from "./learning-trail-steps-repo";
+export * from "./exams-repo";

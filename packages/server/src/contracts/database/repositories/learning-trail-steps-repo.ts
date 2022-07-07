@@ -8,4 +8,8 @@ export interface LearningTrailStepsRepo {
     position: number,
   ): Promise<LearningTrailStep | null>;
   findAllByLearningTrailId(learningTrailId: Id): Promise<LearningTrailStep[]>;
+  findByIdAndInstitutionId(
+    id: Id,
+    institutionId: Id,
+  ): Promise<LearningTrailStep | null>;
 }

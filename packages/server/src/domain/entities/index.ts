@@ -12,3 +12,4 @@ export * from "./student-class-registration";
 export * from "./professor-class-registration";
 export * from "./learning-trail";
 export * from "./learning-trail-step";
+export * from "./exam";

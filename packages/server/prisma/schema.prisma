@@ -160,6 +160,16 @@ model LearningTrailStep {
   updatedAt       DateTime @map("updated_at")
 
   learningTrail LearningTrail @relation(fields: [learningTrailId], references: [id])
+  Exam          Exam[]
 
   @@map("learning_trail_steps")
+}
+
+model Exam {
+  id                  String @id @default(uuid())
+  learningTrailStepId String @unique @map("learning_trail_step_id")
+
+  learningTrailStep LearningTrailStep @relation(fields: [learningTrailStepId], references: [id])
+
+  @@map("exams")
 }

@@ -8,10 +8,12 @@ type Params = {
   method: Method;
 };
 
+const serverPort = process.env.PORT;
+
 export function makeHttpClient(params: Params) {
   const { method, route, token } = params;
 
-  const url = `http://localhost:3333${route}`;
+  const url = `http://localhost:${serverPort}${route}`;
 
   return async (body?: unknown) => {
     const response = await fetch(url, {

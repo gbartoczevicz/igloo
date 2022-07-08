@@ -52,6 +52,7 @@ export function systemSetup(
     .PrismaLearningTrailStepsRepo(
     database.client,
   );
+  const examsRepo = new RepositoryAdapters.PrismaExamsRepo(database.client);
 
   const cnpjFactory = new DomainFactories.CnpjFactory(cnpjValidator);
   const emailFactory = new DomainFactories.EmailFactory(emailValidator);
@@ -90,6 +91,9 @@ export function systemSetup(
   const learningTrailStepFactory = new DomainFactories.LearningTrailStepFactory(
     idFactory,
   );
+  const examFactory = new DomainFactories.ExamFactory(
+    idFactory,
+  );
 
   return {
     factories: {
@@ -111,6 +115,7 @@ export function systemSetup(
       professorClassRegistrationFactory,
       learningTrailFactory,
       learningTrailStepFactory,
+      examFactory,
     },
     hash: {
       idProvider,
@@ -130,6 +135,7 @@ export function systemSetup(
       professorClassRegistrationsRepo,
       learningTrailsRepo,
       learningTrailStepsRepo,
+      examsRepo,
     },
     validators: {
       cnpjValidator,

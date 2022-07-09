@@ -37,6 +37,16 @@ export class PrismaExamsRepo extends BaseRepo<PrismaClient, PrismaExam, Exam>
     return this.toEntity(persisted);
   }
 
+  public async findById(id: Id): Promise<Exam | null> {
+    const persisted = await this.client.client.exam.findUnique({
+      where: {
+        id: id.value,
+      },
+    });
+
+    return this.toEntity(persisted);
+  }
+
   protected toEntity(
     persisted: PrismaExam | null,
   ): Exam | null {

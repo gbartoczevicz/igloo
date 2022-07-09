@@ -19,6 +19,7 @@ export interface SystemSetup {
     learningTrailsRepo: Repositories.LearningTrailsRepo;
     learningTrailStepsRepo: Repositories.LearningTrailStepsRepo;
     examsRepo: Repositories.ExamsRepo;
+    examQuestionsRepo: Repositories.ExamQuestionsRepo;
   };
   factories: {
     cnpjFactory: Factories.CnpjFactory;
@@ -41,6 +42,7 @@ export interface SystemSetup {
     learningTrailFactory: Factories.LearningTrailFactory;
     learningTrailStepFactory: Factories.LearningTrailStepFactory;
     examFactory: Factories.ExamFactory;
+    examQuestionFactory: Factories.ExamQuestionFactory;
   };
   hash: {
     idProvider: Hash.IdProvider;

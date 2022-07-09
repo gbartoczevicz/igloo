@@ -41,6 +41,7 @@ export function systemTestSetup(): SystemSetup {
   const examFactory = new Factories.ExamFactory(
     idFactory,
   );
+  const examQuestionFactory = new Factories.ExamQuestionFactory(idFactory);
 
   const userFactory = new Factories.UserFactory(
     idFactory,
@@ -75,6 +76,7 @@ export function systemTestSetup(): SystemSetup {
       learningTrailFactory,
       learningTrailStepFactory,
       examFactory,
+      examQuestionFactory,
     },
     repositories: {
       usersRepo: new FakeRepo.FakeUsersRepo(),
@@ -92,6 +94,7 @@ export function systemTestSetup(): SystemSetup {
       learningTrailsRepo: new FakeRepo.FakeLearningTrailsRepo(),
       learningTrailStepsRepo: new FakeRepo.FakeLearningTrailStepsRepo(),
       examsRepo: new FakeRepo.FakeExamsRepo(),
+      examQuestionsRepo: new FakeRepo.FakeExamQuestionsRepo(),
     },
     validators: {
       cnpjValidator,

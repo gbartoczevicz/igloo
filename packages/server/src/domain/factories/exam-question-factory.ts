@@ -35,4 +35,12 @@ export class ExamQuestionFactory {
 
     return new ExamQuestion(id, position, examId);
   }
+
+  public toPresentation(question: ExamQuestion) {
+    return {
+      id: question.id.value,
+      examId: question.examId.value,
+      position: question.position,
+    };
+  }
 }

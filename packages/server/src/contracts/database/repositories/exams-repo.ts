@@ -4,5 +4,5 @@ import { Id } from "~/domain/entities/values";
 export interface ExamsRepo {
   save(exam: Exam): Promise<void>;
   findByLearningTrailStepId(learningTrailStepId: Id): Promise<Exam | null>;
-  findById(id: Id): Promise<Exam | null>;
+  findByIdAndInstitutionId(id: Id, institutionId: Id): Promise<Exam | null>;
 }

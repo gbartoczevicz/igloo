@@ -37,10 +37,22 @@ export class PrismaExamsRepo extends BaseRepo<PrismaClient, PrismaExam, Exam>
     return this.toEntity(persisted);
   }
 
-  public async findById(id: Id): Promise<Exam | null> {
-    const persisted = await this.client.client.exam.findUnique({
+  public async findByIdAndInstitutionId(
+    id: Id,
+    institutionId: Id,
+  ): Promise<Exam | null> {
+    const persisted = await this.client.client.exam.findFirst({
       where: {
         id: id.value,
+        learningTrailStep: {
+          learningTrail: {
+            discipline: {
+              course: {
+                institutionId: institutionId.value,
+              },
+            },
+          },
+        },
       },
     });
 

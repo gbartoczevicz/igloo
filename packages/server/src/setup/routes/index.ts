@@ -26,3 +26,4 @@ export * from "./create-learning-trail-step";
 export * from "./list-learning-trail-steps";
 export * from "./create-exam";
 export * from "./create-exam-question";
+export * from "./list-institution-exams";

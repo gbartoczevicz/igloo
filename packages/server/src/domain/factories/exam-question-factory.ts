@@ -15,7 +15,7 @@ export class ExamQuestionFactory {
       },
       position: {
         value: params.position,
-        option: Options.optionalString,
+        option: Options.requiredNumber,
       },
       examId: {
         value: params.examId,

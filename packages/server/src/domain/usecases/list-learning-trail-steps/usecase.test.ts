@@ -39,7 +39,7 @@ function createSut() {
   };
 }
 
-describe("Create or Update Lerning Trail Step Use Case", () => {
+describe("List Lerning Trail Step Use Case", () => {
   it("should list the expected trail steps", async () => {
     const { sut, learningTrailsRepo, learningTrailStepsRepo, fixture } =
       createSut();

@@ -170,6 +170,17 @@ model Exam {
   learningTrailStepId String @unique @map("learning_trail_step_id")
 
   learningTrailStep LearningTrailStep @relation(fields: [learningTrailStepId], references: [id])
+  ExamQuestion      ExamQuestion[]
 
   @@map("exams")
+}
+
+model ExamQuestion {
+  id       String @id @default(uuid())
+  position Int
+  examId   String @map("exam_id")
+
+  exam Exam @relation(fields: [examId], references: [id])
+
+  @@map("exam_questions")
 }

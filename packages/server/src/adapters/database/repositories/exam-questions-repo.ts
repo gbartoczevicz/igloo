@@ -45,6 +45,16 @@ export class PrismaExamQuestionsRepo
     return this.toEntity(persisted);
   }
 
+  public async findAllByExamId(examId: Id): Promise<ExamQuestion[]> {
+    const persisted = await this.client.client.examQuestion.findMany({
+      where: {
+        examId: examId.value,
+      },
+    });
+
+    return persisted.map(this.toEntity) as ExamQuestion[];
+  }
+
   protected toEntity(
     persisted: PrismaExamQuestion | null,
   ): ExamQuestion | null {

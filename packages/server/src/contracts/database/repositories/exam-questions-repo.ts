@@ -7,4 +7,5 @@ export interface ExamQuestionsRepo {
     examId: Id,
     position: number,
   ): Promise<ExamQuestion | null>;
+  findAllByExamId(examId: Id): Promise<ExamQuestion[]>;
 }

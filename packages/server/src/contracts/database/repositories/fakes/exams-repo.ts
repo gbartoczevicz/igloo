@@ -19,4 +19,8 @@ export class FakeExamsRepo implements ExamsRepo {
   ): Promise<Exam | null> {
     return Promise.resolve(null);
   }
+
+  public async findAllByInstitutionId(_institutionId: Id): Promise<Exam[]> {
+    return Promise.resolve([]);
+  }
 }

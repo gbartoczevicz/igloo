@@ -156,6 +156,11 @@ export function createServer(systemSetup: SystemSetup) {
       userAuthenticated,
       userRelatedToInstitution,
     ),
+    SetupRoutes.setupListExamQuestions(
+      systemSetup,
+      userAuthenticated,
+      userRelatedToInstitution,
+    ),
   ]);
 
   express.use(cors());

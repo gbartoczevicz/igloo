@@ -14,3 +14,6 @@ export * from "./learning-trail";
 export * from "./learning-trail-step";
 export * from "./exam";
 export * from "./exam-question";
+export * from "./assertive-question";
+export * from "./essay-question";
+export * from "./assertive-question-option";

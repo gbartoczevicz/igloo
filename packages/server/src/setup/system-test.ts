@@ -95,6 +95,10 @@ export function systemTestSetup(): SystemSetup {
       learningTrailStepsRepo: new FakeRepo.FakeLearningTrailStepsRepo(),
       examsRepo: new FakeRepo.FakeExamsRepo(),
       examQuestionsRepo: new FakeRepo.FakeExamQuestionsRepo(),
+      assertiveQuestionOptionsRepo: new FakeRepo
+        .FakeAssertiveQuestionOptionsRepo(),
+      assertiveQuestionsRepo: new FakeRepo.FakeAssertiveQuestionsRepo(),
+      essayQuestionsRepo: new FakeRepo.FakeEssayQuestionsRepo(),
     },
     validators: {
       cnpjValidator,

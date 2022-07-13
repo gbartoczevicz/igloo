@@ -20,6 +20,9 @@ export interface SystemSetup {
     learningTrailStepsRepo: Repositories.LearningTrailStepsRepo;
     examsRepo: Repositories.ExamsRepo;
     examQuestionsRepo: Repositories.ExamQuestionsRepo;
+    assertiveQuestionsRepo: Repositories.AssertiveQuestionsRepo;
+    assertiveQuestionOptionsRepo: Repositories.AssertiveQuestionOptionsRepo;
+    essayQuestionsRepo: Repositories.EssayQuestionsRepo;
   };
   factories: {
     cnpjFactory: Factories.CnpjFactory;

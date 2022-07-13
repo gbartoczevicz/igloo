@@ -7,7 +7,10 @@ export class FakeAssertiveQuestionsRepo implements AssertiveQuestionsRepo {
     return Promise.resolve();
   }
 
-  public async findById(_id: Id): Promise<AssertiveQuestion | null> {
+  public async findByIdAndInstitution(
+    _id: Id,
+    _institutionId: Id,
+  ): Promise<AssertiveQuestion | null> {
     return Promise.resolve(null);
   }
 }

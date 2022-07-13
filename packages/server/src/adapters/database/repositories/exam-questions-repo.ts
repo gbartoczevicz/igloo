@@ -31,6 +31,30 @@ export class PrismaExamQuestionsRepo
     });
   }
 
+  public async findByIdAndInstitutionId(
+    id: Id,
+    institutionId: Id,
+  ): Promise<ExamQuestion | null> {
+    const persisted = await this.client.client.examQuestion.findFirst({
+      where: {
+        id: id.value,
+        exam: {
+          learningTrailStep: {
+            learningTrail: {
+              discipline: {
+                course: {
+                  institutionId: institutionId.value,
+                },
+              },
+            },
+          },
+        },
+      },
+    });
+
+    return this.toEntity(persisted);
+  }
+
   public async findByExamIdAndPosition(
     examId: Id,
     position: number,

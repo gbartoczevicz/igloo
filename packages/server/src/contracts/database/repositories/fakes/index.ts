@@ -12,3 +12,6 @@ export * from "./learning-trails-repo";
 export * from "./learning-trail-steps-repo";
 export * from "./exams-repo";
 export * from "./exam-questions-repo";
+export * from "./assertive-question-options-repo";
+export * from "./assertive-questions-repo";
+export * from "./essay-questions-repo";

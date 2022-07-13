@@ -7,6 +7,13 @@ export class FakeExamQuestionsRepo implements ExamQuestionsRepo {
     return Promise.resolve();
   }
 
+  public async findByIdAndInstitutionId(
+    _id: Id,
+    _institutionId: Id,
+  ): Promise<ExamQuestion | null> {
+    return Promise.resolve(null);
+  }
+
   public async findByExamIdAndPosition(
     _examId: Id,
     _position: number,

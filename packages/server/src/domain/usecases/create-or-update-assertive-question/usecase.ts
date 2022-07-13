@@ -4,6 +4,7 @@ import {
 } from "~/contracts/database/repositories";
 import { AssertiveQuestion } from "~/domain/entities";
 import { Id } from "~/domain/entities/values";
+import Errors from "./errors";
 
 export class CreateOrUpdateAssertiveQuestionUseCase {
   public constructor(
@@ -18,7 +19,7 @@ export class CreateOrUpdateAssertiveQuestionUseCase {
     );
 
     if (!examQuestion) {
-      throw new Error("Exam question not found");
+      throw new Errors.ExamQuestionNotFound();
     }
 
     await this.assertiveQuestionsRepo.save(question);

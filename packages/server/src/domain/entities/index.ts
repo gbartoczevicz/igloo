@@ -17,3 +17,4 @@ export * from "./exam-question";
 export * from "./assertive-question";
 export * from "./essay-question";
 export * from "./assertive-question-option";
+export * from "./exam-assertive-question";

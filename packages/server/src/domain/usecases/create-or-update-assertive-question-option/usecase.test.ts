@@ -24,13 +24,11 @@ function createSut() {
     fixtures: {
       assertiveQuestionShouldShowFeedback: new AssertiveQuestion(
         id,
-        id,
         "any",
         "any",
         true,
       ),
       assertiveQuestionShouldNotShowFeedback: new AssertiveQuestion(
-        id,
         id,
         "any",
         "any",
